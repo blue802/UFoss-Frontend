@@ -1,7 +1,6 @@
 const typography = {
   fonts: {
-    heading: "Roboto",
-    body: "Quicksand",
+    body: 'Roboto',
   },
 };
 
