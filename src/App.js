@@ -1,16 +1,11 @@
 import React from 'react';
-import { Container, Heading, Text } from '@chakra-ui/react';
+import { Container } from '@chakra-ui/react';
+import Authentication from './pages/auth';
 
 function App() {
   return (
-    <Container
-      bg="red.400"
-      w={[100, 300, 500]}
-      textAlign="center"
-      color="white"
-    >
-      <Heading>Hello World!</Heading>
-      <Text>Are you ready to code?</Text>
+    <Container>
+      <Authentication />
     </Container>
   );
 }
