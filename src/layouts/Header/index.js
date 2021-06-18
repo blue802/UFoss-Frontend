@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link as ReactLink } from 'react-router-dom';
 import {
+  Avatar,
+  Box,
   Button,
   HStack,
   Icon,
@@ -18,6 +20,8 @@ import SearchBar from '../../components/SearchBar';
 import logo from '../../assets/images/logo.png';
 
 const Header = () => {
+  const isLoggedin = true;
+
   return (
     <HStack px={5} py={3} boxShadow="md">
       <HStack>
@@ -46,16 +50,33 @@ const Header = () => {
           color="gray.500"
           mr={3}
         />
-        <Link as={ReactLink} to="/login" _hover={{ textDecoration: 'none' }}>
-          <Button colorScheme="teal" variant="outline" px={6}>
-            Log in
-          </Button>
-        </Link>
-        <Link as={ReactLink} to="/signup" _hover={{ textDecoration: 'none' }}>
-          <Button colorScheme="teal" variant="solid" px={6}>
-            Sign up
-          </Button>
-        </Link>
+        {isLoggedin ? (
+          <Link as={ReactLink} to="/profile">
+            <Avatar size="sm" />
+          </Link>
+        ) : (
+          <Box>
+            <Link
+              as={ReactLink}
+              to="/login"
+              _hover={{ textDecoration: 'none' }}
+            >
+              <Button colorScheme="teal" variant="outline" px={6}>
+                Log in
+              </Button>
+            </Link>
+            <Link
+              as={ReactLink}
+              to="/signup"
+              _hover={{ textDecoration: 'none' }}
+            >
+              <Button colorScheme="teal" variant="solid" px={6}>
+                Sign up
+              </Button>
+            </Link>
+          </Box>
+        )}
+
         <Menu>
           <MenuButton p={1}>
             <Icon as={FaGlobe} fontSize="xl" color="gray.500" />
