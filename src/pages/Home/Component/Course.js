@@ -53,7 +53,6 @@ function Course(props) {
                     {props.nameCourse}
                     </PopoverHeader>
                     <PopoverArrow />
-                    <PopoverCloseButton />
                     <PopoverBody >
                         <Text pb={4} align="left" fontWeight="bold" >Intrustor: {props.nameInstructor}</Text>
                         <Text textOverflow="ellipsis"

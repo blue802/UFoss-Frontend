@@ -6,7 +6,6 @@ import footerLogo from '../../assets/images/logo-footer.png';
 const Footer = () => {
   return (
     <HStack
-      position="fixed"
       w="full"
       bottom="0"
       px="3rem"
@@ -14,6 +13,8 @@ const Footer = () => {
       borderTop="1px"
       borderColor="gray.200"
       justify="space-between"
+      bgColor="white"
+
     >
       <Image src={footerLogo} />
       <Text>© 2021 Udemy</Text>

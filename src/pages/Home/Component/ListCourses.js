@@ -7,10 +7,10 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from 'react-responsive-carousel';
 function ListCourses() {
     return (
-       <Box>
-            <Box >
+       <>
+            <Box>
             <Heading m={3} fontSize="20px">Design</Heading>
-            <Carousel showIndicators={false} showArrows={true}> 
+            <Carousel showIndicators={false} showArrows={true} showStatus={false}> 
                 <HStack>
                     <Course 
                         nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
@@ -49,20 +49,6 @@ function ListCourses() {
                     </Course>
                 </HStack>
                 <HStack>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
                     <Course 
                         nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
                         nameInstructor="Colt Steele"
@@ -126,7 +112,7 @@ function ListCourses() {
         </Box>
         <Box >
             <Heading m={3} fontSize="20px">Design</Heading>
-            <Carousel showIndicators={false} showArrows={true}>
+            <Carousel showIndicators={false} showArrows={true} showStatus={false}>
                 <HStack>
                     <Course 
                         nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
@@ -240,7 +226,7 @@ function ListCourses() {
                 </HStack>
             </Carousel>
         </Box>
-       </Box>
+       </>
     )
 }
 
