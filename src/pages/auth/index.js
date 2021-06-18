@@ -15,10 +15,11 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { Icon } from '@chakra-ui/react';
-import { FaLock, FaUserAlt } from 'react-icons/fa';
+import { FaEnvelope, FaLock, FaUserAlt } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
 
 import ButtonSocialLogin from './components/ButtonSocialLogin';
+import { useLocation } from 'react-router-dom';
 
 function Authentication() {
   const {
@@ -26,6 +27,8 @@ function Authentication() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const location = useLocation();
+  let isSignUp = location.pathname === '/signup';
 
   const usernameValidate = {
     required: 'Username is required',
@@ -36,6 +39,15 @@ function Authentication() {
     maxLength: {
       value: 20,
       message: 'The maximum length is 20',
+    },
+  };
+
+  const emailValidate = {
+    required: 'Email is required',
+    pattern: {
+      value:
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+      message: 'You have entered an invalid email address!',
     },
   };
 
@@ -57,16 +69,42 @@ function Authentication() {
 
   return (
     <Container w="320px">
-      <Heading size="sm">Log-In to Your Udemy Account</Heading>
+      {isSignUp ? (
+        <Heading size="sm">Sign-Up and Start Learning!</Heading>
+      ) : (
+        <Heading size="sm">Log-In to Your Udemy Account</Heading>
+      )}
+
       <Divider my="1rem" />
-      <Box mb={3}>
-        <ButtonSocialLogin
-          provider="google"
-          onSuccess={_onSuccess}
-          onFailure={_onFailure}
-        />
-      </Box>
+
+      {!isSignUp && (
+        <Box mb={3}>
+          <ButtonSocialLogin
+            provider="google"
+            onSuccess={_onSuccess}
+            onFailure={_onFailure}
+          />
+        </Box>
+      )}
+
       <form onSubmit={handleSubmit(onSubmit)}>
+        {isSignUp && (
+          <FormControl mb={2} isInvalid={errors.email}>
+            <InputGroup>
+              <InputLeftElement
+                pointerEvents="none"
+                children={<Icon as={FaEnvelope} color="gray.400" />}
+              />
+              <Input
+                {...register('email', emailValidate)}
+                placeholder="Email"
+                rounded="sm"
+              />
+            </InputGroup>
+            <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
+          </FormControl>
+        )}
+
         <FormControl mb={2} isInvalid={errors.username}>
           <InputGroup>
             <InputLeftElement
@@ -89,7 +127,7 @@ function Authentication() {
               children={<Icon as={FaLock} color="gray.400" />}
             />
             <Input
-              {...register('password', passwordValidate)}
+              {...register('password', isSignUp && passwordValidate)}
               type="password"
               placeholder="Password"
               rounded="sm"
@@ -99,25 +137,48 @@ function Authentication() {
         </FormControl>
 
         <FormControl as="fieldset" mb={4}>
-          <Checkbox {...register('rememberMe')} size="sm" color="gray.700">
-            Remember me?
-          </Checkbox>
+          {isSignUp ? (
+            <Checkbox
+              {...register('rememberMe')}
+              size="sm"
+              color="gray.700"
+              alignItems="baseline"
+            >
+              I agree to your Term of Use and Privacy Policy
+            </Checkbox>
+          ) : (
+            <Checkbox {...register('rememberMe')} size="sm" color="gray.700">
+              Remember me?
+            </Checkbox>
+          )}
         </FormControl>
 
         <Button type="submit" colorScheme="red" w="full" rounded="sm">
-          Log In
+          {isSignUp ? 'Sign Up' : 'Log In'}
         </Button>
       </form>
+
       <Text textAlign="center" mt={4}>
         or <Link color="blue.300">Forgot Password</Link>
       </Text>
+
       <Divider my="1rem" />
-      <Text textAlign="center" mt={5}>
-        Don't have an account?{' '}
-        <Link href="/logout" color="blue.400">
-          Sign up
-        </Link>
-      </Text>
+
+      {isSignUp ? (
+        <Text textAlign="center" mt={5}>
+          Already have an account?{' '}
+          <Link href="/login" color="blue.400">
+            Log In
+          </Link>
+        </Text>
+      ) : (
+        <Text textAlign="center" mt={5}>
+          Don't have an account?{' '}
+          <Link href="/signup" color="blue.400">
+            Sign up
+          </Link>
+        </Text>
+      )}
     </Container>
   );
 }
