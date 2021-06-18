@@ -10,7 +10,7 @@ function ListCourses() {
        <Box>
             <Box >
             <Heading m={3} fontSize="20px">Design</Heading>
-            <Carousel showIndicators={false} showArrows={true}>
+            <Carousel showIndicators={false} showArrows={true}> 
                 <HStack>
                     <Course 
                         nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"

@@ -3,14 +3,11 @@ import { Container } from '@chakra-ui/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import Authentication from './pages/auth';
+import Home from './pages/Home/Home';
 
 function App() {
   return (
-    <Router>
-      <Container>
-        <Authentication />
-      </Container>
-    </Router>
+    <Home></Home>
   );
 }
 

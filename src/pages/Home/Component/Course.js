@@ -10,6 +10,10 @@ import {Link} from "react-router-dom";
 import './course.css';
 
 function Course(props) {
+    const description = `Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore.
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore.`
     return (
         // <LinkBox  to="" p="5" maxW="320px" className="abc">
         //     <LinkOverlay href="">
@@ -34,7 +38,7 @@ function Course(props) {
                     <LinkOverlay href="">
                         <Box align="left">
                             <Image borderRadius="md" src="https://bit.ly/2k1H1t6"  />
-                            <Text mt={2} fontSize="lg" fontWeight="semibold" lineHeight="short" height="45px"overflow="hidden" >
+                            <Text mt={2} fontSize="lg" fontWeight="semibold" lineHeight="short" height="45px" overflow="hidden" >
                             {props.nameCourse}
                             </Text>
                             <Text mt={2}>{props.nameInstructor}</Text>
@@ -54,12 +58,14 @@ function Course(props) {
                     </PopoverHeader>
                     <PopoverArrow />
                     <PopoverCloseButton />
-                    <PopoverBody>
-                        <Text pb={4} align="left" fontWeight="bold">Intrustor: {props.nameInstructor}</Text>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                        eiusmod tempor incididunt ut labore et dolore.
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                        eiusmod tempor incididunt ut labore et dolore.
+                    <PopoverBody >
+                        <Text pb={4} align="left" fontWeight="bold" >Intrustor: {props.nameInstructor}</Text>
+                        <Text textOverflow="ellipsis"
+                            h="50px"
+                            overflow="hidden"
+                            whiteSpace="wrap">
+                            {trancateString(description, 100)}
+                        </Text>
                     </PopoverBody>
                     <PopoverFooter
                     border="0"
