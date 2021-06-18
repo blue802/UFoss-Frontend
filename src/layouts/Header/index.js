@@ -23,7 +23,7 @@ const Header = () => {
   const isLoggedin = true;
 
   return (
-    <HStack px={5} py={3} boxShadow="md">
+    <HStack px={5} py={3} boxShadow="md" position="fixed" top="0" w="full">
       <HStack>
         <Link as={ReactLink} to="/">
           <Image src={logo} />
