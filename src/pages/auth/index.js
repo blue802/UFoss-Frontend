@@ -68,7 +68,7 @@ function Authentication() {
   const _onFailure = res => {};
 
   return (
-    <Container w="320px">
+    <Container w="320px" mt="2rem">
       {isSignUp ? (
         <Heading size="sm">Sign-Up and Start Learning!</Heading>
       ) : (
