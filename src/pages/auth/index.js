@@ -68,7 +68,7 @@ function Authentication() {
   const _onFailure = res => {};
 
   return (
-    <Container w="320px">
+    <Container w="320px" mt="2rem">
       {isSignUp ? (
         <Heading size="sm">Sign-Up and Start Learning!</Heading>
       ) : (
@@ -165,7 +165,7 @@ function Authentication() {
       <Divider my="1rem" />
 
       {isSignUp ? (
-        <Text textAlign='center' mt={5}>
+        <Text textAlign="center" mt={5}>
           Already have an account?{' '}
           <Link href="/login" color="blue.400">
             Log In

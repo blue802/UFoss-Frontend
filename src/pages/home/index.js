@@ -1,17 +1,19 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Container,Image,Box  } from "@chakra-ui/react"
 import ListCourses from './Component/ListCourses'
 import Slider from 'react-slick'
-function Home() {
+function HomePage() {
     return (
-        <Container maxW="container.xxl" >
+        <Fragment>
             <Box w="100%">
                 <Image src="/banner.png" alt="Segun Adebayo" />
             </Box>
             <ListCourses></ListCourses>
-        </Container>
+        </Fragment>
+
+
     )
 }
 
-export default Home
+export default HomePage
 

@@ -8,12 +8,8 @@ import { LinkBox,
 import { MdStar } from "react-icons/md";
 import {Link} from "react-router-dom";
 import './course.css';
-
+import trancateString from '../../../utils/trancateString'
 function Course(props) {
-    const description = `Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-    eiusmod tempor incididunt ut labore et dolore.
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-    eiusmod tempor incididunt ut labore et dolore.`
     return (
         // <LinkBox  to="" p="5" maxW="320px" className="abc">
         //     <LinkOverlay href="">
@@ -61,10 +57,13 @@ function Course(props) {
                     <PopoverBody >
                         <Text pb={4} align="left" fontWeight="bold" >Intrustor: {props.nameInstructor}</Text>
                         <Text textOverflow="ellipsis"
-                            h="50px"
                             overflow="hidden"
                             whiteSpace="wrap">
-                            {trancateString(description, 100)}
+                            
+                            {trancateString(`Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                            eiusmod tempor incididunt ut labore et dolore.
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                            eiusmod tempor incididunt ut labore et dolore.`,250,null)}
                         </Text>
                     </PopoverBody>
                     <PopoverFooter

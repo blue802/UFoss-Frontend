@@ -1,13 +1,19 @@
 import React from 'react';
-import { Container } from '@chakra-ui/react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
+import OverallLayout from './layouts/OverallLayout';
 import Authentication from './pages/auth';
-import Home from './pages/Home/Home';
+import HomePage from './pages/home';
 
 function App() {
   return (
-    <Home></Home>
+    <OverallLayout>
+      <Switch>
+        <Route exact path="/login" component={Authentication} />
+        <Route exact path="/signup" component={Authentication} />
+        <Route exact path="/" component={HomePage} />
+      </Switch>
+    </OverallLayout>
   );
 }
 
