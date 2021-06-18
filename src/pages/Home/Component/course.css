@@ -1,0 +1,27 @@
+/* .css-0{
+    position: relative;
+    z-index: 1 !important;
+}
+.css-1qq679y{
+    z-index: 999 !important;
+    opacity: 1 !important; 
+}
+.css-1marppe{
+    z-index: 9999 !important;
+}
+.react-multi-carousel-item--active{
+    z-index: 1;
+}
+.css-1g68c21{
+    z-index: 1;
+} */
+
+.abc:hover .xyz{
+    display: block;
+}
+.xyz{
+    display: none;
+    position: absolute;
+    right: -100%;
+    top: 50px;
+}
