@@ -9,7 +9,9 @@ const index = props => {
   return (
     <Router>
       <Header />
-      <Container maxW="container.2xl">{props.children}</Container>
+      <Container maxW="container.2xl" overflow="hidden" mt="5rem">
+        {props.children}
+      </Container>
       <Footer />
     </Router>
   );
