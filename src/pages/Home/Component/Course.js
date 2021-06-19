@@ -51,7 +51,6 @@ function CourseCard(props) {
                     justifyContent="space-between"
                     pb={4}
                     >
-                    
                     <ButtonGroup size="lg" width="100%">
                         <Button backgroundColor="red.500" width="100%" _hover={{backgroundColor: "red.600"}}>Add To Card</Button>
                     </ButtonGroup>

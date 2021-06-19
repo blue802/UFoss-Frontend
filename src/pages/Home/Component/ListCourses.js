@@ -9,7 +9,6 @@ import Data from "./MOCK_DATA.json";
 
 const courseSessions = [];
     while(Data.length) courseSessions.push(Data.splice(0,5));
-
 function ListCourses() {
     const listCourses = courseSessions.map(session => (
         <HStack>
@@ -20,7 +19,6 @@ function ListCourses() {
             }
         </HStack>
     ))
-
     return (
        <>
             <Box>
