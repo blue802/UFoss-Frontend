@@ -5,227 +5,36 @@ import Course from './Course';
 // import "react-multi-carousel/lib/styles.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
+import Data from "./MOCK_DATA.json";
+
+const courseSessions = [];
+    while(Data.length) courseSessions.push(Data.splice(0,5));
+
 function ListCourses() {
+    const listCourses = courseSessions.map(session => (
+        <HStack>
+            {
+                session.map(item =>
+                        <Course key={item.id} {...item} />
+                )
+            }
+        </HStack>
+    ))
+
     return (
        <>
             <Box>
-            <Heading m={3} fontSize="20px">Design</Heading>
-            <Carousel showIndicators={false} showArrows={true} showStatus={false}> 
-                <HStack>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                </HStack>
-                <HStack>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                </HStack>
-                <HStack>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                </HStack>
-            </Carousel>
-        </Box>
-        <Box >
-            <Heading m={3} fontSize="20px">Design</Heading>
-            <Carousel showIndicators={false} showArrows={true} showStatus={false}>
-                <HStack>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                </HStack>
-                <HStack>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                </HStack>
-                <HStack>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                    <Course 
-                        nameCourse=" Modern, Chic Penthouse with Mountain, City & Sea Views Modern"
-                        nameInstructor="Colt Steele"
-                        priceCourse="119"
-                        scoreVote="4.84"
-                    >
-                    </Course>
-                </HStack>
-            </Carousel>
-        </Box>
+                <Heading m={3} fontSize="20px">It</Heading>
+                <Carousel showIndicators={false} showArrows={true} showStatus={false}> 
+                {listCourses}
+                </Carousel>
+            </Box>
+            <Box>
+                <Heading m={3} fontSize="20px">Design</Heading>
+                <Carousel showIndicators={false} showArrows={true} showStatus={false}> 
+                {listCourses}
+                </Carousel>
+            </Box>
        </>
     )
 }

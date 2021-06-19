@@ -3,31 +3,14 @@ import { LinkBox,
     Box, Image, Flex,
     Text, LinkOverlay,
     Popover,PopoverArrow,PopoverTrigger,
-    PopoverContent, PopoverCloseButton
-    ,PopoverHeader,PopoverBody, PopoverFooter, ButtonGroup, Button } from '@chakra-ui/react';
+    PopoverContent,PopoverHeader,PopoverBody, PopoverFooter, ButtonGroup, Button
+} from '@chakra-ui/react';
+
 import { MdStar } from "react-icons/md";
-import {Link} from "react-router-dom";
-import './course.css';
 import trancateString from '../../../utils/trancateString'
-function Course(props) {
+function CourseCard(props) {
+    console.log("abc")
     return (
-        // <LinkBox  to="" p="5" maxW="320px" className="abc">
-        //     <LinkOverlay href="">
-        //         <Image borderRadius="md" src="https://bit.ly/2k1H1t6" />
-        //         <Text mt={2} fontSize="lg" fontWeight="semibold" lineHeight="short" height="45px"overflow="hidden" >
-        //         {props.nameCourse}
-        //         </Text>
-        //         <Text mt={2}>{props.nameInstructor}</Text>
-        //         <Text mt={2}>{props.priceCourse}</Text>    
-        //         <Flex mt={2} align="center">
-        //             <Box as={MdStar} color="orange.400" />
-        //             <Text ml={1} fontSize="sm">
-        //             <b>{props.scoreVote}</b>
-        //             </Text>
-        //         </Flex>
-        //     </LinkOverlay>
-        //     <Image src="/banner.png" alt="Segun Adebayo" className="xyz" />
-        // </LinkBox>
         <LinkBox  to="" p="5" maxW="320px" >
             <Popover trigger="hover" placement="auto">
                 <PopoverTrigger >
@@ -41,14 +24,14 @@ function Course(props) {
                             <Text mt={2}>{props.priceCourse}$</Text>    
                             <Flex mt={2} align="center">
                                 <Box as={MdStar} color="orange.400" />
-                                <Text ml={1} fontSize="sm">
-                                <b>{props.scoreVote}</b>
+                                <Text ml={1} fontSize="sm" fontWeight="bold">
+                                    {props.scoreVote}
                                 </Text>
                             </Flex>
                         </Box>
                     </LinkOverlay>
                 </PopoverTrigger>
-                <PopoverContent color="#333" bg="white" borderColor="#dcdacb">
+                <PopoverContent color="black" bg="white" borderColor="gray.300">
                     <PopoverHeader pt={4} fontWeight="bold" border="0">
                     {props.nameCourse}
                     </PopoverHeader>
@@ -58,11 +41,7 @@ function Course(props) {
                         <Text textOverflow="ellipsis"
                             overflow="hidden"
                             whiteSpace="wrap">
-                            
-                            {trancateString(`Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                            eiusmod tempor incididunt ut labore et dolore.
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                            eiusmod tempor incididunt ut labore et dolore.`,250,null)}
+                            {trancateString(props.decription,180)}
                         </Text>
                     </PopoverBody>
                     <PopoverFooter
@@ -74,7 +53,7 @@ function Course(props) {
                     >
                     
                     <ButtonGroup size="lg" width="100%">
-                        <Button backgroundColor="#ec5252" width="100%" _hover={{backgroundColor: "#cc4848"}}>Add To Card</Button>
+                        <Button backgroundColor="red.500" width="100%" _hover={{backgroundColor: "red.600"}}>Add To Card</Button>
                     </ButtonGroup>
                     </PopoverFooter>
                 </PopoverContent>
@@ -84,5 +63,5 @@ function Course(props) {
     )
 }
 
-export default Course
+export default CourseCard
  
