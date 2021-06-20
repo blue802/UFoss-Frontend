@@ -6,9 +6,13 @@ import { BsFillStarFill } from 'react-icons/bs';
 import { AiOutlinePlaySquare } from 'react-icons/ai';
 import { FiPlayCircle } from 'react-icons/fi';
 
-function Courses(props) {
+
+import Lesson from './compnents/lesson'
+
+function CourseDetail(props) {
   const { course } = props;
-  Courses.propTypes = {
+  const [valueScrollY, setValueScrollY] = React.useState();
+  CourseDetail.propTypes = {
     course: PropTypes.shape({
       title: PropTypes.string,
       descriptions: PropTypes.string,
@@ -21,6 +25,10 @@ function Courses(props) {
     })
   }
   const [isNotSmallScreen] = useMediaQuery('(min-width: 640)');
+  const currentScroll = () => {
+    setValueScrollY(window.scrollY);
+  }
+  window.addEventListener('scroll', currentScroll);
   return (
     <Stack>
       <Flex direction={isNotSmallScreen ? "row" : 'column'}>
@@ -60,71 +68,32 @@ function Courses(props) {
         </Box>
       </Flex >
       <Flex>
-        <Box w='70%' margin='auto' >
+        <Box w='70%' margin='auto' position='relative'>
           <Flex >
-            <Box w='65%' borderWidth='1px' borderColor='#DCDACB'>
-              <Flex direction='column'>
-                <Box borderWidth='1px' borderColor='#DCDACB'>
+            <Box w='65%' borderWidth='1px' borderColor='#DCDACB' position='relative' height='1000px'>
+              <Flex direction='column' justifyContent='space-between'>
+                <Box>
                   <Flex direction='column'>
-                    {/* This is lessons */}
-                    <Box borderWidth='1px' borderColor='#DCDACB' padding='10px' cursor='pointer' cursor='pointer'>
-                      <Flex>
-                        <Box paddingTop='3px' paddingRight='10px'>
-                          <FiPlayCircle />
-                        </Box>
-                        <Text fontSize='16px' color='#3c3b37' fontWeight='900'>Auto-Welcome Message</Text>
-                        <Spacer />
-                        <Box>
-                          <Flex>
-                            <Text marginRight="10px">Preview</Text>
-                            <Text>5: 33</Text>
-                          </Flex>
-                        </Box>
-                      </Flex>
-                    </Box>
-                    <Box borderWidth='1px' borderColor='#DCDACB' padding='10px' cursor='pointer' >
-                      <Flex>
-                        <Box paddingTop='3px' paddingRight='10px'>
-                          <FiPlayCircle />
-                        </Box>
-                        <Text fontSize='16px' color='#3c3b37' fontWeight='900'>Auto-Welcome Message</Text>
-                        <Spacer />
-                        <Box>
-                          <Flex>
-                            <Text marginRight="10px">Preview</Text>
-                            <Text>5: 33</Text>
-                          </Flex>
-                        </Box>
-                      </Flex>
-                    </Box>
-                    <Box borderWidth='1px' borderColor='#DCDACB' padding='10px' cursor='pointer' >
-                      <Flex>
-                        <Box paddingTop='3px' paddingRight='10px'>
-                          <FiPlayCircle />
-                        </Box>
-                        <Text fontSize='16px' color='#3c3b37' fontWeight='900'>Auto-Welcome Message</Text>
-                        <Spacer />
-                        <Box>
-                          <Flex>
-                            <Text marginRight="10px">Preview</Text>
-                            <Text>5: 33</Text>
-                          </Flex>
-                        </Box>
+                    <Box borderWidth='1px' borderColor='#DCDACB'>
+                      <Flex direction='column'>
+                        {/* This is lessons */}
+                        <Lesson />
+                        <Lesson />
+                        <Lesson />
+                        <Lesson />
+                        <Lesson />
                       </Flex>
                     </Box>
                   </Flex>
                 </Box>
+                <Box position='absolute' bottom='0' left='0' width='100%'>
+                  <Button colorScheme='#fff' width='100%' textAlign='center' padding='20px 0px' border='1px solid #0F7C90' color='#0F7C90'>Show more</Button>
+                </Box>
               </Flex>
             </Box>
-            <Box>
-              <Text>
-                123
-              </Text>
-            </Box>
-            <Box width='35%' justifyContent='center'>
-
+            <Box width='35%' justifyContent='center' position={valueScrollY > 399 ? "fixed" : "absolute"} top={valueScrollY > 399 ? "30px" : "-350px"} right={valueScrollY > 399 ? "10%" : "0"} zIndex='9'>
               <Flex direction='column'>
-                <Box margin="auto" boxShadow="rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;">
+                <Box margin="auto" bg='#fff' boxShadow="rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;" border='1px solid #fff'>
                   <AspectRatio width='390px' height='192px' ratio={1}>
                     <iframe
                       title='naruto'
@@ -183,4 +152,4 @@ function Courses(props) {
   )
 }
 
-export default Courses;
+export default CourseDetail;
