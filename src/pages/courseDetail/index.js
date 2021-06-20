@@ -91,7 +91,7 @@ function CourseDetail(props) {
                 </Box>
               </Flex>
             </Box>
-            <Box width='35%' justifyContent='center' position={valueScrollY > 399 ? "fixed" : "absolute"} top={valueScrollY > 399 ? "30px" : "-350px"} right={valueScrollY > 399 ? "10%" : "0"} zIndex='9'>
+            <Box width='35%' justifyContent='center' position={valueScrollY > 399 ? "fixed" : "absolute"} top={valueScrollY > 399 ? "30px" : "-350px"} right={valueScrollY > 399 ? "115px" : "-80px"} zIndex='9'>
               <Flex direction='column'>
                 <Box margin="auto" bg='#fff' boxShadow="rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;" border='1px solid #fff'>
                   <AspectRatio width='390px' height='192px' ratio={1}>
