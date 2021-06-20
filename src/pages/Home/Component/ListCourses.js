@@ -1,6 +1,6 @@
 import { Box, Heading, HStack } from '@chakra-ui/react';
 import React from 'react'
-import Course from './Course';
+import CourseCard from './CourseCard';
 // import Carousel from "react-multi-carousel";
 // import "react-multi-carousel/lib/styles.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
@@ -14,7 +14,7 @@ function ListCourses() {
         <HStack>
             {
                 session.map(item =>
-                        <Course key={item.id} {...item} />
+                        <CourseCard key={item.id} {...item} />
                 )
             }
         </HStack>

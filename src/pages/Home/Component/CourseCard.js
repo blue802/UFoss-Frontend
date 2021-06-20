@@ -9,7 +9,6 @@ import { LinkBox,
 import { MdStar } from "react-icons/md";
 import trancateString from '../../../utils/trancateString'
 function CourseCard(props) {
-    console.log("abc")
     return (
         <LinkBox  to="" p="5" maxW="320px" >
             <Popover trigger="hover" placement="auto">

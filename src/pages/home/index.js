@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
-import { Container,Image,Box  } from "@chakra-ui/react"
+import { Image,Box  } from "@chakra-ui/react"
 import ListCourses from './Component/ListCourses'
-import Slider from 'react-slick'
 function HomePage() {
     return (
         <Fragment>
