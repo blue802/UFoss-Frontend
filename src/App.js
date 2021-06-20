@@ -1,11 +1,19 @@
 import React from 'react';
-import { Container } from '@chakra-ui/react';
+import { Switch, Route } from 'react-router-dom';
+
+import OverallLayout from './layouts/OverallLayout';
 import Authentication from './pages/auth';
-import Sourese from '../src/pages/courses'
+import HomePage from './pages/home';
 
 function App() {
   return (
-    <Sourese />
+    <OverallLayout>
+      <Switch>
+        <Route exact path="/login" component={Authentication} />
+        <Route exact path="/signup" component={Authentication} />
+        <Route exact path="/" component={HomePage} />
+      </Switch>
+    </OverallLayout>
   );
 }
 export default App;
