@@ -87,7 +87,7 @@ function Authentication() {
     history.push('/');
   };
 
-  const _onFailureLoginGoogle = res => {};
+  const _onFailureLoginGoogle = res => { };
 
   return (
     <Container w="320px" mt="6rem">
