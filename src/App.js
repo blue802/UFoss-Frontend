@@ -8,7 +8,6 @@ import CourseDetail from "./pages/courseDetail"
 
 function App() {
   return (
-
     <OverallLayout>
       <Switch>
         <Route exact path="/login" component={Authentication} />
