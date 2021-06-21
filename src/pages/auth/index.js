@@ -10,16 +10,23 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  InputRightElement,
   Link,
   Text,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { Icon } from '@chakra-ui/react';
 import { FaEnvelope, FaLock, FaUserAlt } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
+import { useHistory, useLocation } from 'react-router-dom';
 
+import {
+  login,
+  register as signUp,
+  tokenProvider,
+} from '../../services/auth.service';
 import ButtonSocialLogin from './components/ButtonSocialLogin';
-import { useLocation } from 'react-router-dom';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 function Authentication() {
   const {
@@ -27,8 +34,10 @@ function Authentication() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [showPassword, setShowPassword] = useState(false);
   const location = useLocation();
-  let isSignUp = location.pathname === '/signup';
+  const history = useHistory();
+  let isSignUp = location.pathname === '/register';
 
   const usernameValidate = {
     required: 'Username is required',
@@ -61,14 +70,27 @@ function Authentication() {
     },
   };
 
-  const onSubmit = data => { };
+  const onSubmit = async data => {
+    const { username, email, password } = data;
+    if (isSignUp) {
+      await signUp(username, email, password);
+      history.push('/login');
+    } else {
+      await login(username, password);
+      history.push('/');
+    }
+  };
 
-  const _onSuccess = res => { };
+  const _onSuccessLoginGoogle = res => {
+    var id_token = res.getAuthResponse().id_token;
+    tokenProvider.setToken({ tokenAccess: id_token });
+    history.push('/');
+  };
 
-  const _onFailure = res => { };
+  const _onFailureLoginGoogle = res => { };
 
   return (
-    <Container w="320px" mt="2rem">
+    <Container w="320px" mt="6rem">
       {isSignUp ? (
         <Heading size="sm">Sign-Up and Start Learning!</Heading>
       ) : (
@@ -81,8 +103,8 @@ function Authentication() {
         <Box mb={3}>
           <ButtonSocialLogin
             provider="google"
-            onSuccess={_onSuccess}
-            onFailure={_onFailure}
+            onSuccess={_onSuccessLoginGoogle}
+            onFailure={_onFailureLoginGoogle}
           />
         </Box>
       )}
@@ -128,9 +150,20 @@ function Authentication() {
             />
             <Input
               {...register('password', isSignUp && passwordValidate)}
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               placeholder="Password"
               rounded="sm"
+            />
+            <InputRightElement
+              children={
+                <Icon
+                  as={showPassword ? AiFillEyeInvisible : AiFillEye}
+                  fontSize="lg"
+                  color="gray.400"
+                />
+              }
+              cursor="pointer"
+              onClick={() => setShowPassword(!showPassword)}
             />
           </InputGroup>
           <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
@@ -174,7 +207,7 @@ function Authentication() {
       ) : (
         <Text textAlign="center" mt={5}>
           Don't have an account?{' '}
-          <Link href="/signup" color="blue.400">
+          <Link href="/register" color="blue.400">
             Sign up
           </Link>
         </Text>

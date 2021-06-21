@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link as ReactLink } from 'react-router-dom';
 import {
-  Avatar,
   Box,
   Button,
   HStack,
@@ -18,13 +17,23 @@ import { AiOutlineShoppingCart } from 'react-icons/ai';
 
 import SearchBar from '../../components/SearchBar';
 import logo from '../../assets/images/logo.png';
+import { useAuth } from '../../services/auth.service';
+import AvatarNav from '../../components/AvatarNav';
 
 const Header = () => {
-  const isLoggedin = true;
+  const [profile] = useAuth();
 
   return (
-    <HStack px={5} py={3} boxShadow="md" position="fixed" top="0" w="full" bgColor="white"
-    zIndex="1000">
+    <HStack
+      px={5}
+      py={3}
+      boxShadow="md"
+      position="fixed"
+      top="0"
+      w="full"
+      bgColor="white"
+      zIndex="10"
+    >
       <HStack>
         <Link as={ReactLink} to="/">
           <Image src={logo} />
@@ -51,10 +60,8 @@ const Header = () => {
           color="gray.500"
           mr={3}
         />
-        {isLoggedin ? (
-          <Link as={ReactLink} to="/profile">
-            <Avatar size="sm" />
-          </Link>
+        {profile ? (
+          <AvatarNav profile={profile} />
         ) : (
           <Box>
             <Link
@@ -68,7 +75,8 @@ const Header = () => {
             </Link>
             <Link
               as={ReactLink}
-              to="/signup"
+              to="/register"
+              ml={3}
               _hover={{ textDecoration: 'none' }}
             >
               <Button colorScheme="teal" variant="solid" px={6}>

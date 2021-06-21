@@ -14,7 +14,6 @@ const Footer = () => {
       borderColor="gray.200"
       justify="space-between"
       bgColor="white"
-
     >
       <Image src={footerLogo} />
       <Text>© 2021 Udemy</Text>
