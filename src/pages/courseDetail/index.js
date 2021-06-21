@@ -2,27 +2,38 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Stack, Flex, Box, Heading, Text, AspectRatio, Button, Spacer } from '@chakra-ui/react';
 import { useMediaQuery } from '@chakra-ui/media-query';
-import { BsFillStarFill } from 'react-icons/bs';
+
 import { AiOutlinePlaySquare } from 'react-icons/ai';
-import { FiPlayCircle } from 'react-icons/fi';
 
-
-import Lesson from './compnents/lesson'
+import Star from './compnents/StarComponent';
+import Lesson from './compnents/LessonComponent'
+import InforCourse from './compnents/InforCourse';
 
 function CourseDetail(props) {
-  const { course } = props;
+  // const { course } = props;
   const [valueScrollY, setValueScrollY] = React.useState();
-  CourseDetail.propTypes = {
-    course: PropTypes.shape({
-      title: PropTypes.string,
-      descriptions: PropTypes.string,
-      price: PropTypes.number,
-      instructorId: PropTypes.string,
-      videoIds: PropTypes.string,
-      imageUrl: PropTypes.string,
-      rateId: PropTypes.string,
-      categoryId: PropTypes.string
-    })
+
+  // CourseDetail.propTypes = {
+  //   course: PropTypes.shape({
+  //     title: PropTypes.string,
+  //     descriptions: PropTypes.string,
+  //     price: PropTypes.number,
+  //     instructorId: PropTypes.string,
+  //     videoIds: PropTypes.string,
+  //     imageUrl: PropTypes.string,
+  //     rateId: PropTypes.string,
+  //     categoryId: PropTypes.string
+  //   })
+  // }
+  const course = {
+    title: "2021 Complete Python Bootcamp From Zero to Hero in Python",
+    descriptions: "Learn Python like a Professional Start from the basics and go all the way to creating your own applications and games",
+    price: 13.9,
+    instructorId: "",
+    videoIds: "https://www.youtube.com/embed/QhBnZ6NPOY0",
+    imageUrl: "",
+    rateId: "",
+    categoryId: ""
   }
   const [isNotSmallScreen] = useMediaQuery('(min-width: 640)');
   const currentScroll = () => {
@@ -34,26 +45,25 @@ function CourseDetail(props) {
       <Flex direction={isNotSmallScreen ? "row" : 'column'}>
         <Box w='100%' h='395px' bg='#000' padding='32px 0px'>
           <Flex>
-            <Box w='70%' margin='auto' >
+            <Box w='90%' margin='auto' marginTop='60px'>
               <Flex>
                 <Box >
                   <Flex>
-                    <Box w='70%' padding='0 30px'>
+                    <Box w='90%' padding='0 30px'>
                       <Heading color='#fff' lineHeight='1.2' letterSpacing='-2px' fontWeight='700' marginBottom='16px'>
-                        2021 Complete Python Bootcamp From Zero to Hero in Python
+                        {course.title}
                       </Heading>
-                      <Text color='#fff' fontSize='19px' paddingBottom='16px'> Learn Python like a Professional Start from the basics and go all the way to creating your own applications and games</Text>
+                      <Text color='#fff' fontSize='19px' paddingBottom='16px'> {course.descriptions}</Text>
                       <Flex>
-                        <Box marginRight='4px'>
+                        <Box margin='0 5px' paddingTop='3px'>
                           <Text fontSize='14px' fontWeight='700' color='#AE8863' >5</Text>
                         </Box>
-                        <Box paddingTop='3px'>
+                        <Box >
+                          {/* this is star */}
                           <Flex>
-                            <BsFillStarFill fontSize='14px' fontWeight='700' color='#AE8863' />
-                            <BsFillStarFill fontSize='14px' fontWeight='700' color='#AE8863' />
-                            <BsFillStarFill fontSize='14px' fontWeight='700' color='#AE8863' />
-                            <BsFillStarFill fontSize='14px' fontWeight='700' color='#AE8863' />
-                            <BsFillStarFill fontSize='14px' fontWeight='700' color='#AE8863' />
+                            <Star />
+                            <Star />
+                            <Star />
                           </Flex>
                         </Box>
                         <Box>
@@ -68,9 +78,9 @@ function CourseDetail(props) {
         </Box>
       </Flex >
       <Flex>
-        <Box w='70%' margin='auto' position='relative'>
+        <Box w='87%' margin='auto' position='relative'>
           <Flex >
-            <Box w='65%' borderWidth='1px' borderColor='#DCDACB' position='relative' height='1000px'>
+            <Box w='70%' borderWidth='1px' borderColor='#DCDACB' position='relative' height='1000px'>
               <Flex direction='column' justifyContent='space-between'>
                 <Box>
                   <Flex direction='column'>
@@ -91,7 +101,7 @@ function CourseDetail(props) {
                 </Box>
               </Flex>
             </Box>
-            <Box width='35%' justifyContent='center' position={valueScrollY > 399 ? "fixed" : "absolute"} top={valueScrollY > 399 ? "30px" : "-350px"} right={valueScrollY > 399 ? "115px" : "-80px"} zIndex='9'>
+            <Box width='30%' justifyContent='center' position={valueScrollY > 399 ? "fixed" : "absolute"} top={valueScrollY > 399 ? "30px" : "-350px"} right={valueScrollY > 399 ? "80px" : "0px"} zIndex='9'>
               <Flex direction='column'>
                 <Box margin="auto" bg='#fff' boxShadow="rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;" border='1px solid #fff'>
                   <AspectRatio width='390px' height='192px' ratio={1}>
@@ -103,7 +113,7 @@ function CourseDetail(props) {
                   </AspectRatio>
                   <Box padding='24px'>
                     <Text color='#3c3b37' fontSize='32px' fontWeight='700'>
-                      $13.99
+                      ${course.price}
                     </Text>
                     <Button w='full' fontWeight='800' bg='#EC5252' textColor='#fff' fontSize='16px' padding='25px 0px' marginBottom='10px'>
                       Add to cart
@@ -115,30 +125,12 @@ function CourseDetail(props) {
                     <Box>
                       <Text marginBottom='8px' color='#3c3b37' fontWeight='900'>This course include:</Text>
                       <Flex direction='column'>
-                        <Box padding='4px 0'>
-                          <Flex >
-                            <Box paddingTop='2px'><AiOutlinePlaySquare /></Box>
-                            <Text marginLeft='10px' fontSize='14px' color='#3c3b37'>22 hours on-demand video</Text>
-                          </Flex>
-                        </Box>
-                        <Box padding='4px 0'>
-                          <Flex >
-                            <Box paddingTop='2px'><AiOutlinePlaySquare /></Box>
-                            <Text marginLeft='10px' fontSize='14px' color='#3c3b37'>22 hours on-demand video</Text>
-                          </Flex>
-                        </Box>
-                        <Box padding='4px 0'>
-                          <Flex >
-                            <Box paddingTop='2px'><AiOutlinePlaySquare /></Box>
-                            <Text marginLeft='10px' fontSize='14px' color='#3c3b37'>22 hours on-demand video</Text>
-                          </Flex>
-                        </Box>
-                        <Box padding='4px 0'>
-                          <Flex >
-                            <Box paddingTop='2px'><AiOutlinePlaySquare /></Box>
-                            <Text marginLeft='10px' fontSize='14px' color='#3c3b37'>22 hours on-demand video</Text>
-                          </Flex>
-                        </Box>
+                        {/* infor couser */}
+                        <InforCourse />
+                        <InforCourse />
+                        <InforCourse />
+                        <InforCourse />
+                        <InforCourse />
                       </Flex>
                     </Box>
                   </Box>
