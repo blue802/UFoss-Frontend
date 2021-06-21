@@ -28,12 +28,12 @@ function CourseDetail(props) {
   const course = {
     title: "2021 Complete Python Bootcamp From Zero to Hero in Python",
     descriptions: "Learn Python like a Professional Start from the basics and go all the way to creating your own applications and games",
-    price: 13.9,
-    instructorId: "",
-    videoIds: "https://www.youtube.com/embed/QhBnZ6NPOY0",
-    imageUrl: "",
-    rateId: "",
-    categoryId: ""
+    price: 13.99,
+    instructorId: '',
+    videoIds: 'https://www.youtube.com/embed/QhBnZ6NPOY0',
+    imageUrl: '',
+    rateId: 5,
+    categoryId: ''
   }
   const [isNotSmallScreen] = useMediaQuery('(min-width: 640)');
   const currentScroll = () => {
@@ -56,7 +56,7 @@ function CourseDetail(props) {
                       <Text color='#fff' fontSize='19px' paddingBottom='16px'> {course.descriptions}</Text>
                       <Flex>
                         <Box margin='0 5px' paddingTop='3px'>
-                          <Text fontSize='14px' fontWeight='700' color='#AE8863' >5</Text>
+                          <Text fontSize='14px' fontWeight='700' color='#AE8863' >{course.rateId}</Text>
                         </Box>
                         <Box >
                           {/* this is star */}
@@ -101,7 +101,7 @@ function CourseDetail(props) {
                 </Box>
               </Flex>
             </Box>
-            <Box width='30%' justifyContent='center' position={valueScrollY > 399 ? "fixed" : "absolute"} top={valueScrollY > 399 ? "30px" : "-350px"} right={valueScrollY > 399 ? "80px" : "0px"} zIndex='9'>
+            <Box width='30%' justifyContent='center' position={valueScrollY > 399 ? "fixed" : "absolute"} top={valueScrollY > 399 ? "30px" : "-350px"} right={valueScrollY > 399 ? "4% " : "0px"} zIndex='9'>
               <Flex direction='column'>
                 <Box margin="auto" bg='#fff' boxShadow="rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;" border='1px solid #fff'>
                   <AspectRatio width='390px' height='192px' ratio={1}>
@@ -123,7 +123,7 @@ function CourseDetail(props) {
                     </Button>
                     <Text fontSize='12px' textAlign='center' >30-Day Money-Back Guarantee</Text>
                     <Box>
-                      <Text marginBottom='8px' color='#3c3b37' fontWeight='900'>This course include:</Text>
+                      <Text marginBottom='8px' color='#3c3b37' fontWeight='900'>This course include: </Text>
                       <Flex direction='column'>
                         {/* infor couser */}
                         <InforCourse />

@@ -8,15 +8,15 @@ import CourseDetail from "./pages/courseDetail"
 
 function App() {
   return (
-    <CourseDetail />
-    // <OverallLayout>
-    //   <Switch>
-    //     <Route exact path="/login" component={Authentication} />
-    //     <Route exact path="/signup" component={Authentication} />
-    //     <Route exact path="/coursedetail" component={CourseDetail} />
-    //     <Route exact path="/" component={HomePage} />
-    //   </Switch>
-    // </OverallLayout>
+
+    <OverallLayout>
+      <Switch>
+        <Route exact path="/login" component={Authentication} />
+        <Route exact path="/signup" component={Authentication} />
+        <Route exact path="/coursedetail" component={CourseDetail} />
+        <Route exact path="/" component={HomePage} />
+      </Switch>
+    </OverallLayout>
   );
 }
 export default App;
