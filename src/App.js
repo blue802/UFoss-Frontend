@@ -13,27 +13,29 @@ import HomePage from './pages/home';
 import CourseDetail from "./pages/courseDetail"
 import runServer from './server';
 import { useAuth } from './services/auth.service';
+import Payment from './pages/payment';
 
-runServer();
+// runServer();
 
 function App() {
   const [logged] = useAuth();
 
   return (
-    <Router>
-      <OverallLayout>
-        <Switch>
-          {!logged && <Route exact path="/login" component={Authentication} />}
-          {!logged && (
-            <Route exact path="/register" component={Authentication} />
-          )}
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/coursedetail" component={CourseDetail} />
-          <Route exact path="/notFound" component={NotFound} />
-          <Redirect exact from="/*" to="/notFound" />
-        </Switch>
-      </OverallLayout>
-    </Router>
+    // <Router>
+    //   <OverallLayout>
+    //     <Switch>
+    //       {!logged && <Route exact path="/login" component={Authentication} />}
+    //       {!logged && (
+    //         <Route exact path="/register" component={Authentication} />
+    //       )}
+    //       <Route exact path="/" component={HomePage} />
+    //       <Route exact path="/coursedetail" component={CourseDetail} />
+    //       <Route exact path="/notFound" component={NotFound} />
+    //       <Redirect exact from="/*" to="/notFound" />
+    //     </Switch>
+    //   </OverallLayout>
+    // </Router>
+    <Payment />
   );
 }
 export default App;
