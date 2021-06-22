@@ -23,9 +23,9 @@ import iconPaypal from '../../assets/images/iconPaypal.jpg';
 import OrderDetailItem from './components/OrderdetailItem';
 function Payment() {
   const [isTypePayment, setIsTypePayment] = React.useState('paymentCard');
-  const [isNotSmallScreen] = useMediaQuery('(min-width: 768px)');
+  const [isNotSmallScreen] = useMediaQuery('(min-width: 1024px)');
   return (
-    <Box w={isNotSmallScreen ? "80%" : "60%"} margin='0 auto' paddingTop='60px'>
+    <Box w={isNotSmallScreen ? "75%" : "90%"} margin='0 auto' paddingTop='60px'>
       <Flex direction={isNotSmallScreen ? "row" : " column"}>
         {/* Checkout */}
         <Box width={isNotSmallScreen ? "60%" : '100%'} padding='30px'>
