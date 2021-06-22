@@ -10,7 +10,7 @@ import {
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Slider from 'react-slick';
 
-import CourseCard from './Components/CourseCard';
+import CourseCard from '../course/components/CourseCard';
 import NextArrowButton from './Components/NextArrowButton';
 import PrevArrowButton from './Components/PrevArrowButton';
 import useCourses from '../../hooks/useCourses';
@@ -64,8 +64,8 @@ function HomePage() {
     content = (
       <Slider {...settings}>
         {data.map(item => (
-          <Box px="2" pb="5">
-            <CourseCard key={item.id} data={item} />
+          <Box px="2" pb="5" key={item.id}>
+            <CourseCard data={item} />
           </Box>
         ))}
       </Slider>

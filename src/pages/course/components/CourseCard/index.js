@@ -36,7 +36,7 @@ function CourseCard(props) {
             <Text mb="1" fontSize="sm" color="gray.400">
               {instructor}
             </Text>
-            <StarGroup votes={votes} score={300} />
+            <StarGroup votes={votes} />
             <Text fontWeight="bold">${price}</Text>
           </Box>
         </PopoverTrigger>
@@ -82,14 +82,14 @@ function CourseCard(props) {
 }
 
 CourseCard.prototype = {
-  data: {
+  data: PropTypes.shape({
     id: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
     imageUrl: PropTypes.string,
     price: PropTypes.number,
     instructor: PropTypes.string, //this must be object
-  },
+  }),
 };
 
 export default CourseCard;

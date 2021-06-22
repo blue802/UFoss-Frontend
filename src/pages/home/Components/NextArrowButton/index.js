@@ -3,7 +3,7 @@ import { Button, Icon } from '@chakra-ui/react';
 import { FaAngleRight } from 'react-icons/fa';
 
 const NextArrowButton = props => {
-  const { className, style, onClick } = props;
+  const { onClick } = props;
 
   return (
     <Button

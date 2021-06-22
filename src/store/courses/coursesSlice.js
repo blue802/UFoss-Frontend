@@ -13,7 +13,7 @@ export const fetchCourses = createAsyncThunk(
   'courses/fetchCourses',
   async () => {
     const res = await axios.get('/api/courses');
-    return res.data;
+    return res.data.courses;
   }
 );
 

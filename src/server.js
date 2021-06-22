@@ -1,33 +1,35 @@
-import { createServer } from 'miragejs';
+import { createServer, Model } from 'miragejs';
 
 import coursesDummy from './mock-data.json';
 
 export default function runServer() {
-  const courses = coursesDummy;
-
   createServer({
+    models: {
+      course: Model,
+    },
     routes() {
       this.namespace = 'api';
 
       this.get(
         '/courses',
-        () => {
-          return courses;
+        (schema, request) => {
+          return schema.courses.all();
         },
         { timing: 2000 }
       );
 
-      this.post('/courses', (schema, request) => {
-        const newCourse = JSON.parse(request.requestBody);
-        const exist = courses.find(course => course.title === newCourse.title);
-        if (exist > 0) {
-          let headers = {};
-          let data = { msg: 'The course does exist.' };
-          return new Response(406, headers, data);
-        }
-        newCourse.id = Math.floor(Math.random() * 10000);
-        courses.push(newCourse);
-        return courses;
+      this.get(
+        '/courses/:id',
+        (schema, request) => {
+          const id = request.params.id;
+          return schema.courses.find(id);
+        },
+        { timing: 2000 }
+      );
+    },
+    seeds(server) {
+      coursesDummy.forEach(course => {
+        server.create('course', course);
       });
     },
   });
