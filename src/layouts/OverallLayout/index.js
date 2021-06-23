@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../Header';
 import Footer from '../Footer';
-import { Container } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { useLocation } from 'react-router-dom';
 
 const OverallLayout = props => {
@@ -15,9 +15,7 @@ const OverallLayout = props => {
   return (
     <Fragment>
       <Header />
-      <Container maxW="container.2xl" mt="10vh" minH="90vh">
-        {props.children}
-      </Container>
+      <Box>{props.children}</Box>
       <Footer />
     </Fragment>
   );
