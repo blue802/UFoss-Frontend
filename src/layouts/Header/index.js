@@ -32,7 +32,7 @@ const Header = () => {
       top="0"
       w="full"
       bgColor="white"
-      zIndex="10"
+      zIndex="100"
     >
       <HStack>
         <Link as={ReactLink} to="/">
@@ -43,9 +43,9 @@ const Header = () => {
             Category
           </MenuButton>
           <MenuList>
-            <MenuItem>New Window</MenuItem>
-            <MenuItem>Open Closed Tab</MenuItem>
-            <MenuItem>Open File</MenuItem>
+            <MenuItem>Web Development</MenuItem>
+            <MenuItem>Business</MenuItem>
+            <MenuItem>Design</MenuItem>
           </MenuList>
         </Menu>
       </HStack>
