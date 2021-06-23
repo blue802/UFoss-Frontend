@@ -50,7 +50,7 @@ function CourseCard(props) {
           <PopoverArrow />
           <PopoverBody>
             <Heading as="h4" fontSize="2xl" mb="2">
-              {title}
+              {truncateString(title, 50)}
             </Heading>
             <Text mb="3" fontSize="sm" color="gray.400">
               {instructor}
