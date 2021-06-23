@@ -38,10 +38,10 @@ function Payment() {
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Box w={isNotSmallScreen ? "75%" : "90%"} margin='0 auto' paddingTop='60px'>
-        <Flex direction={isNotSmallScreen ? "row" : " column"}>
+      <Box w={isNotSmallScreen ? '75%' : '90%'} margin='0 auto' paddingTop='60px'>
+        <Flex direction={isNotSmallScreen ? 'row' : ' column'}>
           {/* Checkout */}
-          <Box width={isNotSmallScreen ? "60%" : '100%'} padding='30px'>
+          <Box width={isNotSmallScreen ? '60%' : '100%'} padding='30px'>
             <Flex direction='column'>
               <Box paddingBottom='16px'>
                 <Heading fontSize='24px' fontWeight='700'>
@@ -56,9 +56,9 @@ function Payment() {
               </Box>
 
               <Box>
-                <FormControl id="country" >
+                <FormControl id='country' >
                   <FormLabel>Country</FormLabel>
-                  <Select placeholder="Select country" width='50%'>
+                  <Select placeholder='Select country' width='50%'>
                     {/* api coutry */}
                     <option>United Arab Emirates</option>
                     <option>Nigeria</option>
@@ -105,7 +105,7 @@ function Payment() {
           </Box>
 
           {/* Summary */}
-          <Box w={isNotSmallScreen ? "40%" : '100%'} padding='20px' borderWidth='2px' borderColor='#E7E7E8'>
+          <Box w={isNotSmallScreen ? '40%' : '100%'} padding='20px' borderWidth='2px' borderColor='#E7E7E8'>
             <Flex direction='column'>
 
               <Box paddingBottom='16px'>
@@ -133,7 +133,7 @@ function Payment() {
               </Box>
 
               <Box marginTop='10px'>
-                <Button bg='#EC5252' color='#fff' size="md" w='100%' type="submit">Complete payment</Button>
+                <Button bg='#EC5252' color='#fff' size='md' w='100%' type='submit'>Complete payment</Button>
               </Box>
             </Flex>
           </Box>

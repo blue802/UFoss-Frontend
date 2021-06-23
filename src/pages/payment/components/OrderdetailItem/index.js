@@ -5,7 +5,7 @@ function OrderDetailItem() {
     <Box padding='10px 0'>
       <Flex direction='row'>
         <Box>
-          <Image src='' href='order-detail' w='32px' h='32px' />
+          <Image src='image of course' href='order-detail' w='32px' h='32px' />
         </Box>
         <Box marginLeft='10px' >
           <Text fontSize='14px' fontWeight='700' color='#29303b' >Life Coaching Certification Course (Beginner to Advanced)</Text>

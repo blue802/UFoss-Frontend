@@ -52,7 +52,7 @@ function FormPayment(props) {
             <FormControl id='card-number' isInvalid={errors.numberCard}>
               <FormLabel>Card Number</FormLabel>
               <NumberInput
-                placeholder="Number on Card"
+                placeholder='Number on Card'
 
               >
                 <NumberInputField {...register('numberCard', numbercardValidate)} />
