@@ -32,7 +32,7 @@ const Header = () => {
       top="0"
       w="full"
       bgColor="white"
-      zIndex="100"
+      zIndex="10"
     >
       <HStack>
         <Link as={ReactLink} to="/">
