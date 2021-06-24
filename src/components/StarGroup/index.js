@@ -21,7 +21,7 @@ const StarGroup = ({ votes, showAvg = false }) => {
   }
 
   return (
-    <HStack display="flex" fontSize="sm" mb="1">
+    <HStack display="flex" fontSize="sm">
       {showAvg && <Text pt="0.5">{avgScore} </Text>}
       <Box>
         {listStar.map((icon, index) => (

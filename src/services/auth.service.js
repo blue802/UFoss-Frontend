@@ -51,7 +51,7 @@ const createTokenProvider = () => {
       return null;
     }
 
-    const jwt = JSON.parse(atob(_token.tokenAccess.split('.')[1]));
+    const jwt = JSON.parse(atob(_token.accessToken.split('.')[1]));
     const userInfo =
       (jwt && {
         username: jwt.name,
@@ -107,6 +107,7 @@ export const createAuthProvider = () => {
   };
 
   const login = (username, password) => {
+    console.log(username);
     return API.post('/login', {
       username,
       password,

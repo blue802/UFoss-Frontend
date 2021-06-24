@@ -14,7 +14,7 @@ import CourseDetail from './pages/course';
 import runServer from './server';
 import { useAuth } from './services/auth.service';
 
-runServer();
+// runServer();
 
 function App() {
   const [logged] = useAuth();

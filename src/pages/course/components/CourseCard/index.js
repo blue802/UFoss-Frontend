@@ -37,7 +37,9 @@ function CourseCard(props) {
               {instructor}
             </Text>
             <StarGroup votes={votes} />
-            <Text fontWeight="bold">${price}</Text>
+            <Text fontWeight="bold" mt="1">
+              ${price}
+            </Text>
           </Box>
         </PopoverTrigger>
         <PopoverContent
