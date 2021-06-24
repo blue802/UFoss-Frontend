@@ -1,11 +1,17 @@
 import {
     Box,Button, Heading, Select, HStack, Text, Collapse, useDisclosure
 } from '@chakra-ui/react';
+
 import React from 'react'
+
 import Data from "./MOCK_DATA.json";
+
 import { MdDehaze} from 'react-icons/md';
+
 import CoursesOfCategory from './CoursesOfCategory';
-import Filter from './Filter';
+
+import Filter from './FilterComponent';
+
 function CategoryDetail() {
     const { isOpen, onToggle } = useDisclosure()
     return (

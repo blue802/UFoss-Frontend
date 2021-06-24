@@ -1,4 +1,5 @@
 import React from 'react'
+
 import {
     Accordion,
     AccordionItem,
@@ -12,10 +13,14 @@ import {
     HStack,
     Stack,
   } from "@chakra-ui/react"
-  import Data from "./MOCK_DATA.json";
+
+import Data from "./MOCK_DATA.json";
+
 import { FaRegStar, FaStar } from 'react-icons/fa';
+
 import { Radio, RadioGroup } from "@chakra-ui/react"
-function Filter() {
+
+function FilterComponent() {
     let courseFiveStar = 0; 
     let courseFourStar =0;
     let courseThreeStar =0;
@@ -112,4 +117,4 @@ function Filter() {
     )
 }
 
-export default Filter
+export default FilterComponent

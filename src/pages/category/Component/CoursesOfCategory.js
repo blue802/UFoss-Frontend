@@ -1,12 +1,16 @@
 import React from 'react'
+
 import { LinkBox,
     Box, Image,
     Text, LinkOverlay,
     Popover,PopoverArrow,PopoverTrigger,
     PopoverContent,PopoverBody, PopoverFooter, Button, HStack, Heading
 } from '@chakra-ui/react';
+
 import { truncateString } from '../../../utils/stringUtils';
+
 import StarGroup from '../../../components/StarGroup';
+
 function CoursesOfCategory(props) {
     return (
         <LinkBox  to="" >

@@ -1,13 +1,13 @@
 import { Container } from '@chakra-ui/react'
 import React from 'react'
-import ListCourses from './Component/CategoryDetail'
+import CategoryDetail from './Component/CategoryDetail'
 
-function index() {
+function CategoryPage() {
     return (
         <Container maxW="container.2xl" mt="8vh" minH="90vh">
-            <ListCourses/>
+            <CategoryDetail/>
         </Container>
     )
 }
 
-export default index
+export default CategoryPage 
