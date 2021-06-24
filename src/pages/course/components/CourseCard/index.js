@@ -22,7 +22,7 @@ import StarGroup from '../../../../components/StarGroup';
 function CourseCard(props) {
   const { id, title, description, imageUrl, price, instructor, votes } =
     props.data;
-
+    console.log(props.data)
   return (
     <LinkBox as="article" textAlign="left">
       <Popover trigger="hover" placement="auto">
