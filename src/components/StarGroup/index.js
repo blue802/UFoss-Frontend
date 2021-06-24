@@ -3,8 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FaRegStar, FaStar, FaStarHalfAlt } from 'react-icons/fa';
 
-const StarGroup = ({ votes, showAvg = false }) => {
-  let point = votes.total > 0 && votes.score / (votes.total * 2);
+const StarGroup = ({ point, rating, showPoint = false, showRating = true }) => {
   const avgScore = point.toPrecision(2);
 
   const listStar = new Array(5);
@@ -21,8 +20,8 @@ const StarGroup = ({ votes, showAvg = false }) => {
   }
 
   return (
-    <HStack display="flex" fontSize="sm" mb="1">
-      {showAvg && <Text pt="0.5">{avgScore} </Text>}
+    <HStack display="flex" fontSize="sm">
+      {showPoint && <Text pt="0.5">{avgScore} </Text>}
       <Box>
         {listStar.map((icon, index) => (
           <Icon
@@ -34,17 +33,16 @@ const StarGroup = ({ votes, showAvg = false }) => {
           />
         ))}
       </Box>
-      <Text pt="0.5">({votes.total} ratings)</Text>
+      {showRating && <Text pt="0.5">({rating} ratings)</Text>}
     </HStack>
   );
 };
 
 StarGroup.prototype = {
-  votes: PropTypes.shape({
-    total: PropTypes.number.isRequired,
-    score: PropTypes.number.isRequired,
-  }),
-  showAvg: PropTypes.bool,
+  point: PropTypes.number.isRequired,
+  rating: PropTypes.number.isRequired,
+  showPoint: PropTypes.bool,
+  showRating: PropTypes.bool,
 };
 
 export default StarGroup;
