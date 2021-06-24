@@ -28,12 +28,10 @@ function CategoryDetail() {
                             <Text position="absolute" right="0" color="gray.400" fontSize="18px" >{item.courses.length} result</Text>
                         </HStack>
                         <HStack alignItems="flex-start">
-                            <Box w="24%" mt="18px">
-                                <Collapse in={isOpen} animateOpacity>
-                                    <Filter></Filter>
-                                </Collapse>
-                            </Box>
-                            <Box w="76%" pl="15px" >
+                            <Collapse in={isOpen} style={{width: '32%',paddingTop: '15px'}} animateOpacity mt="18px">
+                                <Filter />
+                            </Collapse>
+                            <Box w="100%" pl="15px" >
                                 {item.courses.map(course => {
                                     return (
                                         <CoursesOfCategory key={course.id} {...course}/>

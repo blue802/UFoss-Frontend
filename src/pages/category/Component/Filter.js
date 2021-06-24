@@ -21,8 +21,8 @@ function Filter() {
     let courseThreeStar =0;
     let courseLessStar =0
     Data.category.courses.forEach(item =>{
-        let point = item.scoreVote.total > 0 && item.scoreVote.score / (item.scoreVote.total * 2);
-        point===5? courseFiveStar+= 1: point===4 ? courseFourStar+= 1: point===3? courseThreeStar+= 1: courseLessStar+= 1
+        let point = Math.floor(item.scoreVote.score / (item.scoreVote.total * 2));
+        point===5 ? courseFiveStar+= 1: point===4 ? courseFourStar+= 1: point===3 ? courseThreeStar+= 1: courseLessStar+= 1
     })
     const [value, setValue] = React.useState("1")
     return (

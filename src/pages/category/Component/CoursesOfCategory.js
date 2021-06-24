@@ -13,23 +13,23 @@ function CoursesOfCategory(props) {
             <Popover trigger="hover" placement="auto">
                 <PopoverTrigger >
                     <LinkOverlay href="">
-                     <HStack p="15px 0" borderBottom="solid 1px #ddd"> 
+                     <HStack py="5" alignItems="start" borderBottomWidth="1px" borderColor="gray.200"> 
                         <Image 
-                            w="24%"
-                            h="150px"
+                            w="248px"
+                            h="160px"
                             objectFit="cover"
                             src={props.urlImage}
                             alt="Dan Abramov"
                         />
-                        <Box w="75%" >
-                            <Heading as="h4" fontSize="lg" p="0 5px 5px 5px">
+                        <Box flex="1" pl="2">
+                            <Heading as="h4" fontSize="lg" pb="2">
                                 <LinkOverlay href="">{props.nameCourse}</LinkOverlay>
                             </Heading>
-                            <Text p="5px">{truncateString(props.decription,140)}</Text>
-                            <Text p="5px" color="gray.400">{props.nameInstructor}</Text>
+                            <Text pb="2">{truncateString(props.decription, 140)}</Text>
+                            <Text pb="2" color="gray.400">{props.nameInstructor}</Text>
                             <StarGroup votes={props.scoreVote} />
                          </Box>
-                         <Box top="20px" right="0" position="absolute" fontWeight="bold">
+                         <Box fontWeight="bold">
                              <Text>${props.priceCourse}</Text>
                          </Box>
                      </HStack>
