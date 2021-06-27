@@ -19,6 +19,7 @@ import Data from "./MOCK_DATA.json";
 import { FaRegStar, FaStar } from 'react-icons/fa';
 
 import { Radio, RadioGroup } from "@chakra-ui/react"
+import StarGroup from '../../../components/StarGroup';
 
 function FilterComponent() {
     let courseFiveStar = 0; 
@@ -46,44 +47,28 @@ function FilterComponent() {
                     <Stack direction="column">
                     <Radio value="1">
                         <HStack>
-                            <Icon as={FaStar}  fontSize="lg" color="yellow.400" mr="0.5" />
-                            <Icon as={FaStar}  fontSize="lg" color="yellow.400" mr="0.5" />
-                            <Icon as={FaStar}  fontSize="lg" color="yellow.400" mr="0.5" />
-                            <Icon as={FaStar}  fontSize="lg" color="yellow.400" mr="0.5" />
-                            <Icon as={FaStar}  fontSize="lg" color="yellow.400" mr="0.5" />
+                            <StarGroup point={5} showRating={false}/>
                             <Text color="gray.400" fontSize="sm">(5*)</Text>
                             <Text color="gray.400" fontSize="sm">({courseFiveStar})</Text>
                         </HStack>
                     </Radio>
                     <Radio value="2">
                         <HStack>
-                            <Icon as={FaStar}  fontSize="lg" color="yellow.400" mr="0.5" />
-                            <Icon as={FaStar}  fontSize="lg" color="yellow.400" mr="0.5" />
-                            <Icon as={FaStar}  fontSize="lg" color="yellow.400" mr="0.5" />
-                            <Icon as={FaStar}  fontSize="lg" color="yellow.400" mr="0.5" />
-                            <Icon as={FaRegStar}  fontSize="lg" color="yellow.400" mr="0.5" />
+                            <StarGroup point={4} showRating={false}/>
                             <Text color="gray.400" fontSize="sm">(4*)</Text>
                             <Text color="gray.400" fontSize="sm">({courseFourStar})</Text>
                         </HStack>
                     </Radio>
                     <Radio value="3">
                         <HStack>
-                            <Icon as={FaStar}  fontSize="lg" color="yellow.400" mr="0.5" />
-                            <Icon as={FaStar}  fontSize="lg" color="yellow.400" mr="0.5" />
-                            <Icon as={FaStar}  fontSize="lg" color="yellow.400" mr="0.5" />
-                            <Icon as={FaRegStar}  fontSize="lg" color="yellow.400" mr="0.5" />
-                            <Icon as={FaRegStar}  fontSize="lg" color="yellow.400" mr="0.5" />
+                            <StarGroup point={3} showRating={false}/>
                             <Text color="gray.400" fontSize="sm">(3*)</Text>
                             <Text color="gray.400" fontSize="sm">({courseThreeStar})</Text>
                         </HStack>
                     </Radio>
                     <Radio value="4">
                         <HStack>
-                            <Icon as={FaStar}  fontSize="lg" color="yellow.400" mr="0.5" />
-                            <Icon as={FaStar}  fontSize="lg" color="yellow.400" mr="0.5" />
-                            <Icon as={FaRegStar}  fontSize="lg" color="yellow.400" mr="0.5" />
-                            <Icon as={FaRegStar}  fontSize="lg" color="yellow.400" mr="0.5" />
-                            <Icon as={FaRegStar}  fontSize="lg" color="yellow.400" mr="0.5" />
+                            <StarGroup point={2} showRating={false}/>
                             <Text color="gray.400" fontSize="sm">(2* & down)</Text>
                             <Text color="gray.400" fontSize="sm">({courseLessStar})</Text>
                         </HStack>

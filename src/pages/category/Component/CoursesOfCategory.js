@@ -2,9 +2,7 @@ import React from 'react'
 
 import { LinkBox,
     Box, Image,
-    Text, LinkOverlay,
-    Popover,PopoverArrow,PopoverTrigger,
-    PopoverContent,PopoverBody, PopoverFooter, Button, HStack, Heading
+    Text, LinkOverlay, Button, HStack, Heading
 } from '@chakra-ui/react';
 
 import { truncateString } from '../../../utils/stringUtils';
@@ -12,12 +10,23 @@ import { truncateString } from '../../../utils/stringUtils';
 import StarGroup from '../../../components/StarGroup';
 
 function CoursesOfCategory(props) {
+    const handleAddCart = ()=>{
+        const itemAddCart = {
+            id: props.id,
+            name : props.nameCourse,
+            instructor: props.nameInstructor,
+            image: props.urlImage,
+            price: props.priceCourse,
+            decription: props.decription,
+            rate: props.scoreVote
+        }
+    }
+    const point = props.scoreVote.total > 0 && props.scoreVote.score / (props.scoreVote.total * 2);
     return (
-        <LinkBox  to="" >
-            <Popover trigger="hover" placement="auto">
-                <PopoverTrigger >
-                    <LinkOverlay href="">
-                     <HStack py="5" alignItems="start" borderBottomWidth="1px" borderColor="gray.200"> 
+        <HStack py="5" alignItems="start" borderBottomWidth="1px" borderColor="gray.200" justifyContent="space-between">
+            <LinkBox  to="" >
+                <LinkOverlay href="">
+                    <HStack>
                         <Image 
                             w="248px"
                             h="160px"
@@ -31,52 +40,18 @@ function CoursesOfCategory(props) {
                             </Heading>
                             <Text pb="2">{truncateString(props.decription, 140)}</Text>
                             <Text pb="2" color="gray.400">{props.nameInstructor}</Text>
-                            <StarGroup votes={props.scoreVote} />
-                         </Box>
-                         <Box fontWeight="bold">
-                             <Text>${props.priceCourse}</Text>
-                         </Box>
-                     </HStack>
-                    </LinkOverlay>
-                </PopoverTrigger>
-                <PopoverContent
-                    color="black"
-                    bg="white"
-                    borderColor="gray.300"
-                    px="3"
-                    py="4"
-                >
-                <PopoverArrow />
-                <PopoverBody>
-                    <Heading as="h4" fontSize="2xl" mb="2">
-                        {truncateString(props.nameCourse, 50)}
-                    </Heading>
-                    <Text mb="3" fontSize="sm" color="gray.400">
-                        {props.nameInstructor}
-                    </Text>
-                    <Text
-                    textOverflow="ellipsis"
-                    overflow="hidden"
-                    whiteSpace="wrap"
-                    fontSize="sm"
-                    >
-                    {truncateString(props.decription, 180)}
-                    </Text>
-                </PopoverBody>
-                <PopoverFooter
-                    border="0"
-                    d="flex"
-                    alignItems="center"
-                    justifyContent="space-between"
-                    pb={4}
-                >
-                    <Button colorScheme="red" width="full" color="white">
-                    Add To Card
-                    </Button>
-                </PopoverFooter>
-                </PopoverContent>
-            </Popover>
-        </LinkBox>
+                            <StarGroup point={point} rating={props.scoreVote.total} />
+                        </Box> 
+                    </HStack>
+                </LinkOverlay>
+            </LinkBox>
+            <Box fontWeight="bold" >
+                <Text>${props.priceCourse}</Text>
+                <Button colorScheme="red" variant="outline" onClick={handleAddCart} mt="90px">
+                    Add Cart
+                </Button>
+            </Box>
+        </HStack>
     )
 }
 
