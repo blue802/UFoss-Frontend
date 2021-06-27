@@ -19,6 +19,7 @@ import { Icon } from '@chakra-ui/react';
 import { FaEnvelope, FaLock, FaUserAlt } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router-dom';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 import {
   login,
@@ -26,7 +27,7 @@ import {
   tokenProvider,
 } from '../../services/auth.service';
 import ButtonSocialLogin from './components/ButtonSocialLogin';
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import formValidationConfigs from './configs/formValidationConfigs';
 
 function Authentication() {
   const {
@@ -39,36 +40,8 @@ function Authentication() {
   const history = useHistory();
   let isSignUp = location.pathname === '/register';
 
-  const usernameValidate = {
-    required: 'Username is required',
-    minLength: {
-      value: 3,
-      message: 'The minimum length is 3',
-    },
-    maxLength: {
-      value: 20,
-      message: 'The maximum length is 20',
-    },
-  };
-
-  const emailValidate = {
-    required: 'Email is required',
-    pattern: {
-      value:
-        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-      message: 'You have entered an invalid email address!',
-    },
-  };
-
-  const passwordValidate = {
-    required: 'Password is required',
-    pattern: {
-      value:
-        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$/,
-      message:
-        'The password must be between 8 and 20 characters including at least one lowercase letter, one uppercase letter, one numeric digit, and one special character',
-    },
-  };
+  const { usernameValidate, emailValidate, passwordValidate } =
+    formValidationConfigs;
 
   const onSubmit = async data => {
     const { username, email, password } = data;
@@ -87,7 +60,7 @@ function Authentication() {
     history.push('/');
   };
 
-  const _onFailureLoginGoogle = res => { };
+  const _onFailureLoginGoogle = res => {};
 
   return (
     <Container maxW="container.xl" mt="4vh" minH="74vh">

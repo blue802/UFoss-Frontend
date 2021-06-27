@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+
+import { authHeader } from '../../services/auth.service';
 import API from '../../utils/API';
 import { STATUS } from '../constant';
 
@@ -12,7 +14,9 @@ const initialState = {
 export const fetchCourses = createAsyncThunk(
   'courses/fetchCourses',
   async () => {
-    const res = await axios.get('/api/courses');
+    const res = await axios.get('/api/courses', {
+      headers: authHeader(),
+    });
     return res.data.courses;
   }
 );

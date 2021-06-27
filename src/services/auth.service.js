@@ -7,6 +7,10 @@ const createTokenProvider = () => {
   _token = _token ? JSON.parse(_token) : null;
   let listeners = [];
 
+  if (_token?.tokenAccess) {
+    _token.accessToken = _token.tokenAccess;
+  }
+
   const getExpirationDate = jwtToken => {
     if (!jwtToken) {
       return null;
@@ -107,7 +111,6 @@ export const createAuthProvider = () => {
   };
 
   const login = (username, password) => {
-    console.log(username);
     return API.post('/login', {
       username,
       password,
