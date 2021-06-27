@@ -18,7 +18,6 @@ import { STATUS } from '../../store/constant';
 
 function HomePage() {
   const [data, status, error] = useCourses();
-
   const settings = {
     dots: false,
     infinite: false,
