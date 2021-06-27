@@ -2,17 +2,19 @@ import {
     Box,Button, Heading, Select, HStack, Text, Collapse, useDisclosure
 } from '@chakra-ui/react';
 
+import PropTypes from 'prop-types';
+
 import React from 'react'
 
 import Data from "./MOCK_DATA.json";
 
 import { MdDehaze} from 'react-icons/md';
 
-import CoursesOfCategory from './CoursesOfCategory';
+import CourseRowItem from './CourseRowItem';
 
 import Filter from './FilterComponent';
 
-function CategoryDetail() {
+function CategoryDetail(props) {
     const { isOpen, onToggle } = useDisclosure()
     return (
         <Box>
@@ -40,7 +42,7 @@ function CategoryDetail() {
                             <Box w="100%" pl="15px" >
                                 {item.courses.map(course => {
                                     return (
-                                        <CoursesOfCategory key={course.id} {...course}/>
+                                        <CourseRowItem key={course.id} data={course}/>
                                     )
                                 })}
                             </Box>  
