@@ -11,6 +11,7 @@ import Authentication from './pages/auth';
 import NotFound from './pages/error';
 import HomePage from './pages/home';
 import CourseDetail from './pages/course';
+import CategoryDetail from './pages/category';
 import runServer from './server';
 import { useAuth } from './services/auth.service';
 import Payment from './pages/payment';
@@ -32,6 +33,7 @@ function App() {
           <Route exact path="/" component={HomePage} />
           <Route exact path="/payment" component={Payment} />
           <Route exact path="/courses/:courseId" component={CourseDetail} />
+          <Route exact path="/categoryDetail" component={CategoryDetail} />
           <Route exact path="/notFound" component={NotFound} />
           <Redirect exact from="/*" to="/notFound" />
         </Switch>

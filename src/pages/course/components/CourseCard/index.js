@@ -20,8 +20,10 @@ import { truncateString } from '../../../../utils/stringUtils';
 import StarGroup from '../../../../components/StarGroup';
 
 function CourseCard(props) {
-  const { id, title, description, imageUrl, price, instructor, votes } =
+  const { id, title, description, imageUrl, price, instructor, vote } =
     props.data;
+  const { rating, score } = vote;
+  const point = rating > 0 && score / (rating * 2);
 
   return (
     <LinkBox as="article" textAlign="left">
@@ -36,8 +38,10 @@ function CourseCard(props) {
             <Text mb="1" fontSize="sm" color="gray.400">
               {instructor}
             </Text>
-            <StarGroup votes={votes} />
-            <Text fontWeight="bold">${price}</Text>
+            <StarGroup point={point} rating={rating} />
+            <Text fontWeight="bold" mt="1">
+              ${price}
+            </Text>
           </Box>
         </PopoverTrigger>
         <PopoverContent
@@ -89,6 +93,10 @@ CourseCard.prototype = {
     imageUrl: PropTypes.string,
     price: PropTypes.number,
     instructor: PropTypes.string, //this must be object
+    vote: PropTypes.shape({
+      rating: PropTypes.number,
+      score: PropTypes.number,
+    }),
   }),
 };
 
