@@ -28,6 +28,7 @@ import {
 } from '../../services/auth.service';
 import ButtonSocialLogin from './components/ButtonSocialLogin';
 import formValidationConfigs from './configs/formValidationConfigs';
+import useCustomToast from '../../hooks/useCustomToast';
 
 function Authentication() {
   const {
@@ -36,21 +37,55 @@ function Authentication() {
     formState: { errors },
   } = useForm();
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const location = useLocation();
   const history = useHistory();
+  const toast = useCustomToast();
   let isSignUp = location.pathname === '/register';
 
   const { usernameValidate, emailValidate, passwordValidate } =
     formValidationConfigs;
 
-  const onSubmit = async data => {
-    const { username, email, password } = data;
-    if (isSignUp) {
+  const signUpAsync = async (username, email, password) => {
+    try {
       await signUp(username, email, password);
+      toast({
+        title:
+          'Account created. Please check your email then verify before login!',
+        status: 'success',
+      });
       history.push('/login');
-    } else {
+    } catch (error) {
+      const message = error?.response?.data?.message;
+      message &&
+        toast({
+          title: error.response.data.message,
+          status: 'error',
+        });
+    }
+  };
+
+  const loginAsync = async (username, password) => {
+    try {
       await login(username, password);
       history.push('/');
+    } catch (error) {
+      toast({
+        title: error.response.data.message,
+        status: 'error',
+      });
+    }
+  };
+
+  const onSubmit = async data => {
+    const { username, email, password } = data;
+    setIsSubmitting(true);
+    if (isSignUp) {
+      await signUpAsync(username, email, password);
+      setIsSubmitting(false);
+    } else {
+      await loginAsync(username, password);
+      setIsSubmitting(false);
     }
   };
 
@@ -63,8 +98,8 @@ function Authentication() {
   const _onFailureLoginGoogle = res => {};
 
   return (
-    <Container maxW="container.xl" mt="4vh" minH="74vh">
-      <Box w="320px" mx="auto" mt="6rem">
+    <Container maxW="container.xl" mt="9vh" minH="74vh">
+      <Box w="320px" mx="auto" pt="3rem">
         {isSignUp ? (
           <Heading size="sm">Sign-Up and Start Learning!</Heading>
         ) : (
@@ -160,14 +195,25 @@ function Authentication() {
             )}
           </FormControl>
 
-          <Button type="submit" colorScheme="red" w="full" rounded="sm">
+          <Button
+            type="submit"
+            colorScheme="red"
+            w="full"
+            rounded="sm"
+            isLoading={isSubmitting}
+          >
             {isSignUp ? 'Sign Up' : 'Log In'}
           </Button>
         </form>
 
-        <Text textAlign="center" mt={4}>
-          or <Link color="blue.300">Forgot Password</Link>
-        </Text>
+        {!isSignUp && (
+          <Text textAlign="center" mt={4}>
+            or{' '}
+            <Link href="/reset-password" color="blue.300">
+              Forgot Password
+            </Link>
+          </Text>
+        )}
 
         <Divider my="1rem" />
 

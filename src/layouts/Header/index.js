@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link as ReactLink } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -35,7 +34,7 @@ const Header = () => {
       zIndex="10"
     >
       <HStack>
-        <Link as={ReactLink} to="/">
+        <Link href="/">
           <Image src={logo} />
         </Link>
         <Menu isLazy>
@@ -64,21 +63,12 @@ const Header = () => {
           <AvatarNav profile={profile} />
         ) : (
           <Box>
-            <Link
-              as={ReactLink}
-              to="/login"
-              _hover={{ textDecoration: 'none' }}
-            >
+            <Link href="/login" _hover={{ textDecoration: 'none' }}>
               <Button colorScheme="teal" variant="outline" px={6}>
                 Log in
               </Button>
             </Link>
-            <Link
-              as={ReactLink}
-              to="/register"
-              ml={3}
-              _hover={{ textDecoration: 'none' }}
-            >
+            <Link href="/register" ml={3} _hover={{ textDecoration: 'none' }}>
               <Button colorScheme="teal" variant="solid" px={6}>
                 Sign up
               </Button>

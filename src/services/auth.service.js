@@ -136,6 +136,18 @@ export const createAuthProvider = () => {
       : {};
   };
 
+  const reqResetPassword = email => {
+    return API.post('/password/reset', { email });
+  };
+
+  const resetPassword = (email, password, token) => {
+    return API.post('/password/update', {
+      email,
+      password,
+      resetPasswordToken: token,
+    });
+  };
+
   const useAuth = () => {
     const [logged, setLogged] = useState(tokenProvider.loggedIn());
 
@@ -159,9 +171,19 @@ export const createAuthProvider = () => {
     register,
     login,
     logout,
+    reqResetPassword,
+    resetPassword,
     tokenProvider,
   };
 };
 
-export const { login, register, logout, useAuth, authHeader, tokenProvider } =
-  createAuthProvider();
+export const {
+  login,
+  register,
+  logout,
+  useAuth,
+  authHeader,
+  reqResetPassword,
+  resetPassword,
+  tokenProvider,
+} = createAuthProvider();
