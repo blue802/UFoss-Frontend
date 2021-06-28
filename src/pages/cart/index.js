@@ -47,7 +47,7 @@ function Cart() {
 
   return (
     <Flex direction='column'>
-      <Box w='100%' bg='#000'>
+      <Box w='100%' bg='#000' marginTop='4rem'>
         <Box w={largeScreen ? '70%' : '90%'} margin='0 auto' py='40px'>
           <Text color='#fff' fontSize='30px' fontWeight='400'>Shoping Cart</Text>
         </Box>
