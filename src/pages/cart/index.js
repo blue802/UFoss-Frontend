@@ -6,14 +6,17 @@ import {
   useMediaQuery
 }
   from '@chakra-ui/react';
+
 import CartItem from './components/CartItem';
 import CheckoutForm from './components/CheckoutForm';
 import morkData from '../../mock-data.json';
+import Paypal from './components/paypal';
 function Cart() {
 
   const [largeScreen] = useMediaQuery('(min-width:1024px)');
   const [itemCarts, setItemCarts] = useState(morkData);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [checkout, setCheckout] = useState(false)
 
   const handleRemoveCartItems = (_id) => {
     const newCartItems = itemCarts.filter(item => item.id !== _id)
@@ -31,9 +34,16 @@ function Cart() {
     setTotalAmount(sum)
   }
 
+  const handleCheckout = () => {
+    setCheckout(!checkout);
+  }
+  const handleCleanCart = () => {
+    setItemCarts([]);
+    setCheckout(false);
+  }
   useEffect(() => {
     handleSumPrice();
-  }, [itemCarts])
+  }, [itemCarts]);
 
   return (
     <Flex direction='column'>
@@ -60,7 +70,7 @@ function Cart() {
 
           {/* Toltal price */}
           <Box width={largeScreen ? '35%' : '100%'} padding={largeScreen ? '2rem' : "0 0 2rem 0"}>
-            <CheckoutForm totalAmount={totalAmount} />
+            {checkout ? <Paypal totalAmount={totalAmount} handleCleanCart={handleCleanCart} /> : <CheckoutForm totalAmount={totalAmount} handleCheckout={handleCheckout} />}
           </Box>
         </Flex>
       </Box >
