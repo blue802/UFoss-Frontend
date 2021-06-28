@@ -12,7 +12,7 @@ import {
   NumberInputField,
   Checkbox
 } from '@chakra-ui/react'
-function FormPayment(props) {
+function PaymentForm(props) {
   const { isTypePayment, errors, register } = props
   const namecardValidate = {
     required: 'Name on card is required.',
@@ -106,4 +106,4 @@ function FormPayment(props) {
   )
 }
 
-export default FormPayment;
+export default PaymentForm;

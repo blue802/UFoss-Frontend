@@ -19,19 +19,17 @@ import { useForm } from 'react-hook-form';
 
 import iconPaypal from '../../assets/images/iconPaypal.jpg';
 import OrderDetailItem from './components/OrderdetailItem';
-import FormPayment from './components/FormPayment'
+import PaymentForm from './components/PaymentForm'
 
 function Payment() {
   const [isTypePayment, setIsTypePayment] = useState('paymentCard');
   const [isNotSmallScreen] = useMediaQuery('(min-width: 1024px)');
-
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
 
   const onSubmit = val => {
     console.log('submited');
@@ -81,7 +79,7 @@ function Payment() {
 
               <Box widtd='100%' borderWidth='1px' borderColor='#DEDFE0'>
                 {/* Form Payment */}
-                <FormPayment
+                <PaymentForm
                   errors={errors}
                   isTypePayment={isTypePayment}
                   register={register}
