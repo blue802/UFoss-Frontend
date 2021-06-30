@@ -62,7 +62,7 @@ function HomePage() {
   } else if (status === STATUS.SUCCEEDED) {
     content = (
       <Slider {...settings}>
-        {data.map(item => (
+        {data?.map(item => (
           <Box px="2" pb="5" key={item.id}>
             <CourseCard data={item} />
           </Box>

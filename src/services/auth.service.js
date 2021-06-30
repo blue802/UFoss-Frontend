@@ -7,6 +7,10 @@ const createTokenProvider = () => {
   _token = _token ? JSON.parse(_token) : null;
   let listeners = [];
 
+  if (_token?.tokenAccess) {
+    _token.accessToken = _token.tokenAccess;
+  }
+
   const getExpirationDate = jwtToken => {
     if (!jwtToken) {
       return null;
@@ -51,7 +55,7 @@ const createTokenProvider = () => {
       return null;
     }
 
-    const jwt = JSON.parse(atob(_token.tokenAccess.split('.')[1]));
+    const jwt = JSON.parse(atob(_token.accessToken.split('.')[1]));
     const userInfo =
       (jwt && {
         username: jwt.name,
@@ -132,6 +136,18 @@ export const createAuthProvider = () => {
       : {};
   };
 
+  const reqResetPassword = email => {
+    return API.post('/password/reset', { email });
+  };
+
+  const resetPassword = (email, password, token) => {
+    return API.post('/password/update', {
+      email,
+      password,
+      resetPasswordToken: token,
+    });
+  };
+
   const useAuth = () => {
     const [logged, setLogged] = useState(tokenProvider.loggedIn());
 
@@ -155,9 +171,19 @@ export const createAuthProvider = () => {
     register,
     login,
     logout,
+    reqResetPassword,
+    resetPassword,
     tokenProvider,
   };
 };
 
-export const { login, register, logout, useAuth, authHeader, tokenProvider } =
-  createAuthProvider();
+export const {
+  login,
+  register,
+  logout,
+  useAuth,
+  authHeader,
+  reqResetPassword,
+  resetPassword,
+  tokenProvider,
+} = createAuthProvider();

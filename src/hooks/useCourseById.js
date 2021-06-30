@@ -1,5 +1,7 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+import API from '../utils/API';
 
 const useCourseById = courseId => {
   const [data, setData] = useState(null);
