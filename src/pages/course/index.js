@@ -30,6 +30,9 @@ function CourseDetail(props) {
     );
   }
 
+  const { rating, score } = data.vote;
+  const point = rating > 0 && score / (rating * 2);
+
   const listLesson = data.lessons.map((lesson, index) => (
     <HStack key={lesson.id} py="2">
       <Icon as={FaRegPlayCircle} mr="2" color="gray.400" />
@@ -52,7 +55,7 @@ function CourseDetail(props) {
                 {truncateString(data.description, 420)}
               </Text>
               <Box mb="3">
-                <StarGroup votes={data.votes} showAvg={true} />
+                <StarGroup rating={rating} point={point} showAvg={true} />
               </Box>
               <Text as="i" fontSize="md">
                 Created by <Text as="b">{data.instructor}</Text>

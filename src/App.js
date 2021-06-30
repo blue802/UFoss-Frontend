@@ -12,6 +12,7 @@ import NotFound from './pages/error';
 import HomePage from './pages/home';
 import CourseDetail from './pages/course';
 import CategoryDetail from './pages/category';
+import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 import runServer from './server';
 import { useAuth } from './services/auth.service';
 import CartPage from './pages/cart';
@@ -28,6 +29,13 @@ function App() {
           {!logged && <Route exact path="/login" component={Authentication} />}
           {!logged && (
             <Route exact path="/register" component={Authentication} />
+          )}
+          {!logged && (
+            <Route
+              exact
+              path="/reset-password"
+              component={ForgotPasswordPage}
+            />
           )}
           <Route exact path="/" component={HomePage} />
           <Route exact path="/cart" component={CartPage} />
