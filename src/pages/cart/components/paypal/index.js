@@ -3,8 +3,7 @@ import React, { useRef, useEffect } from "react";
 export default function Paypal(props) {
   const { totalAmount, handleCleanCart } = props;
   const paypal = useRef();
-
-  useEffect(() => {
+  const handlePaypal = () => {
     window.paypal
       .Buttons({
         createOrder: (data, actions, err) => {
@@ -31,6 +30,9 @@ export default function Paypal(props) {
         },
       })
       .render(paypal.current);
+  }
+  useEffect(() => {
+    handlePaypal();
   }, []);
 
   return (

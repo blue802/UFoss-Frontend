@@ -10,8 +10,8 @@ import {
 import CartItem from './components/CartItem';
 import CheckoutForm from './components/CheckoutForm';
 import morkData from '../../mock-data.json';
-import Paypal from './components/paypal';
-function Cart() {
+import Paypal from './components/Paypal';
+function CartPage() {
 
   const [largeScreen] = useMediaQuery('(min-width:1024px)');
   const [itemCarts, setItemCarts] = useState(morkData);
@@ -79,4 +79,4 @@ function Cart() {
   )
 }
 
-export default Cart;
+export default CartPage;

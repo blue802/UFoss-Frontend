@@ -15,7 +15,7 @@ import CategoryDetail from './pages/category';
 import runServer from './server';
 import { useAuth } from './services/auth.service';
 import Payment from './pages/payment';
-import Cart from './pages/cart';
+import CartPage from './pages/cart';
 
 // runServer();
 
@@ -32,7 +32,7 @@ function App() {
           )}
           <Route exact path="/" component={HomePage} />
           <Route exact path="/payment" component={Payment} />
-          <Route exact path="/cart" component={Cart} />
+          <Route exact path="/cart" component={CartPage} />
           <Route exact path="/courses/:courseId" component={CourseDetail} />
           <Route exact path="/categoryDetail" component={CategoryDetail} />
           <Route exact path="/notFound" component={NotFound} />
