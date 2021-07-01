@@ -15,6 +15,7 @@ import CategoryDetail from './pages/category';
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 import runServer from './server';
 import { useAuth } from './services/auth.service';
+import CartPage from './pages/cart';
 
 // runServer();
 
@@ -37,6 +38,7 @@ function App() {
             />
           )}
           <Route exact path="/" component={HomePage} />
+          <Route exact path="/cart" component={CartPage} />
           <Route exact path="/courses/:courseId" component={CourseDetail} />
           <Route exact path="/categoryDetail" component={CategoryDetail} />
           <Route exact path="/notFound" component={NotFound} />
@@ -44,6 +46,7 @@ function App() {
         </Switch>
       </OverallLayout>
     </Router>
+
   );
 }
 export default App;
