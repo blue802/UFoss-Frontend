@@ -16,6 +16,7 @@ import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 import runServer from './server';
 import { useAuth } from './services/auth.service';
 import CartPage from './pages/cart';
+import ProfilePage from './pages/profile'
 
 // runServer();
 
@@ -38,6 +39,7 @@ function App() {
             />
           )}
           <Route exact path="/" component={HomePage} />
+          <Route exact path="/profile" component={ProfilePage} />
           <Route exact path="/cart" component={CartPage} />
           <Route exact path="/courses/:courseId" component={CourseDetail} />
           <Route exact path="/categoryDetail" component={CategoryDetail} />
@@ -46,6 +48,7 @@ function App() {
         </Switch>
       </OverallLayout>
     </Router>
+    
 
   );
 }
