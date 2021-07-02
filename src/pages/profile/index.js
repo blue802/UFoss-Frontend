@@ -1,5 +1,4 @@
 import React from 'react';
-import ImgProfileAvt from '../../assets/images/img-profile-avt.jpg';
 import ProfileForm from './Components/ProfileForm'
 import {
   Box,
@@ -20,7 +19,7 @@ const ProfilePage = () => {
           <Flex w="100px" h="100px" direction="column" w="100%">
             <Box position="relative">
               <Image
-                src={ImgProfileAvt}
+                src='https://chuuniotaku.com/wp-content/uploads/2019/07/nhung-cau-noi-hay-cua-itachi.jpg'
                 w="100px"
                 h="100px"
                 borderRadius="50%"
@@ -43,13 +42,13 @@ const ProfilePage = () => {
           </Text>
         </Box>
         <Box flex="1" justifyContent="center" direction="column" >
-          <Box w="100%" h="10%" p="1%" textAlign="center">
+          <Box w="100%" h="10%" p="20px" textAlign="center">
             <Heading as="h3" size="lg" color="gray.700">
               Your Profile
             </Heading>
           </Box>
 
-          <Box w="100%" flex="1">
+          <Box flex="1">
             <ProfileForm/>
           </Box>
         </Box>
