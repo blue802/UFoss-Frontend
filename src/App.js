@@ -11,13 +11,10 @@ import Authentication from './pages/auth';
 import NotFound from './pages/error';
 import HomePage from './pages/home';
 import CourseDetail from './pages/course';
-import CategoryDetail from './pages/category';
+import CategoryPage from './pages/category';
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
-import runServer from './server';
 import { useAuth } from './services/auth.service';
 import CartPage from './pages/cart';
-
-// runServer();
 
 function App() {
   const [logged] = useAuth();
@@ -39,14 +36,17 @@ function App() {
           )}
           <Route exact path="/" component={HomePage} />
           <Route exact path="/cart" component={CartPage} />
-          <Route exact path="/courses/:courseId" component={CourseDetail} />
-          <Route exact path="/categoryDetail" component={CategoryDetail} />
+          <Route
+            exact
+            path="/categories/:category/courses/:courseId"
+            component={CourseDetail}
+          />
+          <Route exact path="/categories/:category" component={CategoryPage} />
           <Route exact path="/notFound" component={NotFound} />
           <Redirect exact from="/*" to="/notFound" />
         </Switch>
       </OverallLayout>
     </Router>
-
   );
 }
 export default App;

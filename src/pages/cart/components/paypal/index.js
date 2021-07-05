@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect } from 'react';
 
 export default function Paypal(props) {
   const { totalAmount, handleCleanCart } = props;
@@ -8,12 +8,12 @@ export default function Paypal(props) {
       .Buttons({
         createOrder: (data, actions, err) => {
           return actions.order.create({
-            intent: "CAPTURE",
+            intent: 'CAPTURE',
             purchase_units: [
               {
-                description: "Cool looking table",
+                description: 'Cool looking table',
                 amount: {
-                  currency_code: "CAD",
+                  currency_code: 'CAD',
                   value: totalAmount,
                 },
               },
@@ -25,14 +25,15 @@ export default function Paypal(props) {
           handleCleanCart();
           console.log(order);
         },
-        onError: (err) => {
+        onError: err => {
           console.log(err);
         },
       })
       .render(paypal.current);
-  }
+  };
   useEffect(() => {
     handlePaypal();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

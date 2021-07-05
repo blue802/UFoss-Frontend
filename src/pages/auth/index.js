@@ -59,7 +59,7 @@ function Authentication() {
       const message = error?.response?.data?.message;
       message &&
         toast({
-          title: error.response.data.message,
+          title: message,
           status: 'error',
         });
     }
@@ -70,8 +70,9 @@ function Authentication() {
       await login(username, password);
       history.push('/');
     } catch (error) {
+      const message = error?.response?.data?.message;
       toast({
-        title: error.response.data.message,
+        title: message,
         status: 'error',
       });
     }
@@ -91,14 +92,14 @@ function Authentication() {
 
   const _onSuccessLoginGoogle = res => {
     var id_token = res.getAuthResponse().id_token;
-    tokenProvider.setToken({ tokenAccess: id_token });
+    tokenProvider.setToken({ accessToken: id_token });
     history.push('/');
   };
 
   const _onFailureLoginGoogle = res => {};
 
   return (
-    <Container maxW="container.xl" mt="9vh" minH="74vh">
+    <Container maxW="container.xl" mt="64px" minH="74vh">
       <Box w="320px" mx="auto" pt="3rem">
         {isSignUp ? (
           <Heading size="sm">Sign-Up and Start Learning!</Heading>

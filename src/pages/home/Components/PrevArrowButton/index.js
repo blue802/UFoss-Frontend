@@ -10,12 +10,12 @@ const PrevArrowButton = props => {
       onClick={onClick}
       pos="absolute"
       top="20%"
-      left="-20px"
+      left="-1rem"
       rounded="full"
       fontSize="xl"
       variant="outline"
       colorScheme="telegram"
-      zIndex="10"
+      zIndex="9"
       p="3"
     >
       <Icon as={FaAngleLeft} />

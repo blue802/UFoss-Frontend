@@ -18,6 +18,7 @@ import { STATUS } from '../../store/constant';
 
 function HomePage() {
   const [data, status, error] = useCourses();
+
   const settings = {
     dots: false,
     infinite: false,
@@ -25,6 +26,7 @@ function HomePage() {
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 5,
+    swipeToSlide: true,
     nextArrow: <NextArrowButton />,
     prevArrow: <PrevArrowButton />,
     responsive: [
@@ -33,8 +35,6 @@ function HomePage() {
         settings: {
           slidesToShow: 4,
           slidesToScroll: 4,
-          infinite: true,
-          dots: true,
         },
       },
       {
@@ -47,8 +47,10 @@ function HomePage() {
       {
         breakpoint: 448,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 1.5,
           slidesToScroll: 1,
+          prevArrow: false,
+          nextArrow: false,
         },
       },
     ],
@@ -56,38 +58,41 @@ function HomePage() {
 
   let content;
   if (status === STATUS.FAILED) {
-    return <Text color="red.400">{error}</Text>;
+    content = <Text color="red.400">{error}</Text>;
   } else if (status === STATUS.LOADING) {
     content = <Spinner />;
   } else if (status === STATUS.SUCCEEDED) {
     content = (
-      <Slider {...settings}>
-        {data?.map(item => (
-          <Box px="2" pb="5" key={item.id}>
-            <CourseCard data={item} />
+      <>
+        {data.map(({ id, name, children }) => (
+          <Box mb="2" key={id}>
+            <Heading as="h3" mb="5" fontSize="20px" textTransform="capitalize">
+              {name}
+            </Heading>
+            <Slider {...settings}>
+              {children?.map(item => (
+                <Box px="2" pb="5" key={item.id}>
+                  <CourseCard data={item} />
+                </Box>
+              ))}
+            </Slider>
           </Box>
         ))}
-      </Slider>
+      </>
     );
   }
 
   return (
-    <Container maxW="container.2xl" mt="8vh" minH="90vh">
+    <Container maxW="container.2xl" mt="64px" minH="90vh">
       <Box w="full" mb="6rem">
-        <Image src="/banner.png" alt="Segun Adebayo" />
+        <Image
+          src="/banner.png"
+          alt="Segun Adebayo"
+          objectFit="cover"
+          height={['25vh', 'auto']}
+        />
       </Box>
-      <Box mb="2">
-        <Heading as="h3" mb="5" fontSize="20px">
-          Web Development
-        </Heading>
-        {content}
-      </Box>
-      <Box mb="5">
-        <Heading as="h3" mb="5" fontSize="20px">
-          Design
-        </Heading>
-        {content}
-      </Box>
+      {content}
     </Container>
   );
 }
