@@ -15,6 +15,7 @@ import CategoryPage from './pages/category';
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 import { useAuth } from './services/auth.service';
 import CartPage from './pages/cart';
+import ProfilePage from './pages/profile';
 
 function App() {
   const [logged] = useAuth();
@@ -35,6 +36,7 @@ function App() {
             />
           )}
           <Route exact path="/" component={HomePage} />
+          <Route exact path="/profile" component={ProfilePage} />
           <Route exact path="/cart" component={CartPage} />
           <Route
             exact
