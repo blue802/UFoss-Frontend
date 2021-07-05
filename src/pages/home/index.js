@@ -40,8 +40,10 @@ function HomePage() {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToShow: 2.5,
+          slidesToScroll: 2,
+          prevArrow: false,
+          nextArrow: false,
         },
       },
       {
@@ -92,7 +94,7 @@ function HomePage() {
           height={['25vh', 'auto']}
         />
       </Box>
-      {content}
+      <Box p={['1', '3', '5']}>{content}</Box>
     </Container>
   );
 }
