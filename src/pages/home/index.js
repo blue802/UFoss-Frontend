@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  Image,
-  Box,
-  Container,
-  Heading,
-  Text,
-  Spinner,
-} from '@chakra-ui/react';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { Image, Box, Container, Heading, Text } from '@chakra-ui/react';
 import Slider from 'react-slick';
 
 import CourseCard from '../course/components/CourseCard';

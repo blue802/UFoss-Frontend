@@ -41,6 +41,7 @@ function CartPage() {
   };
   useEffect(() => {
     handleSumPrice();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemCarts]);
 
   return (

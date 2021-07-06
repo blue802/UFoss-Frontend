@@ -30,10 +30,11 @@ function CourseDetail(props) {
     );
   }
 
-  // const { rating, score } = data.vote;
-  // const point = rating > 0 && score / (rating * 2);
+  const { title, description, rate, instructor, lessons, price } = data;
+  const { rating, score } = rate;
+  const point = rating > 0 ? score / (rating * 2) : 0;
 
-  const listLesson = data.lessons.map((lesson, index) => (
+  const listLesson = lessons.map((lesson, index) => (
     <HStack key={lesson.id} py="2">
       <Icon as={FaRegPlayCircle} mr="2" color="gray.400" />
       <Link href={lesson.videoURL} isExternal isTruncated>
@@ -49,16 +50,17 @@ function CourseDetail(props) {
           <Grid templateColumns="repeat(3, 1fr)" gap="12">
             <GridItem colSpan={2}>
               <Heading lineHeight="normal" fontWeight="bold" mb="5">
-                {data.title}
+                {title}
               </Heading>
               <Text fontSize="md" mb="3">
-                {truncateString(data.description, 420)}
+                {truncateString(description, 420)}
               </Text>
               <Box mb="3">
-                {/* <StarGroup rating={rating} point={point} showAvg={true} /> */}
+                <StarGroup rating={rating} point={point} showAvg={true} />
               </Box>
               <Text as="i" fontSize="md">
-                Created by <Text as="b">{data.instructor}</Text>
+                Created by{' '}
+                <Text as="b">{`${instructor.firstName} ${instructor.lastName}`}</Text>
               </Text>
             </GridItem>
           </Grid>
@@ -78,8 +80,8 @@ function CourseDetail(props) {
             <Box pos="sticky" top="4rem">
               <CourseWidget
                 data={{
-                  price: data.price,
-                  intro: data.lessons[0],
+                  price: price,
+                  intro: lessons[0],
                 }}
               />
             </Box>

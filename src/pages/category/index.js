@@ -9,9 +9,10 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { MdDehaze } from 'react-icons/md';
-import { useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
+import qs from 'query-string';
 
 import useCoursesByCategory from '../../hooks/useCoursesByCategory';
 import { STATUS } from '../../store/constant';
@@ -21,8 +22,14 @@ import Paginator from './components/Paginator';
 import SpinnerLoading from '../../components/SpinnerLoading';
 
 function CategoryPage() {
+  const history = useHistory();
   const { category } = useParams();
-  const [data, status, error] = useCoursesByCategory(category);
+  const { search, pathname } = useLocation();
+  const [query, setQuery] = useState(qs.parse(search));
+  const [data, status, error] = useCoursesByCategory(
+    category,
+    qs.stringify(query)
+  );
   const { isOpen, onToggle } = useDisclosure();
 
   let content;
@@ -31,13 +38,19 @@ function CategoryPage() {
   } else if (status === STATUS.LOADING) {
     content = <SpinnerLoading />;
   } else if (status === STATUS.SUCCEEDED) {
-    content = data.map(item => {
+    content = data.data?.map(item => {
       return <CourseRowItem key={item.id} data={item} />;
     });
   }
 
   const handleFilter = v => {
     console.log(v);
+  };
+
+  const handlePageChange = selected => {
+    const newQuery = { ...query, page: selected, size: 3 };
+    setQuery(newQuery);
+    history.push(pathname + '?' + qs.stringify(newQuery));
   };
 
   return (
@@ -62,7 +75,7 @@ function CategoryPage() {
             </Select>
           </HStack>
           <Text flex="1" color="gray.400" fontSize="lg" textAlign="right">
-            {data?.length} results
+            {data.totalItems} results
           </Text>
         </HStack>
 
@@ -80,7 +93,12 @@ function CategoryPage() {
           <Box flex="1">{content}</Box>
         </HStack>
       </Box>
-      <Paginator />
+      <Paginator
+        currentPage={data.currentPage}
+        totalItems={data.totalItems}
+        totalPages={data.totalPages}
+        onPageChange={handlePageChange}
+      />
     </Container>
   );
 }

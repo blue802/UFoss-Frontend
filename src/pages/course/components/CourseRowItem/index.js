@@ -22,12 +22,12 @@ function CourseRowItem(props) {
     description,
     instructor,
     price,
-    vote,
+    rate,
     imageURL,
     category,
   } = props.data;
-  // const { rating, score } = vote;
-  // const point = rating > 0 && score / (rating * 2);
+  const { rating, score } = rate;
+  const point = rating > 0 ? score / (rating * 2) : 0;
 
   const handleAddToCart = () => {
     console.log('added');
@@ -62,9 +62,9 @@ function CourseRowItem(props) {
             </Heading>
             <Text pb="2">{truncateString(description, 140)}</Text>
             <Text pb="2" color="gray.400">
-              {instructor}
+              {`${instructor.firstName} ${instructor.lastName}`}
             </Text>
-            {/* <StarGroup point={point} rating={rating} /> */}
+            <StarGroup point={point} rating={rating} />
           </Box>
         </HStack>
       </LinkBox>
@@ -90,7 +90,7 @@ CourseRowItem.prototype = {
     description: PropTypes.string,
     imageUrl: PropTypes.string,
     price: PropTypes.number,
-    instructor: PropTypes.string, //this must be object
+    instructor: PropTypes.object,
     vote: PropTypes.shape({
       rating: PropTypes.number,
       score: PropTypes.number,

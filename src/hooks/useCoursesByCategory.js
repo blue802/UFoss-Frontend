@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { STATUS } from '../store/constant';
 import API from '../utils/API';
 
-const useCoursesByCategory = categoryName => {
+const useCoursesByCategory = (category, query) => {
   const [data, setData] = useState([]);
   const [status, setStatus] = useState(STATUS.IDLE);
   const [error, setError] = useState(null);
@@ -11,7 +11,7 @@ const useCoursesByCategory = categoryName => {
     async function fetchData() {
       try {
         setStatus(STATUS.LOADING);
-        const res = await API.get(`/categories/${categoryName}/courses`);
+        const res = await API.get(`/categories/${category}/courses?${query}`);
         setData(res.data);
         setStatus(STATUS.SUCCEEDED);
       } catch (error) {
@@ -21,10 +21,8 @@ const useCoursesByCategory = categoryName => {
       }
     }
 
-    if (status === STATUS.IDLE) {
-      fetchData();
-    }
-  }, [categoryName, status]);
+    fetchData();
+  }, [category, query]);
 
   return [data, status, error];
 };

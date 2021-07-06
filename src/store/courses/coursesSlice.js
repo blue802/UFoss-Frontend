@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { authHeader } from '../../services/auth.service';
 import API from '../../utils/API';
 import { STATUS } from '../constant';
 

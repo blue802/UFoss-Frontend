@@ -29,11 +29,11 @@ function CourseCard(props) {
     imageURL,
     price,
     instructor,
-    vote,
+    rate,
     category,
   } = props.data;
-  // const { rating, score } = vote;
-  // const point = rating > 0 && score / (rating * 2);
+  const { rating, score } = rate;
+  const point = rating > 0 ? score / (rating * 2) : 0;
 
   return (
     <LinkBox as="article" textAlign="left">
@@ -48,9 +48,9 @@ function CourseCard(props) {
               </LinkOverlay>
             </Heading>
             <Text mb="1" fontSize="sm" color="gray.400">
-              {instructor}
+              {`${instructor.firstName} ${instructor.lastName}`}
             </Text>
-            {/* <StarGroup point={point} rating={rating} /> */}
+            <StarGroup point={point} rating={rating} />
             <Text fontWeight="bold" mt="1">
               ${price}
             </Text>
@@ -70,7 +70,7 @@ function CourseCard(props) {
                 {truncateString(title, 50)}
               </Heading>
               <Text mb="3" fontSize="sm" color="gray.400">
-                {instructor}
+                {`${instructor.firstName} ${instructor.lastName}`}
               </Text>
               <Text
                 textOverflow="ellipsis"
@@ -106,7 +106,7 @@ CourseCard.prototype = {
     description: PropTypes.string,
     imageUrl: PropTypes.string,
     price: PropTypes.number,
-    instructor: PropTypes.string, //this must be object
+    instructor: PropTypes.object,
     vote: PropTypes.shape({
       rating: PropTypes.number,
       score: PropTypes.number,
