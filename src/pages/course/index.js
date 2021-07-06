@@ -19,34 +19,34 @@ import { truncateString } from '../../utils/stringUtils';
 import { FaRegPlayCircle } from 'react-icons/fa';
 
 function CourseDetail(props) {
-  const { courseId } = useParams();
-  const data = useCourseById(courseId);
+  const { category, courseId } = useParams();
+  const data = useCourseById(category, courseId);
 
   if (!data) {
     return (
-      <Container maxW="container.xl" mt="8vh" minH="90vh">
+      <Container maxW="container.2xl" mt="64px" minH="90vh">
         <Text>Loading...</Text>
       </Container>
     );
   }
 
-  const { rating, score } = data.vote;
-  const point = rating > 0 && score / (rating * 2);
+  // const { rating, score } = data.vote;
+  // const point = rating > 0 && score / (rating * 2);
 
   const listLesson = data.lessons.map((lesson, index) => (
     <HStack key={lesson.id} py="2">
       <Icon as={FaRegPlayCircle} mr="2" color="gray.400" />
-      <Link href={lesson.url} isExternal isTruncated>
-        {lesson.title}
+      <Link href={lesson.videoURL} isExternal isTruncated>
+        Lecture {index}: {lesson.title}
       </Link>
     </HStack>
   ));
 
   return (
-    <Box w="full" mt="8vh" minH="90vh">
-      <Box w="full" bgColor="black" px="2rem">
+    <Box w="full" mt="64px" minH="90vh">
+      <Box w="full" bgGradient="linear(to-r, purple.500, pink.500)" px="2rem">
         <Container maxW="container.xl" py="16" color="white">
-          <Grid templateColumns="repeat(3, 1fr)" gap={12}>
+          <Grid templateColumns="repeat(3, 1fr)" gap="12">
             <GridItem colSpan={2}>
               <Heading lineHeight="normal" fontWeight="bold" mb="5">
                 {data.title}
@@ -55,7 +55,7 @@ function CourseDetail(props) {
                 {truncateString(data.description, 420)}
               </Text>
               <Box mb="3">
-                <StarGroup rating={rating} point={point} showAvg={true} />
+                {/* <StarGroup rating={rating} point={point} showAvg={true} /> */}
               </Box>
               <Text as="i" fontSize="md">
                 Created by <Text as="b">{data.instructor}</Text>
@@ -74,7 +74,7 @@ function CourseDetail(props) {
               {listLesson}
             </Box>
           </GridItem>
-          <GridItem colSpan={1} pos="relative" top="-18rem">
+          <GridItem colSpan={1} pos="relative" top="-12rem">
             <Box pos="sticky" top="4rem">
               <CourseWidget
                 data={{

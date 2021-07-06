@@ -7,10 +7,6 @@ const createTokenProvider = () => {
   _token = _token ? JSON.parse(_token) : null;
   let listeners = [];
 
-  if (_token?.tokenAccess) {
-    _token.accessToken = _token.tokenAccess;
-  }
-
   const getExpirationDate = jwtToken => {
     if (!jwtToken) {
       return null;
@@ -35,7 +31,7 @@ const createTokenProvider = () => {
 
     if (isExpired(getExpirationDate(_token.accessToken))) {
       const updatedToken = await API.post(
-        '/update-token',
+        '/refresh-token',
         {},
         {
           headers: {
@@ -103,7 +99,7 @@ export const createAuthProvider = () => {
   const tokenProvider = createTokenProvider();
 
   const register = (username, email, password) => {
-    return API.post('/register', {
+    return API.post('/auth/register', {
       username,
       email,
       password,
@@ -111,7 +107,7 @@ export const createAuthProvider = () => {
   };
 
   const login = (username, password) => {
-    return API.post('/login', {
+    return API.post('/auth/login', {
       username,
       password,
     }).then(res => {
@@ -137,11 +133,11 @@ export const createAuthProvider = () => {
   };
 
   const reqResetPassword = email => {
-    return API.post('/password/reset', { email });
+    return API.post('/auth/reset-password', { email });
   };
 
   const resetPassword = (email, password, token) => {
-    return API.post('/password/update', {
+    return API.post('/auth/update-password', {
       email,
       password,
       resetPasswordToken: token,

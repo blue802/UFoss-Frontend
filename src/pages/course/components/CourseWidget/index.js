@@ -21,9 +21,11 @@ const CourseWidget = props => {
       rounded="md"
       overflow="hidden"
     >
-      <AspectRatio width="full" height="192px" ratio={1}>
-        <iframe title="naruto" src={intro.url} allowFullScreen />
-      </AspectRatio>
+      {intro && (
+        <AspectRatio width="full" height="192px" ratio={1}>
+          <iframe title={intro.title} src={intro.videoURL} allowFullScreen />
+        </AspectRatio>
+      )}
       <Box p="5">
         <Heading as="h5" color="black" fontSize="4xl" mb="3">
           ${price}
