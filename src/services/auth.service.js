@@ -51,14 +51,7 @@ const createTokenProvider = () => {
       return null;
     }
 
-    const jwt = JSON.parse(atob(_token.accessToken.split('.')[1]));
-    const userInfo =
-      (jwt && {
-        username: jwt.name,
-        email: jwt.email,
-        avatarUrl: jwt.picture,
-      }) ||
-      null;
+    const userInfo = _token.userEntity;
 
     return userInfo;
   };
@@ -127,8 +120,8 @@ export const createAuthProvider = () => {
 
     return token
       ? {
-          Authorization: `Basic ${token}`,
-        }
+        Authorization: `Basic ${token}`,
+      }
       : {};
   };
 

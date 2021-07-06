@@ -43,7 +43,6 @@ const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [searchTerm, setSearchTerm] = useState();
   const [data, status] = useSearchCourses(searchTerm);
-
   const loginSignupButtons = (
     <Box>
       <Link href="/login" _hover={{ textDecoration: 'none' }}>
