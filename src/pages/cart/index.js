@@ -4,7 +4,7 @@ import { Flex, Box, Text, Container, Heading } from '@chakra-ui/react';
 import CartItem from './components/CartItem';
 import CheckoutForm from './components/CheckoutForm';
 import morkData from '../../course-dummy.json';
-import Paypal from './components/Paypal';
+import Paypal from './components/paypal/index';
 
 function CartPage() {
   const [itemCarts, setItemCarts] = useState(morkData);

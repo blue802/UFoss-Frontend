@@ -32,9 +32,8 @@ function CourseRowItem(props) {
   const handleAddToCart = () => {
     console.log('added');
   };
-
   return (
-    <HStack
+    <Box
       py="5"
       alignItems="start"
       borderBottomWidth="1px"
@@ -44,42 +43,44 @@ function CourseRowItem(props) {
       <LinkBox flex="1">
         <HStack alignItems="start">
           <Image
-            w="248px"
-            h="160px"
+            w={['12rem','12rem','15rem','15rem']}
+            h='10rem'
             objectFit="cover"
             src={imageURL}
             alt={title}
             rounded="md"
           />
-          <Box flex="1" pl="2">
-            <Heading as="h4" fontSize="xl" pb="2">
-              <LinkOverlay
-                as={ReactLink}
-                to={`/categories/${category?.name}/courses/${id}`}
+          <Box display="flex" width="100%" flexDirection={['column','column','column','row']} pl="2">
+            <Box width="100%">
+              <Heading as="h4" fontSize={['sm','sm','md',"xl"]} pb="2">
+                <LinkOverlay
+                  as={ReactLink}
+                  to={`/categories/${category?.name}/courses/${id}`}
+                >
+                  {title}
+                </LinkOverlay>
+              </Heading>
+              <Text pb="2" display={['none','none','none','block']}>{truncateString(description, 100)}</Text>
+              <Text pb="2" color="gray.400">
+                {instructor}
+              </Text>
+              {/* <StarGroup point={point} rating={rating} /> */}
+            </Box>
+            <Box fontWeight="bold">
+              <Text textAlign={['left','left','left','right']}>${price}</Text>
+              <Button
+                colorScheme="red"
+                variant="outline"
+                onClick={handleAddToCart}
+                mt={['0.6rem','0.6rem','0.8rem','5.6rem']}
               >
-                {title}
-              </LinkOverlay>
-            </Heading>
-            <Text pb="2">{truncateString(description, 140)}</Text>
-            <Text pb="2" color="gray.400">
-              {instructor}
-            </Text>
-            {/* <StarGroup point={point} rating={rating} /> */}
+                Add To Cart
+              </Button>
+            </Box>
           </Box>
         </HStack>
       </LinkBox>
-      <Box fontWeight="bold">
-        <Text textAlign="right">${price}</Text>
-        <Button
-          colorScheme="red"
-          variant="outline"
-          onClick={handleAddToCart}
-          mt="90px"
-        >
-          Add To Cart
-        </Button>
-      </Box>
-    </HStack>
+    </Box>
   );
 }
 
