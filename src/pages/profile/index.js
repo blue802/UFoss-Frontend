@@ -1,5 +1,5 @@
 import React from 'react';
-import ProfileForm from './Components/ProfileForm'
+import ProfileForm from './Components/ProfileForm';
 import {
   Box,
   Container,
@@ -10,16 +10,24 @@ import {
   Heading,
 } from '@chakra-ui/react';
 
-
 const ProfilePage = () => {
   return (
-    <Container maxW="container.2xl" mt="8vh" minH="90vh" pt="5">
-      <Flex w="70%" h="600px" margin="0 auto" textAlign="center">
-        <Box w="200px" pt="5">
-          <Flex w="100px" h="100px" direction="column" w="100%">
+    <Container
+      maxW={['container.sm', 'container.sm', 'container.lg']}
+      mt="8vh"
+      minH="80vh"
+      pt="5"
+    >
+      <Flex
+        margin="0 auto"
+        textAlign="center"
+        direction={['column', 'column', 'column', 'row']}
+      >
+        <Box pt="5">
+          <Box w="100px" h="100px" w="100%">
             <Box position="relative">
               <Image
-                src='https://chuuniotaku.com/wp-content/uploads/2019/07/nhung-cau-noi-hay-cua-itachi.jpg'
+                src="https://chuuniotaku.com/wp-content/uploads/2019/07/nhung-cau-noi-hay-cua-itachi.jpg"
                 w="100px"
                 h="100px"
                 borderRadius="50%"
@@ -36,12 +44,12 @@ const ProfilePage = () => {
                 </Button>
               </Box>
             </Box>
-          </Flex>
+          </Box>
           <Text color="gray.700" fontWeight="900" mt="7" fontSize="20px">
             Full Name
           </Text>
         </Box>
-        <Box flex="1" justifyContent="center" direction="column" >
+        <Box flex="1" justifyContent="center" direction="column">
           <Box w="100%" h="10%" p="20px" textAlign="center">
             <Heading as="h3" size="lg" color="gray.700">
               Your Profile
@@ -49,7 +57,7 @@ const ProfilePage = () => {
           </Box>
 
           <Box flex="1">
-            <ProfileForm/>
+            <ProfileForm />
           </Box>
         </Box>
       </Flex>

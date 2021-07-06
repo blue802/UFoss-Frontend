@@ -26,6 +26,7 @@ function CourseRowItem(props) {
     imageURL,
     category,
   } = props.data;
+  const check = props.check
   // const { rating, score } = vote;
   // const point = rating > 0 && score / (rating * 2);
 
@@ -42,14 +43,16 @@ function CourseRowItem(props) {
     >
       <LinkBox flex="1">
         <HStack alignItems="start">
-          <Image
-            w={['12rem','12rem','15rem','15rem']}
-            h='10rem'
-            objectFit="cover"
-            src={imageURL}
-            alt={title}
-            rounded="md"
-          />
+          <Box w={['12rem','12rem','15rem','15rem']}>
+            <Image
+              w='100%'
+              h='10rem'
+              objectFit="cover"
+              src={imageURL}
+              alt={title}
+              rounded="md"
+            />  
+          </Box>   
           <Box display="flex" width="100%" flexDirection={['column','column','column','row']} pl="2">
             <Box width="100%">
               <Heading as="h4" fontSize={['sm','sm','md',"xl"]} pb="2">
@@ -66,6 +69,39 @@ function CourseRowItem(props) {
               </Text>
               {/* <StarGroup point={point} rating={rating} /> */}
             </Box>
+            {/* <Box fontWeight="bold">
+              <Text textAlign={['left','left','left','right']}>${price}</Text>
+              {check?
+              <Button
+              colorScheme="blue"
+              variant="outline"
+              onClick={handleAddToCart}
+              mt={['0.6rem','0.6rem','0.8rem','5.6rem']}
+            >
+              Go to Courses
+            </Button>
+            :
+            <Button
+              colorScheme="blue"
+              variant="outline"
+              onClick={handleAddToCart}
+              mt={['0.6rem','0.6rem','0.8rem','5.6rem']}
+            >
+              Add To Cart
+            </Button>
+            }
+            </Box> */}
+            {check?
+            <Box fontWeight="bold">
+              <Button
+              colorScheme="blue"
+              variant="outline"
+              onClick={handleAddToCart}
+            >
+              Go to Courses
+              </Button>
+            </Box>
+            :
             <Box fontWeight="bold">
               <Text textAlign={['left','left','left','right']}>${price}</Text>
               <Button
@@ -77,6 +113,7 @@ function CourseRowItem(props) {
                 Add To Cart
               </Button>
             </Box>
+            }
           </Box>
         </HStack>
       </LinkBox>
@@ -100,3 +137,29 @@ CourseRowItem.prototype = {
 };
 
 export default CourseRowItem;
+// {check ? (
+//               <Box fontWeight="bold">
+//                 <Button
+//                   colorScheme="blue"
+//                   variant="outline"
+//                   onClick={handleAddToCart}
+//                   mt={['0.6rem', '0.6rem', '0.8rem', '5.6rem']}
+//                 >
+//                   Go to Courses
+//                 </Button>
+//               </Box>
+//             ) : (
+//               <Box fontWeight="bold">
+//                 <Text textAlign={['left', 'left', 'left', 'right']}>
+//                   ${price}
+//                 </Text>
+//                 <Button
+//                   colorScheme="red"
+//                   variant="outline"
+//                   onClick={handleAddToCart}
+//                   mt={['0.6rem', '0.6rem', '0.8rem', '5.6rem']}
+//                 >
+//                   Add To Cart
+//                 </Button>
+//               </Box>
+//             )}

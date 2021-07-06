@@ -16,6 +16,7 @@ import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 import { useAuth } from './services/auth.service';
 import CartPage from './pages/cart';
 import ProfilePage from './pages/profile';
+import MyLearning from './pages/myLearning';
 
 function App() {
   const [logged] = useAuth();
@@ -44,6 +45,7 @@ function App() {
             component={CourseDetail}
           />
           <Route exact path="/categories/:category" component={CategoryPage} />
+          <Route exact path="/learning" component={MyLearning} />
           <Route exact path="/notFound" component={NotFound} />
           <Redirect exact from="/*" to="/notFound" />
         </Switch>
