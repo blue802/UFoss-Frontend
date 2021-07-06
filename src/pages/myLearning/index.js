@@ -54,7 +54,7 @@ import {
         </Heading>
         <Box>
         <Heading py="5" size="xl">
-            My Learing
+            My Learning
         </Heading>    
           <HStack alignItems="start" spacing="5">
             <Box flex="1">{content}</Box>
