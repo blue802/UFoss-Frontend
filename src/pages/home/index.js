@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  Image,
-  Box,
-  Container,
-  Heading,
-  Text,
-  Spinner,
-} from '@chakra-ui/react';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { Image, Box, Container, Heading, Text } from '@chakra-ui/react';
 import Slider from 'react-slick';
 
 import CourseCard from '../course/components/CourseCard';
@@ -15,6 +7,7 @@ import NextArrowButton from './Components/NextArrowButton';
 import PrevArrowButton from './Components/PrevArrowButton';
 import useCourses from '../../hooks/useCourses';
 import { STATUS } from '../../store/constant';
+import SpinnerLoading from '../../components/SpinnerLoading';
 
 function HomePage() {
   const [data, status, error] = useCourses();
@@ -62,7 +55,7 @@ function HomePage() {
   if (status === STATUS.FAILED) {
     content = <Text color="red.400">{error}</Text>;
   } else if (status === STATUS.LOADING) {
-    content = <Spinner />;
+    content = <SpinnerLoading />;
   } else if (status === STATUS.SUCCEEDED) {
     content = (
       <>

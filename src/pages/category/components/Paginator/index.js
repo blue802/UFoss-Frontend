@@ -7,10 +7,10 @@ import './style.css';
 import { Box, Icon } from '@chakra-ui/react';
 
 const Paginator = props => {
-  const { pages, total, size } = props;
+  const { totalPages, onPageChange } = props;
 
-  const handlePageClick = data => {
-    console.log(data);
+  const handlePageClick = ({ selected }) => {
+    onPageChange(selected);
   };
 
   return (
@@ -18,7 +18,7 @@ const Paginator = props => {
       <ReactPaginate
         previousLabel={<Icon as={FaAngleLeft} />}
         nextLabel={<Icon as={FaAngleRight} />}
-        pageCount={pages}
+        pageCount={totalPages}
         pageRangeDisplayed={2}
         marginPagesDisplayed={1}
         onPageChange={handlePageClick}
@@ -30,9 +30,10 @@ const Paginator = props => {
 };
 
 Paginator.propTypes = {
-  pages: PropTypes.number,
-  total: PropTypes.number,
-  size: PropTypes.number,
+  currentPage: PropTypes.number,
+  totalItems: PropTypes.number,
+  totalPages: PropTypes.number,
+  onPageChange: PropTypes.func,
 };
 
 export default Paginator;

@@ -2,29 +2,29 @@ import { useEffect, useState } from 'react';
 import { STATUS } from '../store/constant';
 import API from '../utils/API';
 
-const useCoursesByCategory = (category, query) => {
+const useSearchCourses = searchTerm => {
   const [data, setData] = useState([]);
   const [status, setStatus] = useState(STATUS.IDLE);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(STATUS.IDLE);
 
   useEffect(() => {
     async function fetchData() {
       try {
         setStatus(STATUS.LOADING);
-        const res = await API.get(`/categories/${category}/courses?${query}`);
+        const res = await API.get(
+          `/courses?title=${searchTerm}&desc=${searchTerm}`
+        );
         setData(res.data);
         setStatus(STATUS.SUCCEEDED);
       } catch (error) {
-        const message = error?.response?.data?.message;
-        setError(message);
+        setError(error.response?.data?.message);
         setStatus(STATUS.FAILED);
       }
     }
-
     fetchData();
-  }, [category, query]);
+  }, [searchTerm]);
 
   return [data, status, error];
 };
 
-export default useCoursesByCategory;
+export default useSearchCourses;

@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { authHeader } from '../../services/auth.service';
 import API from '../../utils/API';
 import { STATUS } from '../constant';
 
@@ -17,8 +16,10 @@ export const fetchCourses = createAsyncThunk(
 
     if (data.length > 0) {
       for (let i = 0; i < data.length; i++) {
-        const res = await API.get(`/categories/${data[i].name}/courses`);
-        data[i].children = [...res.data];
+        const res = await API.get(
+          `/categories/${data[i].name}/courses?size=15`
+        );
+        data[i].children = [...res.data?.data];
       }
     }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Avatar,
   Box,
@@ -33,12 +33,16 @@ import logo from '../../assets/images/logo.png';
 import { useAuth } from '../../services/auth.service';
 import AvatarNav from '../../components/AvatarNav';
 import useCategories from '../../hooks/useCategories';
+import useSearchCourses from '../../hooks/useSearchCourses';
+import { STATUS } from '../../store/constant';
 
 const Header = () => {
   const [profile] = useAuth();
-  const categories = useCategories();
+  const [categories] = useCategories();
   const [isLargeScreen] = useMediaQuery('(min-width: 42rem)');
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [searchTerm, setSearchTerm] = useState();
+  const [data, status] = useSearchCourses(searchTerm);
 
   const loginSignupButtons = (
     <Box>
@@ -132,7 +136,12 @@ const Header = () => {
         </Box>
       )}
 
-      <SearchBar isLargeScreen={isLargeScreen} />
+      <SearchBar
+        data={data}
+        onChange={setSearchTerm}
+        isSearching={status === STATUS.LOADING}
+        isLargeScreen={isLargeScreen}
+      />
 
       {isLargeScreen ? (
         <HStack>

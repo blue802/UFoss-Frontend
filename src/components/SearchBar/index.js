@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { Link as ReactLink } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -7,16 +8,21 @@ import {
   DrawerBody,
   DrawerContent,
   DrawerHeader,
+  Heading,
   Icon,
   Input,
   InputGroup,
   InputLeftElement,
+  Link,
+  Text,
   useDisclosure,
 } from '@chakra-ui/react';
 import { AiOutlineSearch, AiOutlineCloseCircle } from 'react-icons/ai';
+import { truncateString } from '../../utils/stringUtils';
+import SpinnerLoading from '../SpinnerLoading';
 
 const SearchBar = props => {
-  const { onChange, isLargeScreen } = props;
+  const { data, onChange, isLargeScreen, isSearching } = props;
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const _onChange = e => {
@@ -40,6 +46,24 @@ const SearchBar = props => {
     </InputGroup>
   );
 
+  const listLinkItems = data?.map(({ id, title, description, category }) => (
+    <Link
+      as={ReactLink}
+      to={`/categories/${category.name}/courses/${id}`}
+      key={id}
+      display="inline-block"
+      mb="3"
+      onClick={onClose}
+    >
+      <Heading as="h5" fontSize="xl" color="gray.600">
+        {truncateString(title, 30)}
+      </Heading>
+      <Text fontSize="sm" color="gray.400">
+        {truncateString(description, 40)}
+      </Text>
+    </Link>
+  ));
+
   if (isLargeScreen) {
     return <Box flex="1">{inputGroup}</Box>;
   }
@@ -55,7 +79,7 @@ const SearchBar = props => {
         <Icon as={AiOutlineSearch} fontSize="xl" color="gray.400" />
       </Button>
       <Drawer onClose={onClose} isOpen={isOpen} size="full">
-        <DrawerContent>
+        <DrawerContent overflow="hidden">
           <DrawerHeader textAlign="right">
             <Icon
               as={AiOutlineCloseCircle}
@@ -67,7 +91,9 @@ const SearchBar = props => {
             />
             {inputGroup}
           </DrawerHeader>
-          <DrawerBody></DrawerBody>
+          <DrawerBody>
+            {isSearching ? <SpinnerLoading /> : listLinkItems}
+          </DrawerBody>
         </DrawerContent>
       </Drawer>
     </>
@@ -76,6 +102,13 @@ const SearchBar = props => {
 
 SearchBar.propTypes = {
   onChange: PropTypes.func,
+  data: PropTypes.arrayOf({
+    id: PropTypes.string,
+    title: PropTypes.string,
+    description: PropTypes.string,
+    category: PropTypes.object,
+  }),
+  isSearching: PropTypes.bool,
   isLargeScreen: PropTypes.bool,
 };
 

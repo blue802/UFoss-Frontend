@@ -1,23 +1,24 @@
-import { useState, useEffect } from 'react';
-import API from '../utils/API';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchCategories,
+  selectCategories,
+} from '../store/categories/categoriesSlice';
+import { STATUS } from '../store/constant';
 
 const useCategories = () => {
-  const [data, setData] = useState([]);
+  const data = useSelector(selectCategories);
+  const status = useSelector(state => state.categories.status);
+  const error = useSelector(state => state.categories.error);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await API.get('/categories');
-        setData(res.data);
-      } catch (error) {
-        console.error(error.response?.data?.message);
-      }
+    if (status === STATUS.IDLE) {
+      dispatch(fetchCategories());
     }
+  }, [dispatch, status]);
 
-    fetchData();
-  }, []);
-
-  return data;
+  return [data, status, error];
 };
 
 export default useCategories;
