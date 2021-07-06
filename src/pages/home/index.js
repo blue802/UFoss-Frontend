@@ -15,6 +15,7 @@ import NextArrowButton from './Components/NextArrowButton';
 import PrevArrowButton from './Components/PrevArrowButton';
 import useCourses from '../../hooks/useCourses';
 import { STATUS } from '../../store/constant';
+import SpinnerLoading from '../../components/SpinnerLoading';
 
 function HomePage() {
   const [data, status, error] = useCourses();
@@ -62,7 +63,7 @@ function HomePage() {
   if (status === STATUS.FAILED) {
     content = <Text color="red.400">{error}</Text>;
   } else if (status === STATUS.LOADING) {
-    content = <Spinner />;
+    content = <SpinnerLoading />;
   } else if (status === STATUS.SUCCEEDED) {
     content = (
       <>

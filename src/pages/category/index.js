@@ -6,7 +6,6 @@ import {
   Heading,
   HStack,
   Select,
-  Spinner,
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
@@ -19,6 +18,7 @@ import { STATUS } from '../../store/constant';
 import CourseRowItem from '../course/components/CourseRowItem';
 import FilterComponent from './components/FilterComponent';
 import Paginator from './components/Paginator';
+import SpinnerLoading from '../../components/SpinnerLoading';
 
 function CategoryPage() {
   const { category } = useParams();
@@ -29,17 +29,7 @@ function CategoryPage() {
   if (status === STATUS.FAILED) {
     content = <Text color="red.400">{error}</Text>;
   } else if (status === STATUS.LOADING) {
-    content = (
-      <Box textAlign="center">
-        <Spinner
-          thickness="5px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="blue.500"
-          size="xl"
-        />
-      </Box>
-    );
+    content = <SpinnerLoading />;
   } else if (status === STATUS.SUCCEEDED) {
     content = data.map(item => {
       return <CourseRowItem key={item.id} data={item} />;

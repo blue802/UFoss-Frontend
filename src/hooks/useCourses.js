@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { STATUS } from '../store/constant';
 import { fetchCourses, selectAllCourses } from '../store/courses/coursesSlice';
 
 const useCourses = () => {
@@ -9,7 +10,7 @@ const useCourses = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (status === 'idle') {
+    if (status === STATUS.IDLE) {
       dispatch(fetchCourses());
     }
   }, [dispatch, status]);
