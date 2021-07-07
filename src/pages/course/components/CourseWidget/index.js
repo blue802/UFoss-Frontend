@@ -12,6 +12,9 @@ import { FcApproval } from 'react-icons/fc';
 
 const CourseWidget = props => {
   const { price, intro } = props.data;
+  const addToCart = () => {
+    console.log("add to cart");
+  }
 
   return (
     <Box
@@ -30,7 +33,7 @@ const CourseWidget = props => {
         <Heading as="h5" color="black" fontSize="4xl" mb="3">
           ${price}
         </Heading>
-        <Button w="full" colorScheme="red" size="lg" mb="3">
+        <Button w="full" colorScheme="red" size="lg" mb="3" onClick={addToCart}>
           Add to cart
         </Button>
         <Button w="full" colorScheme="teal" variant="outline" size="lg" mb="3">
