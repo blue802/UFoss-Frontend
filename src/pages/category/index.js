@@ -41,6 +41,7 @@ function CategoryPage() {
   );
   const [isSmallScreen] = useMediaQuery('(max-width: 1024px)');
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
+  const [criteria, setCriteria] = useState('newest');
 
   let content;
   if (status === STATUS.FAILED) {
@@ -54,7 +55,15 @@ function CategoryPage() {
   }
 
   const handleFilter = v => {
-    console.log(v);
+    const newQuery = { ...query, ...v };
+    setQuery(newQuery);
+    history.push(pathname + '?' + qs.stringify(newQuery));
+  };
+
+  const handleSelection = value => {
+    const newQuery = { ...query, criteria: value };
+    setQuery(newQuery);
+    history.push(pathname + '?' + qs.stringify(newQuery));
   };
 
   const handlePageChange = selected => {
@@ -94,9 +103,13 @@ function CategoryPage() {
                 Filter
               </Button>
             )}
-            <Select placeholder="Select option" defaultValue="newest">
+            <Select
+              placeholder="Select option"
+              defaultValue={criteria}
+              onChange={e => handleSelection(e.target.value)}
+            >
               <option value="newest">Newest</option>
-              <option value="hightestRated">Hightest Rated</option>
+              <option value="sellest">Best Seller</option>
             </Select>
           </HStack>
           <Text flex="1" color="gray.400" fontSize="lg" textAlign="right">

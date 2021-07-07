@@ -31,11 +31,11 @@ const createTokenProvider = () => {
 
     if (isExpired(getExpirationDate(_token.accessToken))) {
       const updatedToken = await API.post(
-        '/refresh-token',
+        '/auth/refresh-token',
         {},
         {
           headers: {
-            Authorization: `Basic ${_token.accessToken}`,
+            Authorization: `Basic ${_token.refreshToken}`,
           },
         }
       );
@@ -70,7 +70,10 @@ const createTokenProvider = () => {
 
   const setToken = token => {
     if (token) {
-      localStorage.setItem('TOKEN_AUTH', JSON.stringify(token));
+      localStorage.setItem(
+        'TOKEN_AUTH',
+        JSON.stringify({ ..._token, ...token })
+      );
     } else {
       localStorage.removeItem('TOKEN_AUTH');
     }
@@ -119,7 +122,7 @@ export const createAuthProvider = () => {
 
     return token
       ? {
-          Authorization: `Basic ${token}`,
+          Authorization: `Bearer ${token}`,
         }
       : {};
   };

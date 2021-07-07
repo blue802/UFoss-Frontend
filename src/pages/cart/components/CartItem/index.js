@@ -4,7 +4,6 @@ import { BsFillTagFill } from 'react-icons/bs';
 
 function CartItem(props) {
   const { itemCart, handleRemoveCartItems } = props;
-
   return (
     <Box padding='10px' borderWidth='2px' borderColor='#F4F5F5' marginBottom='10px'>
       <Flex direction='row'>
@@ -12,18 +11,18 @@ function CartItem(props) {
         <Box width='70%'>
           <Flex direction='row'>
             <Box marginRight='10px' >
-              <Image src={itemCart.imageUrl} alt='image of course' maxWidth='130px' height='auto' />
+              <Image src={itemCart.imageURL} alt='image of course' maxWidth='130px' height='auto' />
             </Box>
 
             <Box>
               <Text fontSize='15px' fontWeight='700' color='#29303b'>{itemCart.title}</Text>
-              <Text fontSize='13px' fontWeight='400' color='#686f7a'>{itemCart.instructor}</Text>
+              <Text fontSize='13px' fontWeight='400' color='#686f7a'>{`${itemCart.instructor.firstName}  ${itemCart.instructor.lastName} `}</Text>
             </Box>
 
           </Flex>
         </Box>
 
-        <Box width='15%' onClick={() => handleRemoveCartItems(itemCart.id)}>
+        <Box width='15%' onClick={() => handleRemoveCartItems(itemCart)}>
           <Text fontSize='13px' fontWeight='400' color='#007791' cursor='pointer' >
             Remove
           </Text>

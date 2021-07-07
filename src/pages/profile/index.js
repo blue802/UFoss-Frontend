@@ -8,9 +8,13 @@ import {
   Image,
   Button,
   Heading,
+  Avatar,
 } from '@chakra-ui/react';
+import { useAuth } from '../../services/auth.service';
 
 const ProfilePage = () => {
+  const [profile] = useAuth();
+
   return (
     <Container
       maxW={['container.sm', 'container.sm', 'container.lg']}
@@ -21,44 +25,34 @@ const ProfilePage = () => {
       <Flex
         margin="0 auto"
         textAlign="center"
-        direction={['column', 'column', 'column', 'row']}
+        direction={['column', 'column', 'row']}
       >
-        <Box pt="5">
-          <Box w="100px" h="100px" w="full">
-            <Box position="relative">
-              <Image
-                src="https://chuuniotaku.com/wp-content/uploads/2019/07/nhung-cau-noi-hay-cua-itachi.jpg"
-                w="100px"
-                h="100px"
-                borderRadius="50%"
-                margin="0 auto"
-              />
-              <Box
-                w="full"
-                textAlign="center"
-                position="absolute"
-                bottom="-15px"
-              >
-                <Button colorScheme="teal" w="70px" size="xs">
-                  Edit
-                </Button>
-              </Box>
-            </Box>
+        <Box w={['full', 'full', '16rem']} textAlign="center" mb="3">
+          <Box pos="relative" display="inline-block">
+            <Avatar
+              size="2xl"
+              name={profile.firstName}
+              src={profile.avatarURl}
+            />
+            <Button
+              colorScheme="teal"
+              pos="absolute"
+              bottom="0"
+              right="4"
+              size="xs"
+            >
+              Edit
+            </Button>
           </Box>
-          <Text color="gray.700" fontWeight="900" mt="7" fontSize="20px">
-            Full Name
-          </Text>
+          <Heading as="h5" color="gray" mt="3" fontSize="2xl">
+            {profile.username}
+          </Heading>
         </Box>
-        <Box flex="1" justifyContent="center" direction="column">
-          <Box w="100%" h="10%" p="20px" textAlign="center">
-            <Heading as="h3" size="lg" color="gray.700">
-              Your Profile
-            </Heading>
-          </Box>
-
-          <Box flex="1">
-            <ProfileForm />
-          </Box>
+        <Box flex="1">
+          <Heading as="h4" size="lg" color="gray.700" textAlign="center">
+            Your Profile
+          </Heading>
+          <ProfileForm profile={profile} />
         </Box>
       </Flex>
     </Container>

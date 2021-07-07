@@ -13,7 +13,6 @@ export const fetchCourses = createAsyncThunk(
   'courses/fetchCourses',
   async () => {
     const { data } = await API.get('/categories');
-
     if (data.length > 0) {
       for (let i = 0; i < data.length; i++) {
         const res = await API.get(
@@ -22,7 +21,7 @@ export const fetchCourses = createAsyncThunk(
 
         const courses = res.data?.data;
         if (courses.length > 0) {
-          data[i].children = [...courses];
+          data[i].children = courses;
         }
       }
     }
