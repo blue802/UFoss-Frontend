@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Link as ReactLink } from 'react-router-dom';
 import {
@@ -27,6 +27,7 @@ import SpinnerLoading from '../SpinnerLoading';
 const SearchBar = props => {
   const { data, onChange, isLargeScreen, isSearching } = props;
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const refBox = useRef(null);
 
   const _onChange = e => {
     if (onChange && e.target.value) {
@@ -62,29 +63,39 @@ const SearchBar = props => {
     </Box>
   ));
 
+  useEffect(() => {
+    window.addEventListener('click', e => {
+      if (refBox.current && isOpen && !refBox.current.contains(e.target)) {
+        onClose();
+      }
+    });
+  });
+
   if (isLargeScreen) {
     return (
-      <Box flex="1" pos="relative">
-        <form onFocus={() => onOpen()} onBlur={() => onClose()}>
-          {inputGroup}
-          {isOpen && (
-            <VStack
-              bgColor="white"
-              p="3"
-              w="full"
-              maxW="800px"
-              alignItems="start"
-              pos="absolute"
-              top="3rem"
-              left="0"
-              border="1px"
-              borderColor="gray.300"
-              rounded="sm"
-            >
-              {listLinkItems}
-            </VStack>
-          )}
-        </form>
+      <Box flex="1" pos="relative" ref={refBox} onFocus={() => onOpen()}>
+        {inputGroup}
+        {isOpen && (
+          <VStack
+            bgColor="white"
+            p="5"
+            w="full"
+            maxW="800px"
+            alignItems="start"
+            pos="absolute"
+            top="3rem"
+            left="0"
+            border="1px"
+            borderColor="gray.300"
+            rounded="sm"
+          >
+            {data.length > 0 ? (
+              listLinkItems
+            ) : (
+              <Text color="gray">0 Results</Text>
+            )}
+          </VStack>
+        )}
       </Box>
     );
   }

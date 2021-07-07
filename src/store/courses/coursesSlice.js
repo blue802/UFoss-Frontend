@@ -19,7 +19,11 @@ export const fetchCourses = createAsyncThunk(
         const res = await API.get(
           `/categories/${data[i].name}/courses?size=15`
         );
-        data[i].children = [...res.data?.data];
+
+        const courses = res.data?.data;
+        if (courses.length > 0) {
+          data[i].children = [...courses];
+        }
       }
     }
 

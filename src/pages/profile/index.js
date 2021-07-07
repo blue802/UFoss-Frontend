@@ -1,5 +1,5 @@
 import React from 'react';
-import ProfileForm from './Components/ProfileForm'
+import ProfileForm from './Components/ProfileForm';
 import {
   Box,
   Container,
@@ -10,7 +10,6 @@ import {
   Heading,
 } from '@chakra-ui/react';
 
-
 const ProfilePage = () => {
   return (
     <Container maxW="container.2xl" mt="8vh" minH="90vh" pt="5">
@@ -19,7 +18,7 @@ const ProfilePage = () => {
           <Flex w="100px" h="100px" direction="column" w="100%">
             <Box position="relative">
               <Image
-                src='https://chuuniotaku.com/wp-content/uploads/2019/07/nhung-cau-noi-hay-cua-itachi.jpg'
+                src="https://chuuniotaku.com/wp-content/uploads/2019/07/nhung-cau-noi-hay-cua-itachi.jpg"
                 w="100px"
                 h="100px"
                 borderRadius="50%"
@@ -41,7 +40,7 @@ const ProfilePage = () => {
             Full Name
           </Text>
         </Box>
-        <Box flex="1" justifyContent="center" direction="column" >
+        <Box flex="1" justifyContent="center" direction="column">
           <Box w="100%" h="10%" p="20px" textAlign="center">
             <Heading as="h3" size="lg" color="gray.700">
               Your Profile
@@ -49,7 +48,7 @@ const ProfilePage = () => {
           </Box>
 
           <Box flex="1">
-            <ProfileForm/>
+            <ProfileForm />
           </Box>
         </Box>
       </Flex>

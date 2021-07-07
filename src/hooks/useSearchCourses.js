@@ -21,7 +21,10 @@ const useSearchCourses = searchTerm => {
         setStatus(STATUS.FAILED);
       }
     }
-    fetchData();
+
+    if (searchTerm) {
+      fetchData();
+    }
   }, [searchTerm]);
 
   return [data, status, error];
