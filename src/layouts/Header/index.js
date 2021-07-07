@@ -148,9 +148,9 @@ const Header = () => {
 
       {isLargeScreen ? (
         <HStack>
-          <Box>
+          <Box >
             <Link as={ReactLink} to="/cart">
-              <Tag>
+              <Tag colorScheme="red">
                 <Icon
                   as={AiOutlineShoppingCart}
                   fontSize="2xl"
