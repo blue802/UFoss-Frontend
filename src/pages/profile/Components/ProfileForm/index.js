@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   Box,
   Button,
@@ -9,54 +10,79 @@ import {
   NumberInputField,
 } from '@chakra-ui/react';
 
-const ProfileForm = () => {
-  return (
-    <form>
-      <Box>
-        <FormControl id="firstName" m="20px auto" w="90%">
-          <FormLabel color="gray.700" fontWeight="600">
-            First name :
-          </FormLabel>
-          <Input value="Machel" />
-        </FormControl>
-      </Box>
-      <Box>
-        <FormControl id="lastName" w="90%" m="20px auto">
-          <FormLabel color="gray.700" fontWeight="600">
-            Last name :
-          </FormLabel>
-          <Input value="Join" />
-        </FormControl>
-      </Box>
-      <Box>
-        <FormControl id="phone" w="90%" m="20px auto">
-          <NumberInput value="0917664174">
-            <FormLabel color="gray.700" fontWeight="600">
-              Phone :
-            </FormLabel>
-            <NumberInputField />
-          </NumberInput>
-        </FormControl>
-      </Box>
-      <Box>
-        <FormControl id="email" w="90%" m="20px auto">
-          <FormLabel color="gray.700" fontWeight="600">
-            Email :
-          </FormLabel>
-          <Input
-            type="email"
-            value="ufoss.udemy@gmail.com"
-            color="black"
-            fontWeight="600"
-            disabled
-          />
-        </FormControl>
-      </Box>
+import API from '../../../../utils/API';
+import { authHeader } from '../../../../services/auth.service';
+import useCustomToast from '../../../../hooks/useCustomToast';
 
-      <Button type="submit" colorScheme="facebook">
-        Save
-      </Button>
+const ProfileForm = ({ profile }) => {
+  const [firstName, setFirstName] = useState(profile.firstName || '');
+  const [lastName, setLastName] = useState(profile.lastName || '');
+  const [phone, setPhone] = useState(profile.phone || '');
+  const toast = useCustomToast();
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const updateProfile = { ...profile, firstName, lastName, phone };
+    try {
+      await API.put('/user', updateProfile, {
+        headers: authHeader(),
+      });
+      toast({ title: 'Update Successful!', status: 'success' });
+    } catch (error) {
+      const message = error?.response?.data?.message;
+      toast({ title: message, status: 'error' });
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <FormControl mb="3">
+        <FormLabel color="gray.700" fontWeight="bold">
+          First Name :
+        </FormLabel>
+        <Input value={firstName} onChange={e => setFirstName(e.target.value)} />
+      </FormControl>
+      <FormControl mb="3">
+        <FormLabel color="gray.700" fontWeight="bold">
+          Last Name :
+        </FormLabel>
+        <Input value={lastName} onChange={e => setLastName(e.target.value)} />
+      </FormControl>
+      <FormControl mb="3">
+        <NumberInput
+          value={phone}
+          onChange={valueString => setPhone(valueString)}
+        >
+          <FormLabel color="gray.700" fontWeight="bold">
+            Phone :
+          </FormLabel>
+          <NumberInputField />
+        </NumberInput>
+      </FormControl>
+
+      <FormControl mb="3">
+        <FormLabel color="gray.700" fontWeight="bold">
+          Email :
+        </FormLabel>
+        <Input type="email" value={profile.email} fontWeight="bold" disabled />
+      </FormControl>
+
+      <Box textAlign="right">
+        <Button type="submit" colorScheme="facebook">
+          Save
+        </Button>
+      </Box>
     </form>
   );
 };
+
+ProfileForm.prototype = {
+  profile: PropTypes.shape({
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    phone: PropTypes.string,
+    email: PropTypes.string.isRequired,
+  }),
+};
+
 export default ProfileForm;

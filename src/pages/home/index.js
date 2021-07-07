@@ -1,5 +1,6 @@
 import React from 'react';
-import { Image, Box, Container, Heading, Text } from '@chakra-ui/react';
+import { Image, Box, Container, Heading, Text, Link } from '@chakra-ui/react';
+import { Link as ReactLink } from 'react-router-dom';
 import Slider from 'react-slick';
 
 import CourseCard from '../course/components/CourseCard';
@@ -62,7 +63,9 @@ function HomePage() {
         {data.map(({ id, name, children }) => (
           <Box mb="2" key={id}>
             <Heading as="h3" mb="5" fontSize="20px" textTransform="capitalize">
-              {name}
+              <Link as={ReactLink} to={`/categories/${name}`}>
+                {name}
+              </Link>
             </Heading>
             <Slider {...settings}>
               {children?.map(item => (
