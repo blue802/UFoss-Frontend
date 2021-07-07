@@ -43,15 +43,17 @@ function CourseRowItem(props) {
     >
       <LinkBox flex="1">
         <HStack alignItems="start">
-            <Image
-              w={['12rem','12rem','15rem','15rem']}
-              h='10rem'
-              objectFit="cover"
-              src={imageURL}
-              alt={title}
-              rounded="md"
-            /> 
-          <Box display="flex" width="100%" flexDirection={['column','column','column','row']} pl="2">
+          
+              <Image
+                w={['12rem','12rem','15rem','15rem']}
+                h='10rem'
+                objectFit="cover"
+                src={imageURL}
+                alt={title}
+                rounded="md"
+              />
+           
+          <Box display="flex" flex="1" flexDirection={['column','column','column','row']} pl="2">
             <Box width="100%">
               <Heading as="h4" fontSize={['sm','sm','md',"xl"]} pb="2">
                 <LinkOverlay
