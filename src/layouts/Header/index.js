@@ -22,11 +22,14 @@ import {
   Text,
   useDisclosure,
   useMediaQuery,
+  Tag,
+  TagLabel
 } from '@chakra-ui/react';
 import { Link as ReactLink } from 'react-router-dom';
 import { FaGlobe } from 'react-icons/fa';
 import { HiMenu } from 'react-icons/hi';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { useSelector } from 'react-redux';
 
 import SearchBar from '../../components/SearchBar';
 import logo from '../../assets/images/logo.png';
@@ -43,6 +46,7 @@ const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [searchTerm, setSearchTerm] = useState();
   const [data, status] = useSearchCourses(searchTerm);
+  const cart = useSelector(state => state.carts);
   const loginSignupButtons = (
     <Box>
       <Link href="/login" _hover={{ textDecoration: 'none' }}>
@@ -144,13 +148,20 @@ const Header = () => {
 
       {isLargeScreen ? (
         <HStack>
-          <Icon
-            as={AiOutlineShoppingCart}
-            fontSize="2xl"
-            cursor="pointer"
-            color="gray.500"
-            mr={3}
-          />
+          <Box>
+            <Link as={ReactLink} to="/cart">
+              <Tag>
+                <Icon
+                  as={AiOutlineShoppingCart}
+                  fontSize="2xl"
+                  cursor="pointer"
+                  color="gray.500"
+                  mr={3}
+                />
+                <TagLabel>{cart ? cart.length : ""}</TagLabel>
+              </Tag>
+            </Link>
+          </Box>
           {profile ? <AvatarNav profile={profile} /> : loginSignupButtons}
 
           <Menu>

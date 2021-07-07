@@ -1,23 +1,29 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import { Flex, Box, Text, Container, Heading } from '@chakra-ui/react';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeItemCart, removeAllCart } from '../../store/cart/cartSlice';
 
 import CartItem from './components/CartItem';
 import CheckoutForm from './components/CheckoutForm';
-import morkData from '../../course-dummy.json';
 import Paypal from './components/Paypal';
 
 function CartPage() {
-  const [itemCarts, setItemCarts] = useState(morkData);
+  let history = useHistory();
+  const dispatch = useDispatch();
+  const carts = useSelector(state => state.carts);
+  const [listCarts, setListCarts] = useState(carts);
   const [totalAmount, setTotalAmount] = useState(0);
   const [checkout, setCheckout] = useState(false);
-
-  const handleRemoveCartItems = _id => {
-    const newCartItems = itemCarts.filter(item => item.id !== _id);
-    setItemCarts(newCartItems);
+  console.log(carts)
+  const handleRemoveCartItems = val => {
+    const newCart = listCarts.filter(cart => cart.id !== val.id);
+    setListCarts(newCart);
+    dispatch(removeItemCart(val))
   };
 
   const handleRenderItemCart = () => {
-    return itemCarts.map(itemCart => (
+    return listCarts.map(itemCart => (
       <CartItem
         handleRemoveCartItems={handleRemoveCartItems}
         itemCart={itemCart}
@@ -26,7 +32,7 @@ function CartPage() {
   };
 
   const handleSumPrice = () => {
-    const sum = itemCarts.reduce((total, itemCarts) => {
+    const sum = listCarts.reduce((total, itemCarts) => {
       return total + itemCarts.price;
     }, 0);
     setTotalAmount(sum);
@@ -36,13 +42,13 @@ function CartPage() {
     setCheckout(!checkout);
   };
   const handleCleanCart = () => {
-    setItemCarts([]);
+    dispatch(removeAllCart([]));
     setCheckout(false);
+    history.push("/");
   };
   useEffect(() => {
     handleSumPrice();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [itemCarts]);
+  }, [listCarts]);
 
   return (
     <Box mt="64px" minH="90vh">
@@ -78,7 +84,7 @@ function CartPage() {
             <Box>
               <Text fontSize="18px" fontWeight="400" color="#29303B">
                 {' '}
-                {itemCarts.length} Courses in Cart
+                {listCarts.length} Courses in Cart
               </Text>
             </Box>
             <Flex direction="column">

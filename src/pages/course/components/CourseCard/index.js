@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   LinkBox,
@@ -15,12 +15,17 @@ import {
   Button,
   Heading,
   useMediaQuery,
+  AlertIcon,
+  Alert
 } from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { truncateString } from '../../../../utils/stringUtils';
 import StarGroup from '../../../../components/StarGroup';
+import { addToCart } from '../../../../store/cart/cartSlice';
 
 function CourseCard(props) {
+  const dispatch = useDispatch();
   const [isLargeScreen] = useMediaQuery('(min-width: 42rem)');
   const {
     id,
@@ -32,9 +37,18 @@ function CourseCard(props) {
     rate,
     category,
   } = props.data;
+  const [isAdded, setIsAdded] = useState(false);
   const { rating, score } = rate;
   const point = rating > 0 ? score / (rating * 2) : 0;
+  const carts = useSelector(state => state.carts);
 
+  const addCourseToCart = (val) => {
+    let checkIdCard = carts.find(cart => cart.id === val.id);
+    if (!checkIdCard) {
+      dispatch(addToCart(val));
+      setIsAdded(true);
+    }
+  }
   return (
     <LinkBox as="article" textAlign="left">
       <Popover trigger="hover" placement="auto">
@@ -88,8 +102,8 @@ function CourseCard(props) {
               justifyContent="space-between"
               pb={4}
             >
-              <Button colorScheme="red" width="full" color="white">
-                Add To Card
+              <Button colorScheme="red" width="full" color="white" onClick={() => addCourseToCart(props.data)}>
+                {isAdded ? "Added" : "Add to cart"}
               </Button>
             </PopoverFooter>
           </PopoverContent>
