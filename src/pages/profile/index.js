@@ -12,10 +12,19 @@ import {
 
 const ProfilePage = () => {
   return (
-    <Container maxW="container.2xl" mt="8vh" minH="90vh" pt="5">
-      <Flex w="70%" h="600px" margin="0 auto" textAlign="center">
-        <Box w="200px" pt="5">
-          <Flex w="100px" h="100px" direction="column" w="100%">
+    <Container
+      maxW={['container.sm', 'container.sm', 'container.lg']}
+      mt="8vh"
+      minH="80vh"
+      pt="5"
+    >
+      <Flex
+        margin="0 auto"
+        textAlign="center"
+        direction={['column', 'column', 'column', 'row']}
+      >
+        <Box pt="5">
+          <Box w="100px" h="100px" w="full">
             <Box position="relative">
               <Image
                 src="https://chuuniotaku.com/wp-content/uploads/2019/07/nhung-cau-noi-hay-cua-itachi.jpg"
@@ -25,7 +34,7 @@ const ProfilePage = () => {
                 margin="0 auto"
               />
               <Box
-                w="100%"
+                w="full"
                 textAlign="center"
                 position="absolute"
                 bottom="-15px"
@@ -35,7 +44,7 @@ const ProfilePage = () => {
                 </Button>
               </Box>
             </Box>
-          </Flex>
+          </Box>
           <Text color="gray.700" fontWeight="900" mt="7" fontSize="20px">
             Full Name
           </Text>

@@ -3,11 +3,20 @@ import {
   Button,
   Collapse,
   Container,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
   Heading,
   HStack,
+  Input,
   Select,
   Text,
   useDisclosure,
+  useMediaQuery,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { MdDehaze } from 'react-icons/md';
@@ -30,7 +39,8 @@ function CategoryPage() {
     category,
     qs.stringify(query)
   );
-  const { isOpen, onToggle } = useDisclosure();
+  const [isSmallScreen] = useMediaQuery('(max-width: 1024px)');
+  const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
 
   let content;
   if (status === STATUS.FAILED) {
@@ -54,21 +64,36 @@ function CategoryPage() {
   };
 
   return (
-    <Container maxW="container.xl" mt="8vh" minH="90vh">
+    <Container
+      maxW={['container.sm', 'container.sm', 'container.md', 'container.2xl']}
+      mt="8vh"
+      minH="90vh"
+    >
       <Heading py="5" size="xl">
         {category}
       </Heading>
       <Box>
         <HStack>
           <HStack w="20rem">
-            <Button
-              leftIcon={<MdDehaze />}
-              onClick={onToggle}
-              colorScheme="blue"
-              variant="outline"
-            >
-              Filter
-            </Button>
+            {isSmallScreen ? (
+              <Button
+                leftIcon={<MdDehaze />}
+                onClick={onOpen}
+                colorScheme="blue"
+                variant="outline"
+              >
+                Filter
+              </Button>
+            ) : (
+              <Button
+                leftIcon={<MdDehaze />}
+                onClick={onToggle}
+                colorScheme="blue"
+                variant="outline"
+              >
+                Filter
+              </Button>
+            )}
             <Select placeholder="Select option" defaultValue="newest">
               <option value="newest">Newest</option>
               <option value="hightestRated">Hightest Rated</option>
@@ -80,16 +105,30 @@ function CategoryPage() {
         </HStack>
 
         <HStack alignItems="start" spacing="5">
-          <Collapse
-            in={isOpen}
-            animateOpacity
-            style={{
-              width: '20rem',
-              marginTop: '1.25rem',
-            }}
-          >
-            <FilterComponent onFilter={handleFilter} />
-          </Collapse>
+          {isSmallScreen ? (
+            <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+              <DrawerOverlay />
+              <DrawerContent>
+                <DrawerCloseButton />
+                <DrawerHeader>Filter</DrawerHeader>
+
+                <DrawerBody>
+                  <FilterComponent onFilter={handleFilter} />
+                </DrawerBody>
+              </DrawerContent>
+            </Drawer>
+          ) : (
+            <Collapse
+              in={isOpen}
+              animateOpacity
+              style={{
+                width: '20rem',
+                marginTop: '1.25rem',
+              }}
+            >
+              <FilterComponent onFilter={handleFilter} />
+            </Collapse>
+          )}
           <Box flex="1">{content}</Box>
         </HStack>
       </Box>
