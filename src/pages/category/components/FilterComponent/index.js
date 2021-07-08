@@ -16,16 +16,16 @@ import StarGroup from '../../../../components/StarGroup';
 
 function FilterComponent(props) {
   const filterConfig = [4.5, 4.0, 3.5, 3.0];
-  const [rating, setRating] = useState(null);
-  const [price, setPrice] = useState('decrease');
+  const [ratings, setRatings] = useState(null);
+  const [price, setPrice] = useState('asc');
 
   useEffect(() => {
     props.onFilter({
-      rating,
-      price,
+      ratings,
+      sortByPrice: price,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [price, rating]);
+  }, [price, ratings]);
 
   const radioItems = filterConfig.map(q => (
     <Radio value={q} key={q}>
@@ -48,7 +48,7 @@ function FilterComponent(props) {
           <AccordionIcon />
         </AccordionButton>
         <AccordionPanel pb={4}>
-          <RadioGroup value={rating} onChange={v => setRating(Number(v))}>
+          <RadioGroup value={ratings} onChange={v => setRatings(Number(v))}>
             <VStack alignItems="start">{radioItems}</VStack>
           </RadioGroup>
         </AccordionPanel>
@@ -64,8 +64,8 @@ function FilterComponent(props) {
         <AccordionPanel pb={4}>
           <RadioGroup value={price} onChange={setPrice}>
             <VStack alignItems="start">
-              <Radio value="descending">Descending</Radio>
-              <Radio value="ascending">Ascending</Radio>
+              <Radio value="desc">Descending</Radio>
+              <Radio value="asc">Ascending</Radio>
             </VStack>
           </RadioGroup>
         </AccordionPanel>

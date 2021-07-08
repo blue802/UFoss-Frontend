@@ -15,7 +15,7 @@ import CategoryPage from './pages/category';
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 import { useAuth } from './services/auth.service';
 import CartPage from './pages/cart';
-import ProfilePage from './pages/profile';
+import ProfilePage from './pages/dashboard';
 
 function App() {
   const [logged] = useAuth();
