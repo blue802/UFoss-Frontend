@@ -4,15 +4,13 @@ import {
   Box,
   Container,
   Flex,
-  Text,
-  Image,
   Button,
   Heading,
   Avatar,
 } from '@chakra-ui/react';
 import { useAuth } from '../../services/auth.service';
 
-const ProfilePage = () => {
+const Dashboard = () => {
   const [profile] = useAuth();
 
   return (
@@ -59,4 +57,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default Dashboard;

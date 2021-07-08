@@ -15,14 +15,12 @@ import {
   Button,
   Heading,
   useMediaQuery,
-  AlertIcon,
-  Alert
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { truncateString } from '../../../../utils/stringUtils';
 import StarGroup from '../../../../components/StarGroup';
 import { addToCart } from '../../../../store/cart/cartSlice';
+import LinesEllipsis from 'react-lines-ellipsis';
 
 function CourseCard(props) {
   const dispatch = useDispatch();
@@ -42,13 +40,13 @@ function CourseCard(props) {
   const point = rating > 0 ? score / (rating * 2) : 0;
   const carts = useSelector(state => state.carts);
 
-  const addCourseToCart = (val) => {
+  const addCourseToCart = val => {
     let checkIdCard = carts.find(cart => cart.id === val.id);
     if (!checkIdCard) {
       dispatch(addToCart(val));
       setIsAdded(true);
     }
-  }
+  };
   return (
     <LinkBox as="article" textAlign="left">
       <Popover trigger="hover" placement="auto">
@@ -62,7 +60,7 @@ function CourseCard(props) {
               </LinkOverlay>
             </Heading>
             <Text mb="1" fontSize="sm" color="gray.400">
-              {`${instructor.firstName} ${instructor.lastName}`}
+              {`${instructor?.firstName} ${instructor?.lastName}`}
             </Text>
             <StarGroup point={point} rating={rating} />
             <Text fontWeight="bold" mt="1">
@@ -81,10 +79,10 @@ function CourseCard(props) {
             <PopoverArrow />
             <PopoverBody>
               <Heading as="h4" fontSize="2xl" mb="2">
-                {truncateString(title, 50)}
+                <LinesEllipsis text={title} maxLine={2} />
               </Heading>
               <Text mb="3" fontSize="sm" color="gray.400">
-                {`${instructor.firstName} ${instructor.lastName}`}
+                {`${instructor?.firstName} ${instructor?.lastName}`}
               </Text>
               <Text
                 textOverflow="ellipsis"
@@ -92,7 +90,7 @@ function CourseCard(props) {
                 whiteSpace="wrap"
                 fontSize="sm"
               >
-                {truncateString(description, 180)}
+                <LinesEllipsis text={description} maxLine={4} />
               </Text>
             </PopoverBody>
             <PopoverFooter
@@ -102,8 +100,13 @@ function CourseCard(props) {
               justifyContent="space-between"
               pb={4}
             >
-              <Button colorScheme="red" width="full" color="white" onClick={() => addCourseToCart(props.data)}>
-                {isAdded ? "Added" : "Add to cart"}
+              <Button
+                colorScheme="red"
+                width="full"
+                color="white"
+                onClick={() => addCourseToCart(props.data)}
+              >
+                {isAdded ? 'Added' : 'Add to cart'}
               </Button>
             </PopoverFooter>
           </PopoverContent>

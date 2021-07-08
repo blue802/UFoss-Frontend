@@ -21,7 +21,6 @@ import {
 import { AiOutlineSearch, AiOutlineCloseCircle } from 'react-icons/ai';
 import LinesEllipsis from 'react-lines-ellipsis';
 
-import { truncateString } from '../../utils/stringUtils';
 import SpinnerLoading from '../SpinnerLoading';
 
 const SearchBar = props => {
@@ -51,10 +50,10 @@ const SearchBar = props => {
   );
 
   const listLinkItems = data?.map(({ id, title, description, category }) => (
-    <Box key={id} mb="3">
+    <Box key={id} mb="3" w="full">
       <Heading as="h5" fontSize="lg" color="gray.600" onClick={onClose}>
         <Link as={ReactLink} to={`/categories/${category.name}/courses/${id}`}>
-          {truncateString(title, 30)}
+          <LinesEllipsis text={title} />
         </Link>
       </Heading>
       <Text fontSize="sm" color="gray.400">

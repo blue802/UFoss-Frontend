@@ -7,12 +7,10 @@ import {
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   Heading,
   HStack,
-  Input,
   Select,
   Text,
   useDisclosure,
@@ -41,7 +39,6 @@ function CategoryPage() {
   );
   const [isSmallScreen] = useMediaQuery('(max-width: 1024px)');
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
-  const [criteria, setCriteria] = useState('newest');
 
   let content;
   if (status === STATUS.FAILED) {
@@ -105,7 +102,7 @@ function CategoryPage() {
             )}
             <Select
               placeholder="Select option"
-              defaultValue={criteria}
+              defaultValue="newest"
               onChange={e => handleSelection(e.target.value)}
             >
               <option value="newest">Newest</option>

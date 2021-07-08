@@ -9,7 +9,6 @@ import {
   HStack,
   Link,
   Icon,
-  useMediaQuery,
 } from '@chakra-ui/react';
 import LinesEllipsis from 'react-lines-ellipsis';
 

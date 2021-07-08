@@ -74,7 +74,7 @@ function CourseRowItem(props) {
                 <LinesEllipsis text={description} maxLine={2} />
               </Text>
               <Text pb="2" color="gray.400">
-                {`${instructor.firstName} ${instructor.lastName}`}
+                {`${instructor?.firstName} ${instructor?.lastName}`}
               </Text>
               <StarGroup point={point} rating={rating} />
             </Box>
