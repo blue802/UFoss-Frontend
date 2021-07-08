@@ -25,7 +25,7 @@ function CourseRowItem(props) {
     rate,
     imageURL,
     category,
-    payment,
+    payment = true,
   } = props.data;
   const { rating, score } = rate;
   const point = rating > 0 ? score / (rating * 2) : 0;
@@ -120,7 +120,7 @@ CourseRowItem.prototype = {
     imageUrl: PropTypes.string,
     price: PropTypes.number,
     instructor: PropTypes.object,
-    vote: PropTypes.shape({
+    rate: PropTypes.shape({
       rating: PropTypes.number,
       score: PropTypes.number,
     }),
@@ -129,29 +129,3 @@ CourseRowItem.prototype = {
 };
 
 export default CourseRowItem;
-// {check ? (
-//               <Box fontWeight="bold">
-//                 <Button
-//                   colorScheme="blue"
-//                   variant="outline"
-//                   onClick={handleAddToCart}
-//                   mt={['0.6rem', '0.6rem', '0.8rem', '5.6rem']}
-//                 >
-//                   Go to Courses
-//                 </Button>
-//               </Box>
-//             ) : (
-//               <Box fontWeight="bold">
-//                 <Text textAlign={['left', 'left', 'left', 'right']}>
-//                   ${price}
-//                 </Text>
-//                 <Button
-//                   colorScheme="red"
-//                   variant="outline"
-//                   onClick={handleAddToCart}
-//                   mt={['0.6rem', '0.6rem', '0.8rem', '5.6rem']}
-//                 >
-//                   Add To Cart
-//                 </Button>
-//               </Box>
-//             )}

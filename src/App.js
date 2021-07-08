@@ -45,7 +45,7 @@ function App() {
           <Route exact path="/" component={HomePage} />
           <PrivateRoute
             exact
-            path="/profile"
+            path="/dashboard"
             redirectTo="/login"
             guard={() => logged}
             component={Dashboard}
