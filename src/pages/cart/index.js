@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { removeItemCart, removeAllCart } from '../../store/cart/cartSlice';
 import CartItem from './components/CartItem';
 import CheckoutForm from './components/CheckoutForm';
-import Paypal from './components/Paypal';
+import Paypal from './components/paypal';
 import { useAuth } from '../../services/auth.service'
 import API from "../../utils/API"
 import useCustomToast from "../../hooks/useCustomToast"
