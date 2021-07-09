@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 
 import API from '../../../../utils/API';
-import { authHeader } from '../../../../services/auth.service';
+import { authHeader, updateProfile } from '../../../../services/auth.service';
 import useCustomToast from '../../../../hooks/useCustomToast';
 
 const ProfileForm = ({ profile }) => {
@@ -22,11 +22,12 @@ const ProfileForm = ({ profile }) => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const updateProfile = { ...profile, firstName, lastName, phone };
+    const payload = { firstName, lastName, phone };
     try {
-      await API.put('/user', updateProfile, {
+      const res = await API.put(`/user/update/${profile.id}`, payload, {
         headers: authHeader(),
       });
+      updateProfile(res.data);
       toast({ title: 'Update Successful!', status: 'success' });
     } catch (error) {
       const message = error?.response?.data?.message;

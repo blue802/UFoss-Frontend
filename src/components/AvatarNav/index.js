@@ -30,7 +30,7 @@ const AvatarNav = props => {
   return (
     <Popover trigger="hover">
       <PopoverTrigger>
-        <Link as={ReactLink} to="/profile">
+        <Link as={ReactLink} to="/dashboard">
           <Avatar src={avatarUrl} size="sm" />
         </Link>
       </PopoverTrigger>
