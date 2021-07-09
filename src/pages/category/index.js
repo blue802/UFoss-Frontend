@@ -64,7 +64,7 @@ function CategoryPage() {
   };
 
   const handlePageChange = selected => {
-    const newQuery = { ...query, page: selected, size: 3 };
+    const newQuery = { ...query, page: selected };
     setQuery(newQuery);
     history.push(pathname + '?' + qs.stringify(newQuery));
   };
