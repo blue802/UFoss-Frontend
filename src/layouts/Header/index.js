@@ -22,8 +22,6 @@ import {
   Text,
   useDisclosure,
   useMediaQuery,
-  Tag,
-  TagLabel,
 } from '@chakra-ui/react';
 import { Link as ReactLink } from 'react-router-dom';
 import { FaGlobe } from 'react-icons/fa';
