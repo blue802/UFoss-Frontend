@@ -17,6 +17,13 @@ import { useAuth } from './services/auth.service';
 import CartPage from './pages/cart';
 import Dashboard from './pages/dashboard';
 
+const PrivateRoute = ({ component: Component, guard, redirectTo, ...rest }) => {
+  const _render = props =>
+    !guard() ? <Redirect to={redirectTo} /> : <Component {...props} />;
+
+  return <Route {...rest} render={_render} />;
+};
+
 function App() {
   const [logged] = useAuth();
 
@@ -36,7 +43,13 @@ function App() {
             />
           )}
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/profile" component={Dashboard} /> 
+          <PrivateRoute
+            exact
+            path="/dashboard"
+            redirectTo="/login"
+            guard={() => logged}
+            component={Dashboard}
+          />
           <Route exact path="/cart" component={CartPage} />
           <Route
             exact

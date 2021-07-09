@@ -23,7 +23,7 @@ import {
   useDisclosure,
   useMediaQuery,
   Tag,
-  TagLabel
+  TagLabel,
 } from '@chakra-ui/react';
 import { Link as ReactLink } from 'react-router-dom';
 import { FaGlobe } from 'react-icons/fa';
@@ -38,6 +38,7 @@ import AvatarNav from '../../components/AvatarNav';
 import useCategories from '../../hooks/useCategories';
 import useSearchCourses from '../../hooks/useSearchCourses';
 import { STATUS } from '../../store/constant';
+import Cart from '../../components/Cart';
 
 const Header = () => {
   const [profile] = useAuth();
@@ -47,6 +48,7 @@ const Header = () => {
   const [searchTerm, setSearchTerm] = useState();
   const [data, status] = useSearchCourses(searchTerm);
   const cart = useSelector(state => state.carts);
+
   const loginSignupButtons = (
     <Box>
       <Link href="/login" _hover={{ textDecoration: 'none' }}>
@@ -148,19 +150,8 @@ const Header = () => {
 
       {isLargeScreen ? (
         <HStack>
-          <Box >
-            <Link as={ReactLink} to="/cart">
-              <Tag colorScheme="red">
-                <Icon
-                  as={AiOutlineShoppingCart}
-                  fontSize="2xl"
-                  cursor="pointer"
-                  color="gray.500"
-                  mr={3}
-                />
-                <TagLabel>{cart ? cart.length : ""}</TagLabel>
-              </Tag>
-            </Link>
+          <Box>
+            <Cart amount={cart.length} />
           </Box>
           {profile ? <AvatarNav profile={profile} /> : loginSignupButtons}
 

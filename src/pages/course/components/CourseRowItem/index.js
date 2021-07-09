@@ -25,7 +25,7 @@ function CourseRowItem(props) {
     rate,
     imageURL,
     category,
-    payment=true,
+    payment = true,
   } = props.data;
   const { rating, score } = rate;
   const point = rating > 0 ? score / (rating * 2) : 0;
@@ -74,7 +74,7 @@ function CourseRowItem(props) {
                 <LinesEllipsis text={description} maxLine={2} />
               </Text>
               <Text pb="2" color="gray.400">
-                {`${instructor.firstName} ${instructor.lastName}`}
+                {`${instructor?.firstName} ${instructor?.lastName}`}
               </Text>
               <StarGroup point={point} rating={rating} />
             </Box>
@@ -120,7 +120,7 @@ CourseRowItem.prototype = {
     imageUrl: PropTypes.string,
     price: PropTypes.number,
     instructor: PropTypes.object,
-    vote: PropTypes.shape({
+    rate: PropTypes.shape({
       rating: PropTypes.number,
       score: PropTypes.number,
     }),
@@ -129,4 +129,3 @@ CourseRowItem.prototype = {
 };
 
 export default CourseRowItem;
-

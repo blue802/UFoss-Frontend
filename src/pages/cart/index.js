@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import { Flex, Box, Text, Container, Heading } from '@chakra-ui/react';
 import { useSelector, useDispatch } from 'react-redux';
-
 
 import { removeItemCart, removeAllCart } from '../../store/cart/cartSlice';
 import CartItem from './components/CartItem';
 import CheckoutForm from './components/CheckoutForm';
-import Paypal from './components/paypal';
-import { useAuth } from '../../services/auth.service'
-import API from "../../utils/API"
-import useCustomToast from "../../hooks/useCustomToast"
+import Paypal from './components/Paypal';
+import { useAuth } from '../../services/auth.service';
+import API from '../../utils/API';
+import useCustomToast from '../../hooks/useCustomToast';
 function CartPage() {
   let history = useHistory();
   const toast = useCustomToast();
@@ -20,23 +19,22 @@ function CartPage() {
   const [totalAmount, setTotalAmount] = useState(0);
   const [checkout, setCheckout] = useState(false);
   const [profile] = useAuth();
-  console.log("profile", profile)
+  console.log('profile', profile);
   const [dataSubmitCart, setDataSubmitCart] = useState({
-    userId: "",
-    courId: [
-    ]
-  })
+    userId: '',
+    courId: [],
+  });
 
   useEffect(() => {
     setDataSubmitCart({
       userId: profile.id,
-      courId: listCarts.map(cart => cart.id)
-    })
+      courId: listCarts.map(cart => cart.id),
+    });
   }, [profile, listCarts]);
   const handleRemoveCartItems = val => {
     const newCart = listCarts.filter(cart => cart.id !== val.id);
     setListCarts(newCart);
-    dispatch(removeItemCart(val))
+    dispatch(removeItemCart(val));
   };
 
   const handleRenderItemCart = () => {
@@ -57,10 +55,11 @@ function CartPage() {
 
   const handleCheckout = async () => {
     try {
-      await API.post(`/payments`, dataSubmitCart).then(res => {
-      }).catch(err => console.log(err))
+      await API.post(`/payments`, dataSubmitCart)
+        .then(res => {})
+        .catch(err => console.log(err));
     } catch {
-      console.log("err");
+      console.log('err');
     }
     setCheckout(!checkout);
   };
@@ -68,7 +67,7 @@ function CartPage() {
     dispatch(removeAllCart([]));
     setCheckout(false);
     toast({ title: 'Payment success', status: 'success' });
-    history.push("/");
+    history.push('/');
   };
   useEffect(() => {
     handleSumPrice();

@@ -156,6 +156,13 @@ export const createAuthProvider = () => {
     return [logged];
   };
 
+  const updateProfile = profile => {
+    let _token = localStorage.getItem('TOKEN_AUTH');
+    _token = _token ? JSON.parse(_token) : null;
+    _token.userEntity = profile;
+    localStorage.setItem('TOKEN_AUTH', JSON.stringify(_token));
+  };
+
   return {
     useAuth,
     authHeader,
@@ -165,6 +172,7 @@ export const createAuthProvider = () => {
     reqResetPassword,
     resetPassword,
     tokenProvider,
+    updateProfile,
   };
 };
 
@@ -177,4 +185,5 @@ export const {
   reqResetPassword,
   resetPassword,
   tokenProvider,
+  updateProfile,
 } = createAuthProvider();
