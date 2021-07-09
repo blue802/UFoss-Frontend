@@ -4,6 +4,7 @@ import { BsFillTagFill } from 'react-icons/bs';
 
 function CartItem(props) {
   const { itemCart, handleRemoveCartItems } = props;
+  console.log("props cart item ne", props)
   return (
     <Box padding='10px' borderWidth='2px' borderColor='#F4F5F5' marginBottom='10px'>
       <Flex direction='row'>

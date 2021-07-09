@@ -6,22 +6,19 @@ import {
   Container,
   Grid,
   GridItem,
-  HStack,
-  Link,
-  Icon,
 } from '@chakra-ui/react';
+import { useSelector } from "react-redux"
+
 
 import StarGroup from '../../components/StarGroup';
 import CourseWidget from './components/CourseWidget';
 import { useParams } from 'react-router-dom';
 import useCourseById from '../../hooks/useCourseById';
 import { truncateString } from '../../utils/stringUtils';
-import { FaRegPlayCircle } from 'react-icons/fa';
-
+import ShowLesson from './components/ShowLesson';
 function CourseDetail(props) {
   const { category, courseId } = useParams();
   const data = useCourseById(category, courseId);
-
   if (!data) {
     return (
       <Container maxW="container.2xl" mt="64px" minH="90vh">
@@ -35,12 +32,7 @@ function CourseDetail(props) {
   const point = rating > 0 ? score / (rating * 2) : 0;
 
   const listLesson = lessons.map((lesson, index) => (
-    <HStack key={lesson.id} py="2">
-      <Icon as={FaRegPlayCircle} mr="2" color="gray.400" />
-      <Link href={lesson.videoURL} isExternal isTruncated>
-        Lecture {index}: {lesson.title}
-      </Link>
-    </HStack>
+    <ShowLesson index={index} lesson={lesson} />
   ));
 
   return (
@@ -83,6 +75,7 @@ function CourseDetail(props) {
                   price: price,
                   intro: lessons[0],
                 }}
+                course={data}
               />
             </Box>
           </GridItem>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Box,
@@ -9,11 +9,21 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { FcApproval } from 'react-icons/fc';
+import { useSelector, useDispatch } from 'react-redux';
+import { addToCart } from '../../../../store/cart/cartSlice';
 
 const CourseWidget = props => {
+  console.log("props cours ne", props.course)
+  const dispatch = useDispatch();
+  const [isAdded, setIsAdded] = useState(false);
+  const carts = useSelector(state => state.carts);
   const { price, intro } = props.data;
-  const addToCart = () => {
-    console.log("add to cart");
+  const handleAddToCart = (val) => {
+    let checkIdCard = carts.find(cart => cart.id === val.id);
+    if (!checkIdCard) {
+      dispatch(addToCart(val));
+      setIsAdded(true);
+    }
   }
 
   return (
@@ -33,8 +43,8 @@ const CourseWidget = props => {
         <Heading as="h5" color="black" fontSize="4xl" mb="3">
           ${price}
         </Heading>
-        <Button w="full" colorScheme="red" size="lg" mb="3" onClick={addToCart}>
-          Add to cart
+        <Button w="full" colorScheme="red" size="lg" mb="3" onClick={() => handleAddToCart(props.course)}>
+          {isAdded ? "Added" : "Add To Cart"}
         </Button>
         <Button w="full" colorScheme="teal" variant="outline" size="lg" mb="3">
           Buy now

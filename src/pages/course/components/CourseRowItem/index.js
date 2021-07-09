@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link as ReactLink } from 'react-router-dom';
 import {
@@ -11,11 +11,14 @@ import {
   HStack,
   Heading,
 } from '@chakra-ui/react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { truncateString } from '../../../../utils/stringUtils';
 import StarGroup from '../../../../components/StarGroup';
+import { addToCart } from '../../../../store/cart/cartSlice';
 
 function CourseRowItem(props) {
+  const dispatch = useDispatch();
   const {
     id,
     title,
@@ -28,9 +31,15 @@ function CourseRowItem(props) {
   } = props.data;
   const { rating, score } = rate;
   const point = rating > 0 ? score / (rating * 2) : 0;
+  const [isAdded, setIsAdded] = useState(false);
+  const carts = useSelector(state => state.carts);
 
-  const handleAddToCart = () => {
-    console.log('added');
+  const handleAddToCart = (val) => {
+    let checkIdCard = carts.find(cart => cart.id === val.id);
+    if (!checkIdCard) {
+      dispatch(addToCart(val));
+      setIsAdded(true);
+    }
   };
 
   return (
@@ -73,10 +82,10 @@ function CourseRowItem(props) {
         <Button
           colorScheme="red"
           variant="outline"
-          onClick={handleAddToCart}
+          onClick={() => handleAddToCart(props.data)}
           mt="90px"
         >
-          Add To Cart
+          {isAdded ? "Added" : "Add To Cart"}
         </Button>
       </Box>
     </HStack>

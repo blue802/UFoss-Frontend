@@ -42,7 +42,7 @@ function CourseCard(props) {
   const point = rating > 0 ? score / (rating * 2) : 0;
   const carts = useSelector(state => state.carts);
 
-  const addCourseToCart = (val) => {
+  const handleAddToCart = (val) => {
     let checkIdCard = carts.find(cart => cart.id === val.id);
     if (!checkIdCard) {
       dispatch(addToCart(val));
@@ -102,7 +102,7 @@ function CourseCard(props) {
               justifyContent="space-between"
               pb={4}
             >
-              <Button colorScheme="red" width="full" color="white" onClick={() => addCourseToCart(props.data)}>
+              <Button colorScheme="red" width="full" color="white" onClick={() => handleAddToCart(props.data)}>
                 {isAdded ? "Added" : "Add to cart"}
               </Button>
             </PopoverFooter>
