@@ -20,7 +20,13 @@ const StarGroup = ({ point, rating, showPoint = false, showRating = true }) => {
   }
 
   return (
-    <HStack display="flex" fontSize="sm">
+    <HStack
+      display="flex"
+      flexDir={['column', 'column', 'row']}
+      alignItems="start"
+      fontSize="sm"
+      mb="2"
+    >
       {showPoint && <Text pt="0.5">{avgScore} </Text>}
       <Box>
         {listStar.map((icon, index) => (

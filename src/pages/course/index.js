@@ -6,9 +6,13 @@ import {
   Container,
   Grid,
   GridItem,
+  HStack,
+  Link,
+  Icon,
+  useMediaQuery,
 } from '@chakra-ui/react';
-import { useSelector } from "react-redux"
 
+import LinesEllipsis from 'react-lines-ellipsis';
 
 import StarGroup from '../../components/StarGroup';
 import CourseWidget from './components/CourseWidget';
@@ -16,6 +20,8 @@ import { useParams } from 'react-router-dom';
 import useCourseById from '../../hooks/useCourseById';
 import { truncateString } from '../../utils/stringUtils';
 import ShowLesson from './components/ShowLesson';
+import { FaRegPlayCircle } from 'react-icons/fa';
+
 function CourseDetail(props) {
   const { category, courseId } = useParams();
   const data = useCourseById(category, courseId);
@@ -37,15 +43,19 @@ function CourseDetail(props) {
 
   return (
     <Box w="full" mt="64px" minH="90vh">
-      <Box w="full" bgGradient="linear(to-r, purple.500, pink.500)" px="2rem">
-        <Container maxW="container.xl" py="16" color="white">
-          <Grid templateColumns="repeat(3, 1fr)" gap="12">
-            <GridItem colSpan={2}>
+      <Box
+        w="full"
+        bgGradient="linear(to-r, purple.500, pink.500)"
+        px={['0', '2', '5']}
+      >
+        <Container maxW="container.xl" py={['8', '8', '16']} color="white">
+          <Grid templateColumns="repeat(3, 1fr)" gap={['6', '6', '6', '12']}>
+            <GridItem colSpan={[3, 3, 2]}>
               <Heading lineHeight="normal" fontWeight="bold" mb="5">
                 {title}
               </Heading>
               <Text fontSize="md" mb="3">
-                {truncateString(description, 420)}
+                <LinesEllipsis text={description} maxLine={3} />
               </Text>
               <Box mb="3">
                 <StarGroup rating={rating} point={point} showAvg={true} />

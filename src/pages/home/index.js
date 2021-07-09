@@ -1,5 +1,6 @@
 import React from 'react';
-import { Image, Box, Container, Heading, Text } from '@chakra-ui/react';
+import { Image, Box, Container, Heading, Text, Link } from '@chakra-ui/react';
+import { Link as ReactLink } from 'react-router-dom';
 import Slider from 'react-slick';
 
 import CourseCard from '../course/components/CourseCard';
@@ -9,8 +10,12 @@ import useCourses from '../../hooks/useCourses';
 import { STATUS } from '../../store/constant';
 import SpinnerLoading from '../../components/SpinnerLoading';
 
+import useMyCourses from '../../hooks/useMyCourses'
+
 function HomePage() {
   const [data, status, error] = useCourses();
+  const [myCourse] = useMyCourses();
+  console.log("day le mycourses", myCourse)
 
   const settings = {
     dots: false,
@@ -62,7 +67,9 @@ function HomePage() {
         {data.map(({ id, name, children }) => (
           <Box mb="2" key={id}>
             <Heading as="h3" mb="5" fontSize="20px" textTransform="capitalize">
-              {name}
+              <Link as={ReactLink} to={`/categories/${name}`}>
+                {name}
+              </Link>
             </Heading>
             <Slider {...settings}>
               {children?.map(item => (

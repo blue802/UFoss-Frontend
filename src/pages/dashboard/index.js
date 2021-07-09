@@ -1,0 +1,94 @@
+import React from 'react';
+import ProfileForm from './Components/ProfileForm';
+import {
+  Box,
+  Container,
+  Flex,
+  Text,
+  Button,
+  Heading,
+  Avatar,
+  HStack,
+} from '@chakra-ui/react';
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react"
+import CourseRowItem from '../course/components/CourseRowItem';
+import useCoursesByCategory from '../../hooks/useCoursesByCategory';
+import { STATUS } from '../../store/constant';
+import { useAuth } from '../../services/auth.service';
+import SpinnerLoading from '../../components/SpinnerLoading';
+const ProfilePage = () => {
+  const [profile] = useAuth();
+  const [data, status, error] = useCoursesByCategory('Design');
+
+  let content;
+  if (status === STATUS.FAILED) {
+    content = <Text color="red.400">{error}</Text>;
+  } else if (status === STATUS.LOADING) {
+    content = <SpinnerLoading />;
+  } else if (status === STATUS.SUCCEEDED) {
+    content = data.data?.map(item => {
+      return <CourseRowItem key={item.id} data={item} />;
+    });
+  }
+  return (
+    <Container
+    maxW={['container.sm', 'container.sm', 'container.lg']}
+    mt="8vh"
+    minH="80vh"
+    pt="5"
+  >
+    <Tabs>
+      <TabList>
+        <Tab>Profile</Tab>
+        <Tab>My Courses</Tab>
+      </TabList>
+      <TabPanels>
+        <TabPanel>
+        <Flex
+      margin="0 auto"
+      textAlign="center"
+      direction={['column', 'column', 'row']}
+    >
+      <Box w={['full', 'full', '16rem']} textAlign="center" mb="3">
+        <Box pos="relative" display="inline-block">
+          <Avatar
+            size="2xl"
+            name={profile.firstName}
+            src={profile.avatarURl}
+          />
+          <Button
+            colorScheme="teal"
+            pos="absolute"
+            bottom="0"
+            right="4"
+            size="xs"
+          >
+            Edit
+          </Button>
+        </Box>
+        <Heading as="h5" color="gray" mt="3" fontSize="2xl">
+          {profile.username}
+        </Heading>
+      </Box>
+      <Box flex="1">
+        <Heading as="h4" size="lg" color="gray.700" textAlign="center">
+          Your Profile
+        </Heading>
+        <ProfileForm profile={profile} />
+      </Box>
+    </Flex>
+        </TabPanel>
+        <TabPanel>
+        <Box>
+        <HStack alignItems="start" spacing="5">
+          <Box flex="1">{content}</Box>
+        </HStack>
+      </Box>
+        </TabPanel>
+      </TabPanels>
+    </Tabs>
+  </Container>
+  );
+};
+
+export default ProfilePage;

@@ -8,7 +8,9 @@ import {
   ModalBody,
   Button,
   useDisclosure,
-  Box
+  Box,
+  HStack,
+  Text
 } from '@chakra-ui/react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
@@ -17,8 +19,12 @@ function ShowLesson(props) {
   const { index, lesson } = props;
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <>
-      <Button onClick={onOpen}>Lesson {`${index + 1}:  ${lesson.title}`}</Button>
+    <HStack marginBottom='1rem'>
+      <Button justifyContent='flex-start' w='100%' onClick={onOpen}>
+        <Text>
+          Lesson {`${index + 1}:  ${lesson.title}`}
+        </Text>
+      </Button>
       <Modal isOpen={isOpen} onClose={onClose} width="1000px">
         <ModalOverlay />
         <ModalContent width='800px'>
@@ -39,7 +45,7 @@ function ShowLesson(props) {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </>
+    </HStack>
   )
 }
 ShowLesson.prototype = {

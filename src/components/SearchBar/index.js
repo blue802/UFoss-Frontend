@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Link as ReactLink } from 'react-router-dom';
 import {
@@ -16,17 +16,21 @@ import {
   Link,
   Text,
   useDisclosure,
+  VStack,
 } from '@chakra-ui/react';
 import { AiOutlineSearch, AiOutlineCloseCircle } from 'react-icons/ai';
+import LinesEllipsis from 'react-lines-ellipsis';
+
 import { truncateString } from '../../utils/stringUtils';
 import SpinnerLoading from '../SpinnerLoading';
 
 const SearchBar = props => {
   const { data, onChange, isLargeScreen, isSearching } = props;
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const refBox = useRef(null);
 
   const _onChange = e => {
-    if (onChange) {
+    if (onChange && e.target.value) {
       onChange(e.target.value);
     }
   };
@@ -47,25 +51,53 @@ const SearchBar = props => {
   );
 
   const listLinkItems = data?.map(({ id, title, description, category }) => (
-    <Link
-      as={ReactLink}
-      to={`/categories/${category.name}/courses/${id}`}
-      key={id}
-      display="inline-block"
-      mb="3"
-      onClick={onClose}
-    >
-      <Heading as="h5" fontSize="xl" color="gray.600">
-        {truncateString(title, 30)}
+    <Box key={id} mb="3">
+      <Heading as="h5" fontSize="lg" color="gray.600" onClick={onClose}>
+        <Link as={ReactLink} to={`/categories/${category.name}/courses/${id}`}>
+          {truncateString(title, 30)}
+        </Link>
       </Heading>
       <Text fontSize="sm" color="gray.400">
-        {truncateString(description, 40)}
+        <LinesEllipsis text={description} />
       </Text>
-    </Link>
+    </Box>
   ));
 
+  useEffect(() => {
+    window.addEventListener('click', e => {
+      if (refBox.current && isOpen && !refBox.current.contains(e.target)) {
+        onClose();
+      }
+    });
+  });
+
   if (isLargeScreen) {
-    return <Box flex="1">{inputGroup}</Box>;
+    return (
+      <Box flex="1" pos="relative" ref={refBox} onFocus={() => onOpen()}>
+        {inputGroup}
+        {isOpen && (
+          <VStack
+            bgColor="white"
+            p="5"
+            w="full"
+            maxW="800px"
+            alignItems="start"
+            pos="absolute"
+            top="3rem"
+            left="0"
+            border="1px"
+            borderColor="gray.300"
+            rounded="sm"
+          >
+            {data.length > 0 ? (
+              listLinkItems
+            ) : (
+              <Text color="gray">0 Results</Text>
+            )}
+          </VStack>
+        )}
+      </Box>
+    );
   }
 
   return (
@@ -102,12 +134,7 @@ const SearchBar = props => {
 
 SearchBar.propTypes = {
   onChange: PropTypes.func,
-  data: PropTypes.arrayOf({
-    id: PropTypes.string,
-    title: PropTypes.string,
-    description: PropTypes.string,
-    category: PropTypes.object,
-  }),
+  data: PropTypes.array,
   isSearching: PropTypes.bool,
   isLargeScreen: PropTypes.bool,
 };

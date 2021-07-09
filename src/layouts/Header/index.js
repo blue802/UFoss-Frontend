@@ -75,7 +75,7 @@ const Header = () => {
   );
 
   const listCategoryLinks = categories?.map(({ id, name }) => (
-    <ListItem key={id}>
+    <ListItem key={id} onClick={() => onClose()}>
       <Link as={ReactLink} to={`/categories/${name}`}>
         {name}
       </Link>
@@ -83,8 +83,8 @@ const Header = () => {
   ));
 
   const menuCategoryItems = categories?.map(({ id, name }) => (
-    <MenuItem key={id}>
-      <Link as={ReactLink} to={`/categories/${name}`}>
+    <MenuItem key={id} onClick={() => onClose()}>
+      <Link as={ReactLink} to={`/categories/${name}`} display="inline-block">
         {name}
       </Link>
     </MenuItem>
