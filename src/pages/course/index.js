@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Heading,
@@ -9,6 +9,9 @@ import {
   HStack,
   Link,
   Icon,
+  Button,
+  useDisclosure,
+  ModalHeader,
 } from '@chakra-ui/react';
 import LinesEllipsis from 'react-lines-ellipsis';
 
@@ -17,10 +20,20 @@ import CourseWidget from './components/CourseWidget';
 import { useParams } from 'react-router-dom';
 import useCourseById from '../../hooks/useCourseById';
 import { FaRegPlayCircle } from 'react-icons/fa';
+import { Modal, ModalOverlay, ModalContent } from '@chakra-ui/react';
+import ReactStars from 'react-rating-stars-component';
+import { useAuth } from '../../services/auth.service';
+import API from '../../utils/API';
+import useRate from '../../hooks/useRate';
+import useCustomToast from '../../hooks/useCustomToast';
 
 function CourseDetail(props) {
+  const toast = useCustomToast();
+  const [profile] = useAuth();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { category, courseId } = useParams();
   const data = useCourseById(category, courseId);
+  const checkRate = useRate(courseId , profile.id)
 
   if (!data) {
     return (
@@ -43,8 +56,31 @@ function CourseDetail(props) {
     </HStack>
   ));
 
-  return (
+  const ratingChanged = async(newRating) => {
+    const values ={userId: profile.id ,score: newRating*2};
+    await API.post(`/categories/${category}/courses/${courseId}/rate`,values);
+    onClose()
+    toast({ title: 'Rate success', status: 'success' });
+  };
+  return (  
     <Box w="full" mt="64px" minH="90vh">
+      {!checkRate && <Button onClick={onOpen}>Rate Course</Button>}
+        <Box>
+          <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+            <ModalHeader textAlign='center'>Rate Course</ModalHeader>
+              <Box margin="0 auto">
+                <ReactStars
+                  count={5}
+                  onChange={ratingChanged}
+                  size={50}
+                  isHalf={true}
+                />
+              </Box>
+            </ModalContent>
+          </Modal>
+        </Box>
       <Box
         w="full"
         bgGradient="linear(to-r, purple.500, pink.500)"

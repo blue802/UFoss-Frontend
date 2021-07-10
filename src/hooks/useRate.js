@@ -1,15 +1,25 @@
 import { useEffect, useState } from 'react';
-import { STATUS } from '../store/constant';
 import API from '../utils/API';
 
-const  useRate= (userId,courseId,score,category) =>{
+const useRate = (courseId,userId) => {
+    const [data, setData] = useState();
 
     useEffect(() => {
-        async function postData() {
-            await API.post(`/categories/${category}/courses/${courseId}/rate`,{score,userId});
+      async function fetchData() {
+        try {
+          const res = await API.get(
+            `/course/${courseId}/user/${userId}`
+          );
+          setData(res.data);
+        } catch (error) {
+          alert(error);
         }
-        postData();
-      });
-}
+      }
+  
+      fetchData();
+    }, [courseId,userId]);
+  
+    return data;
+};
 
 export default useRate
