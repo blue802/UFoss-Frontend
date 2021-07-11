@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Flex, Icon, Text, Image } from '@chakra-ui/react';
 import { BsFillTagFill } from 'react-icons/bs';
+import LinesEllipsis from 'react-lines-ellipsis';
 
 function CartItem(props) {
   const { item, handleRemoveCartItems } = props;
@@ -27,13 +28,13 @@ function CartItem(props) {
 
             <Box>
               <Text fontSize="15px" fontWeight="700" color="#29303b">
-                {title}
+                <LinesEllipsis text={title} maxLine={2} />
               </Text>
               <Text
                 fontSize="13px"
                 fontWeight="400"
                 color="#686f7a"
-              >{`${instructor?.firstName}  ${instructor?.lastName} `}</Text>
+              >{`${instructor?.firstName} ${instructor?.lastName} `}</Text>
             </Box>
           </Flex>
         </Box>

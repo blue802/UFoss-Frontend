@@ -12,9 +12,6 @@ import SpinnerLoading from '../../components/SpinnerLoading';
 
 function HomePage() {
   const [data, status, error] = useCourses();
-  const cart = useSelector(state => state.cart);
-
-  const isInCart = id => cart.find(cart => cart.id === id);
 
   let content;
   if (status === STATUS.FAILED) {
@@ -34,7 +31,7 @@ function HomePage() {
             <Slider {...settings}>
               {children?.map(item => (
                 <Box px="2" pb="5" key={item.id}>
-                  <CourseCard data={item} isInCart={isInCart(item.id)} />
+                  <CourseCard data={item} />
                 </Box>
               ))}
             </Slider>

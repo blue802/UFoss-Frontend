@@ -1,23 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Text, Icon, Heading, Button } from '@chakra-ui/react';
 import { FcApproval } from 'react-icons/fc';
-import { useSelector, useDispatch } from 'react-redux';
-import { addToCart } from '../../../../store/cart/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import ReactPlayer from 'react-player';
 
+import { addToCart, checkInCart } from '../../../../store/cart/cartSlice';
+import { useHistory } from 'react-router-dom';
 const CourseWidget = props => {
   const dispatch = useDispatch();
-  const [isAdded, setIsAdded] = useState(false);
-  const carts = useSelector(state => state.carts);
-  const { price, intro, thumbnail } = props.data;
+  const history = useHistory();
+  const added = useSelector(state => checkInCart(state, props?.data.id));
+  const { price, lessons, imageURL } = props.data;
 
-  const handleAddToCart = val => {
-    let checkIdCard = carts.find(cart => cart.id === val.id);
-    if (!checkIdCard) {
-      dispatch(addToCart(val));
-      setIsAdded(true);
-    }
+  const handleBuyNow = val => {
+    dispatch(addToCart(val));
+    history.push('/cart');
   };
 
   return (
@@ -28,12 +26,12 @@ const CourseWidget = props => {
       rounded="md"
       overflow="hidden"
     >
-      {intro && (
+      {lessons[0] && (
         <Box width="full">
           <ReactPlayer
-            light={thumbnail}
+            light={imageURL}
             playing
-            url={intro.videoURL}
+            url={lessons[0].videoURL}
             controls
             width="100%"
             height="192px"
@@ -49,11 +47,18 @@ const CourseWidget = props => {
           colorScheme="red"
           size="lg"
           mb="3"
-          onClick={() => handleAddToCart(props.course)}
+          onClick={() => dispatch(addToCart(props.data))}
         >
-          {isAdded ? 'Added' : 'Add To Cart'}
+          {added ? 'Added' : 'Add To Cart'}
         </Button>
-        <Button w="full" colorScheme="teal" variant="outline" size="lg" mb="3">
+        <Button
+          w="full"
+          colorScheme="teal"
+          variant="outline"
+          size="lg"
+          mb="3"
+          onClick={() => handleBuyNow(props.data)}
+        >
           Buy now
         </Button>
         <Text fontSize="xs" textAlign="center" mb="3">
@@ -80,10 +85,17 @@ const CourseWidget = props => {
 
 CourseWidget.prototype = {
   data: PropTypes.shape({
-    price: PropTypes.number.isRequired,
-    intro: PropTypes.string.isRequired,
-    thumbnail: PropTypes.string,
-  }),
+    id: PropTypes.string,
+    title: PropTypes.string,
+    description: PropTypes.string,
+    imageUrl: PropTypes.string,
+    price: PropTypes.number,
+    instructor: PropTypes.object,
+    rate: PropTypes.shape({
+      rating: PropTypes.number,
+      score: PropTypes.number,
+    }),
+  }).isRequired,
 };
 
 export default CourseWidget;

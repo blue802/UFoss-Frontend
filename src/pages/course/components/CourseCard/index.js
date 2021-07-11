@@ -15,11 +15,11 @@ import {
   useMediaQuery,
   PopoverFooter,
 } from '@chakra-ui/react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LinesEllipsis from 'react-lines-ellipsis';
 
 import StarGroup from '../../../../components/StarGroup';
-import { addToCart } from '../../../../store/cart/cartSlice';
+import { addToCart, checkInCart } from '../../../../store/cart/cartSlice';
 import CourseButton from '../../../../components/CourseButton';
 
 function CourseCard(props) {
@@ -35,15 +35,10 @@ function CourseCard(props) {
     rate,
     category,
   } = props.data;
+  const added = useSelector(state => checkInCart(state, id));
 
   const { rating, score } = rate;
   const point = rating > 0 ? score / (rating * 2) : 0;
-
-  const handleAddToCart = val => {
-    if (!props.isInCart) {
-      dispatch(addToCart(val));
-    }
-  };
 
   return (
     <LinkBox as="article" textAlign="left">
@@ -99,8 +94,8 @@ function CourseCard(props) {
               pb={4}
             >
               <CourseButton
-                status={props.isInCart ? 'ADDED' : 'ADD_TO_CART'}
-                onClick={() => handleAddToCart(props.data)}
+                status={added ? 'ADDED' : 'ADD_TO_CART'}
+                onClick={() => dispatch(addToCart(props.data))}
               />
             </PopoverFooter>
           </PopoverContent>

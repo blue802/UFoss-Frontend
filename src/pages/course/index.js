@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Heading,
@@ -8,7 +8,6 @@ import {
   GridItem,
   HStack,
   Icon,
-  Button,
   useDisclosure,
 } from '@chakra-ui/react';
 import { FaRegPlayCircle } from 'react-icons/fa';
@@ -26,6 +25,7 @@ function CourseDetail(props) {
   const { category, courseId } = useParams();
   const [data, status, error] = useCourseById(category, courseId);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [videoPlaying, setVideoPlaying] = useState(null);
 
   if (status === STATUS.FAILED) {
     return (
@@ -45,8 +45,7 @@ function CourseDetail(props) {
     );
   }
 
-  const { title, description, imageURL, rate, instructor, lessons, price } =
-    data;
+  const { title, description, rate, instructor, lessons } = data;
   const { rating, score } = rate;
   const point = rating > 0 ? score / (rating * 2) : 0;
 
@@ -54,13 +53,19 @@ function CourseDetail(props) {
     lessons.map((lesson, index) => (
       <HStack key={lesson.id} py="2">
         <Icon as={FaRegPlayCircle} mr="2" color="gray.400" />
-        <Box onClick={onOpen} cursor="pointer">
+        <Box
+          onClick={() => onOpenVideoPlayer(lesson.videoURL)}
+          cursor="pointer"
+        >
           <LinesEllipsis text={`Lecture ${index}: ${lesson.title}`} />
         </Box>
       </HStack>
     ));
 
-  const sourcesVideoURL = () => lessons.map(lesson => lesson.videoURL);
+  const onOpenVideoPlayer = url => {
+    setVideoPlaying(url);
+    onOpen();
+  };
 
   return (
     <Box w="full" mt="64px" minH="90vh">
@@ -89,35 +94,36 @@ function CourseDetail(props) {
           </Grid>
         </Container>
       </Box>
-      <Container maxW="container.xl">
-        <Grid templateColumns="repeat(3, 1fr)" gap={12}>
-          <GridItem colSpan={2}>
-            <Heading as="h5" size="lg" mt="12" mb="5">
-              Course content
-            </Heading>
-            <Box borderWidth="1px" p="3" rounded="sm">
-              {listLesson()}
-            </Box>
-          </GridItem>
-          <GridItem colSpan={1} pos="relative" top="-12rem">
-            <Box pos="sticky" top="4rem">
-              <CourseWidget
-                data={{
-                  price: price,
-                  intro: lessons[0],
-                  thumbnail: imageURL,
-                }}
-                course={data}
-              />
-            </Box>
-          </GridItem>
-        </Grid>
-      </Container>
-      <VideoPlayer
-        source={sourcesVideoURL()}
-        isOpen={isOpen}
-        onClose={onClose}
-      />
+      <Box px={['0', '2', '5']}>
+        <Container maxW="container.xl">
+          <Grid templateColumns="repeat(3, 1fr)" gap={['6', '6', '6', '12']}>
+            <GridItem
+              colSpan={[3, 3, 2]}
+              rowStart={[2, 2, 1]}
+              rowEnd={[3, 3, 2]}
+            >
+              <Heading as="h5" size="md" mt={['2', '2', '8']} mb="5">
+                Course content
+              </Heading>
+              <Box borderWidth="1px" p="3" rounded="sm" mb="3">
+                {listLesson()}
+              </Box>
+            </GridItem>
+            <GridItem
+              colSpan={[3, 3, 1]}
+              rowStart="1"
+              rowEnd={[2, 2, 2]}
+              pos="relative"
+              top={['0', '0', '-12rem']}
+            >
+              <Box pos="sticky" top="4rem">
+                <CourseWidget data={data} />
+              </Box>
+            </GridItem>
+          </Grid>
+        </Container>
+      </Box>
+      <VideoPlayer source={videoPlaying} isOpen={isOpen} onClose={onClose} />
     </Box>
   );
 }
