@@ -1,77 +1,53 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Flex, Box, Text, Container, Heading } from '@chakra-ui/react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { removeItemCart, removeAllCart } from '../../store/cart/cartSlice';
+import { removeItemInCart, cleanCart } from '../../store/cart/cartSlice';
 import CartItem from './components/CartItem';
 import CheckoutForm from './components/CheckoutForm';
 import Paypal from './components/Paypal';
 import { useAuth } from '../../services/auth.service';
 import API from '../../utils/API';
 import useCustomToast from '../../hooks/useCustomToast';
+
 function CartPage() {
-  let history = useHistory();
+  const cart = useSelector(state => state.cart);
   const toast = useCustomToast();
   const dispatch = useDispatch();
-  const carts = useSelector(state => state.carts);
-  const [listCarts, setListCarts] = useState(carts);
-  const [totalAmount, setTotalAmount] = useState(0);
+  const history = useHistory();
   const [checkout, setCheckout] = useState(false);
   const [profile] = useAuth();
-  console.log('profile', profile);
-  const [dataSubmitCart, setDataSubmitCart] = useState({
-    userId: '',
-    courId: [],
+
+  const bill = () => ({
+    userId: profile.id,
+    courseIds: cart.map(cart => cart.id),
   });
 
-  useEffect(() => {
-    setDataSubmitCart({
-      userId: profile.id,
-      courId: listCarts.map(cart => cart.id),
-    });
-  }, [profile, listCarts]);
-  const handleRemoveCartItems = val => {
-    const newCart = listCarts.filter(cart => cart.id !== val.id);
-    setListCarts(newCart);
-    dispatch(removeItemCart(val));
+  const onSubmit = async () => {
+    try {
+      await API.post(`/payments`, bill());
+      dispatch(cleanCart());
+      toast({ title: 'Payment success', status: 'success' });
+      history.push('/');
+    } catch (error) {
+      const message = error?.response?.data?.message;
+      toast({ title: message, status: 'error' });
+    }
   };
 
-  const handleRenderItemCart = () => {
-    return listCarts.map(itemCart => (
-      <CartItem
-        handleRemoveCartItems={handleRemoveCartItems}
-        itemCart={itemCart}
-      />
+  const handleRemoveCartItems = val => {
+    dispatch(removeItemInCart(val));
+  };
+
+  const handleRenderItems = () => {
+    return cart.map(item => (
+      <CartItem handleRemoveCartItems={handleRemoveCartItems} item={item} />
     ));
   };
 
-  const handleSumPrice = () => {
-    const sum = listCarts.reduce((total, itemCarts) => {
-      return total + itemCarts.price;
-    }, 0);
-    setTotalAmount(sum);
-  };
-
-  const handleCheckout = async () => {
-    try {
-      await API.post(`/payments`, dataSubmitCart)
-        .then(res => {})
-        .catch(err => console.log(err));
-    } catch {
-      console.log('err');
-    }
-    setCheckout(!checkout);
-  };
-  const handleCleanCart = () => {
-    dispatch(removeAllCart([]));
-    setCheckout(false);
-    toast({ title: 'Payment success', status: 'success' });
-    history.push('/');
-  };
-  useEffect(() => {
-    handleSumPrice();
-  }, [listCarts]);
+  const totalMoney = bill =>
+    bill.reduce((total, item) => total + item.price, 0);
 
   return (
     <Box mt="64px" minH="90vh">
@@ -102,36 +78,31 @@ function CartPage() {
         color="white"
       >
         <Flex w="full" direction={['column-reverse', 'column-reverse', 'row']}>
-          {/* Total item checkout */}
           <Box w={['full', 'full', 2 / 3]}>
             <Box>
               <Text fontSize="18px" fontWeight="400" color="#29303B">
                 {' '}
-                {listCarts.length} Courses in Cart
+                {cart.length} Courses in Cart
               </Text>
             </Box>
             <Flex direction="column">
               <Box>
-                <Flex direction="column">{handleRenderItemCart()}</Flex>
+                <Flex direction="column">{handleRenderItems()}</Flex>
               </Box>
             </Flex>
           </Box>
 
-          {/* Toltal price */}
           <Box
             w={['full', 'full', 1 / 3]}
             ml={['0', '0', '5']}
             mb={['5', '5', '0']}
           >
             {checkout ? (
-              <Paypal
-                totalAmount={totalAmount}
-                handleCleanCart={handleCleanCart}
-              />
+              <Paypal totalMoney={totalMoney(cart)} onSubmit={onSubmit} />
             ) : (
               <CheckoutForm
-                totalAmount={totalAmount}
-                handleCheckout={handleCheckout}
+                totalMoney={totalMoney(cart)}
+                onClick={() => setCheckout(true)}
               />
             )}
           </Box>

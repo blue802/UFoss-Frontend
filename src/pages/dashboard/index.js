@@ -32,9 +32,10 @@ const Dashboard = () => {
     content = <SpinnerLoading />;
   } else if (status === STATUS.SUCCEEDED) {
     content = data.data?.map(item => {
-      return <CourseRowItem key={item.id} data={item} />;
+      return <CourseRowItem key={item.id} data={item} paid={true} />;
     });
   }
+
   return (
     <Container
       maxW={['container.sm', 'container.sm', 'container.lg']}

@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link as ReactLink } from 'react-router-dom';
+import { Link, Link as ReactLink } from 'react-router-dom';
 import {
   LinkBox,
   Box,
   Image,
   Text,
   LinkOverlay,
-  Button,
   HStack,
   Heading,
 } from '@chakra-ui/react';
 
 import StarGroup from '../../../../components/StarGroup';
 import LinesEllipsis from 'react-lines-ellipsis';
+import CourseButton from '../../../../components/CourseButton';
 
 function CourseRowItem(props) {
   const {
@@ -25,13 +25,14 @@ function CourseRowItem(props) {
     rate,
     imageURL,
     category,
-    payment = true,
   } = props.data;
   const { rating, score } = rate;
   const point = rating > 0 ? score / (rating * 2) : 0;
+
   const handleAddToCart = () => {
     console.log('added');
   };
+
   return (
     <Box
       py="5"
@@ -78,31 +79,21 @@ function CourseRowItem(props) {
               </Text>
               <StarGroup point={point} rating={rating} />
             </Box>
-            {payment ? (
+            {props.paid ? (
               <Box fontWeight="bold">
-                <Button
-                  colorScheme="blue"
-                  variant="outline"
-                  fontSize={['sm', 'sm', 'md']}
-                  onClick={handleAddToCart}
-                >
-                  Go to Courses
-                </Button>
+                <Link to={`/categories/${category.name}/courses/${id}`}>
+                  <CourseButton status="GO_TO_COURSE" />
+                </Link>
               </Box>
             ) : (
               <Box fontWeight="bold">
-                <Text textAlign={['left', 'left', 'left', 'right']}>
+                <Text
+                  textAlign={['left', 'left', 'left', 'right']}
+                  mb={['0.6rem', '0.6rem', '0.8rem', '5.6rem']}
+                >
                   ${price}
                 </Text>
-                <Button
-                  colorScheme="red"
-                  variant="outline"
-                  onClick={handleAddToCart}
-                  fontSize={['sm', 'sm', 'md']}
-                  mt={['0.6rem', '0.6rem', '0.8rem', '5.6rem']}
-                >
-                  Add To Cart
-                </Button>
+                <CourseButton status="ADD_TO_CART" onClick={handleAddToCart} />
               </Box>
             )}
           </Box>
@@ -124,8 +115,8 @@ CourseRowItem.prototype = {
       rating: PropTypes.number,
       score: PropTypes.number,
     }),
-    payment: PropTypes.bool,
   }),
+  paid: PropTypes.bool,
 };
 
 export default CourseRowItem;

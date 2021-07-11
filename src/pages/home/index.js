@@ -2,55 +2,19 @@ import React from 'react';
 import { Image, Box, Container, Heading, Text, Link } from '@chakra-ui/react';
 import { Link as ReactLink } from 'react-router-dom';
 import Slider from 'react-slick';
+import { useSelector } from 'react-redux';
 
 import CourseCard from '../course/components/CourseCard';
-import NextArrowButton from './Components/NextArrowButton';
-import PrevArrowButton from './Components/PrevArrowButton';
 import useCourses from '../../hooks/useCourses';
 import { STATUS } from '../../store/constant';
+import settings from './configSlider';
 import SpinnerLoading from '../../components/SpinnerLoading';
 
 function HomePage() {
   const [data, status, error] = useCourses();
+  const cart = useSelector(state => state.cart);
 
-  const settings = {
-    dots: false,
-    infinite: false,
-    lazyLoad: true,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 5,
-    swipeToSlide: true,
-    nextArrow: <NextArrowButton />,
-    prevArrow: <PrevArrowButton />,
-    responsive: [
-      {
-        breakpoint: 1280,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 4,
-        },
-      },
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2.5,
-          slidesToScroll: 2,
-          prevArrow: false,
-          nextArrow: false,
-        },
-      },
-      {
-        breakpoint: 448,
-        settings: {
-          slidesToShow: 1.5,
-          slidesToScroll: 1,
-          prevArrow: false,
-          nextArrow: false,
-        },
-      },
-    ],
-  };
+  const isInCart = id => cart.find(cart => cart.id === id);
 
   let content;
   if (status === STATUS.FAILED) {
@@ -70,7 +34,7 @@ function HomePage() {
             <Slider {...settings}>
               {children?.map(item => (
                 <Box px="2" pb="5" key={item.id}>
-                  <CourseCard data={item} />
+                  <CourseCard data={item} isInCart={isInCart(item.id)} />
                 </Box>
               ))}
             </Slider>

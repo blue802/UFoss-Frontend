@@ -1,20 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Box,
-  Text,
-  Icon,
-  AspectRatio,
-  Heading,
-  Button,
-} from '@chakra-ui/react';
+import { Box, Text, Icon, Heading, Button } from '@chakra-ui/react';
 import { FcApproval } from 'react-icons/fc';
+import { useSelector, useDispatch } from 'react-redux';
+import { addToCart } from '../../../../store/cart/cartSlice';
+import ReactPlayer from 'react-player';
 
 const CourseWidget = props => {
-  const { price, intro } = props.data;
-  const addToCart = () => {
-    console.log("add to cart");
-  }
+  const dispatch = useDispatch();
+  const [isAdded, setIsAdded] = useState(false);
+  const carts = useSelector(state => state.carts);
+  const { price, intro, thumbnail } = props.data;
+
+  const handleAddToCart = val => {
+    let checkIdCard = carts.find(cart => cart.id === val.id);
+    if (!checkIdCard) {
+      dispatch(addToCart(val));
+      setIsAdded(true);
+    }
+  };
 
   return (
     <Box
@@ -25,16 +29,29 @@ const CourseWidget = props => {
       overflow="hidden"
     >
       {intro && (
-        <AspectRatio width="full" height="192px" ratio={1}>
-          <iframe title={intro.title} src={intro.videoURL} allowFullScreen />
-        </AspectRatio>
+        <Box width="full">
+          <ReactPlayer
+            light={thumbnail}
+            playing
+            url={intro.videoURL}
+            controls
+            width="100%"
+            height="192px"
+          />
+        </Box>
       )}
       <Box p="5">
         <Heading as="h5" color="black" fontSize="4xl" mb="3">
           ${price}
         </Heading>
-        <Button w="full" colorScheme="red" size="lg" mb="3" onClick={addToCart}>
-          Add to cart
+        <Button
+          w="full"
+          colorScheme="red"
+          size="lg"
+          mb="3"
+          onClick={() => handleAddToCart(props.course)}
+        >
+          {isAdded ? 'Added' : 'Add To Cart'}
         </Button>
         <Button w="full" colorScheme="teal" variant="outline" size="lg" mb="3">
           Buy now
@@ -65,6 +82,7 @@ CourseWidget.prototype = {
   data: PropTypes.shape({
     price: PropTypes.number.isRequired,
     intro: PropTypes.string.isRequired,
+    thumbnail: PropTypes.string,
   }),
 };
 

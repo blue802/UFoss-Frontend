@@ -1,8 +1,11 @@
 import React, { useRef, useEffect } from 'react';
+import useCustomToast from '../../../../hooks/useCustomToast';
 
 export default function Paypal(props) {
-  const { totalAmount, handleCleanCart } = props;
+  const { totalMoney, onSubmit } = props;
   const paypal = useRef();
+  const toast = useCustomToast();
+
   const handlePaypal = () => {
     window.paypal
       .Buttons({
@@ -14,7 +17,7 @@ export default function Paypal(props) {
                 description: 'Cool looking table',
                 amount: {
                   currency_code: 'CAD',
-                  value: totalAmount,
+                  value: totalMoney,
                 },
               },
             ],
@@ -22,15 +25,16 @@ export default function Paypal(props) {
         },
         onApprove: async (data, actions) => {
           const order = await actions.order.capture();
-          handleCleanCart();
-          console.log(order);
+          onSubmit();
         },
-        onError: err => {
-          console.log(err);
+        onError: error => {
+          const message = error?.response?.data?.message;
+          toast({ title: message, status: 'error' });
         },
       })
       .render(paypal.current);
   };
+
   useEffect(() => {
     handlePaypal();
     // eslint-disable-next-line react-hooks/exhaustive-deps
