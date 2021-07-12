@@ -12,6 +12,7 @@ import {
   Button,
   useDisclosure,
   ModalHeader,
+  Flex,
 } from '@chakra-ui/react';
 import LinesEllipsis from 'react-lines-ellipsis';
 
@@ -28,12 +29,13 @@ import useRate from '../../hooks/useRate';
 import useCustomToast from '../../hooks/useCustomToast';
 
 function CourseDetail(props) {
+  const [rated, setRated] = useState(true)
   const toast = useCustomToast();
   const [profile] = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { category, courseId } = useParams();
   const data = useCourseById(category, courseId);
-  const checkRate = useRate(courseId , profile.id)
+  const checkRated = useRate(courseId , profile?.id);
 
   if (!data) {
     return (
@@ -42,7 +44,6 @@ function CourseDetail(props) {
       </Container>
     );
   }
-
   const { title, description, rate, instructor, lessons, price } = data;
   const { rating, score } = rate;
   const point = rating > 0 ? score / (rating * 2) : 0;
@@ -60,11 +61,13 @@ function CourseDetail(props) {
     const values ={userId: profile.id ,score: newRating*2};
     await API.post(`/categories/${category}/courses/${courseId}/rate`,values);
     onClose()
-    toast({ title: 'Rate success', status: 'success' });
+    toast({ title: 'Thank You!', status: 'success' });
+    setRated(false)
   };
+  console.log(checkRated)
   return (  
     <Box w="full" mt="64px" minH="90vh">
-      {!checkRate && <Button onClick={onOpen}>Rate Course</Button>}
+      
         <Box>
           <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
@@ -114,9 +117,19 @@ function CourseDetail(props) {
               rowStart={[2, 2, 1]}
               rowEnd={[3, 3, 2]}
             >
-              <Heading as="h5" size="lg" mt={['2', '2', '8']} mb="5">
-                Course content
-              </Heading>
+              <Flex justifyContent="space-between" mt={['2', '2', '8']} mb="5">
+                <Heading as="h5" size="lg" >
+                  Course content
+                </Heading>
+                {profile && !checkRated && rated && 
+                  <Button 
+                    variant="unstyled" 
+                    fontWeight="normal" 
+                    onClick={onOpen}>
+                      Leave a rating
+                </Button>
+                }
+              </Flex>
               <Box borderWidth="1px" p="3" rounded="sm" mb="3">
                 {listLesson}
               </Box>

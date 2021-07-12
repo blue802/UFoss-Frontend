@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import API from '../utils/API';
 
-const useRate = (courseId,userId) => {
+const useRate = (courseId, userId) => {
     const [data, setData] = useState();
 
     useEffect(() => {
@@ -16,7 +16,9 @@ const useRate = (courseId,userId) => {
         }
       }
   
-      fetchData();
+      if (userId) {     
+        fetchData();
+      }
     }, [courseId,userId]);
   
     return data;
