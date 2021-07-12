@@ -46,7 +46,7 @@ function CategoryPage() {
   } else if (status === STATUS.LOADING) {
     content = <SpinnerLoading />;
   } else if (status === STATUS.SUCCEEDED) {
-    content = data?.map(item => {
+    content = data.data?.map(item => {
       return <CourseRowItem key={item.id} data={item} />;
     });
   }

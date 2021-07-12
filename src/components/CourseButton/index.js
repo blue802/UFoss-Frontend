@@ -11,9 +11,19 @@ const CourseButton = props => {
     if (status === 'GO_TO_COURSE') return 'Go To Course';
   };
 
+  const _colorScheme = status => {
+    if (status === 'GO_TO_COURSE') {
+      return 'blue';
+    }
+    if (status === 'ADDED') {
+      return 'green';
+    }
+    return 'red';
+  };
+
   return (
     <Button
-      colorScheme={status === 'GO_TO_COURSE' ? 'blue' : 'red'}
+      colorScheme={_colorScheme(status)}
       width="full"
       variant={status === 'GO_TO_COURSE' ? 'outline' : 'solid'}
       fontSize={['sm', 'sm', 'md']}

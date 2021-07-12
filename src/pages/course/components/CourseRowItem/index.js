@@ -14,6 +14,8 @@ import {
 import StarGroup from '../../../../components/StarGroup';
 import LinesEllipsis from 'react-lines-ellipsis';
 import CourseButton from '../../../../components/CourseButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, checkInCart } from '../../../../store/cart/cartSlice';
 
 function CourseRowItem(props) {
   const {
@@ -26,6 +28,8 @@ function CourseRowItem(props) {
     imageURL,
     category,
   } = props.data;
+  const dispatch = useDispatch();
+  const added = useSelector(state => checkInCart(state, id));
   const { rating, score } = rate;
   const point = rating > 0 ? score / (rating * 2) : 0;
 
@@ -93,7 +97,10 @@ function CourseRowItem(props) {
                 >
                   ${price}
                 </Text>
-                <CourseButton status="ADD_TO_CART" onClick={handleAddToCart} />
+                <CourseButton
+                  status={added ? 'ADDED' : 'ADD_TO_CART'}
+                  onClick={() => dispatch(addToCart(props.data))}
+                />
               </Box>
             )}
           </Box>
