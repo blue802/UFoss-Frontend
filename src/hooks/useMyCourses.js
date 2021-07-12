@@ -20,7 +20,6 @@ const useMyCourses = () => {
       dispatch(fetchMyCourses(profile.id));
     }
   }, [dispatch, profile.id, status]);
-
   return [data, status, error];
 };
 

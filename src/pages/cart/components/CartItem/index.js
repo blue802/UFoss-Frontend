@@ -1,11 +1,12 @@
 import React from 'react';
-import { Box, Flex, Icon, Text, Image } from '@chakra-ui/react';
+import { Box, Flex, Icon, Text, Image, Link } from '@chakra-ui/react';
+import { Link as ReactLink } from 'react-router-dom';
 import { BsFillTagFill } from 'react-icons/bs';
 import LinesEllipsis from 'react-lines-ellipsis';
 
 function CartItem(props) {
   const { item, handleRemoveCartItems } = props;
-  const { title, imageURL, instructor, price } = item;
+  const { id, title, imageURL, instructor, price, category } = item;
 
   return (
     <Box
@@ -15,29 +16,32 @@ function CartItem(props) {
       marginBottom="10px"
     >
       <Flex direction="row">
-        <Box width="70%">
-          <Flex direction="row">
-            <Box marginRight="10px">
-              <Image
-                src={imageURL}
-                alt="image of course"
-                maxWidth="130px"
-                height="auto"
-              />
-            </Box>
+        <Link as={ReactLink} to={`/categories/${category.name}/courses/${id}`}>
+          <Box width="70%">
+            <Flex direction="row">
+              <Box marginRight="10px">
+                <Image
+                  src={imageURL}
+                  alt="image of course"
+                  maxWidth="130px"
+                  height="auto"
+                />
+              </Box>
 
-            <Box>
-              <Text fontSize="15px" fontWeight="700" color="#29303b">
-                <LinesEllipsis text={title} maxLine={2} />
-              </Text>
-              <Text
-                fontSize="13px"
-                fontWeight="400"
-                color="#686f7a"
-              >{`${instructor?.firstName} ${instructor?.lastName} `}</Text>
-            </Box>
-          </Flex>
-        </Box>
+              <Box>
+                <Text fontSize="15px" fontWeight="700" color="#29303b">
+                  <LinesEllipsis text={title} maxLine={2} />
+                </Text>
+                <Text
+                  fontSize="13px"
+                  fontWeight="400"
+                  color="#686f7a"
+                >{`${instructor?.firstName} ${instructor?.lastName} `}</Text>
+              </Box>
+            </Flex>
+          </Box>
+
+        </Link>
 
         <Box width="15%" onClick={() => handleRemoveCartItems(item)}>
           <Text

@@ -12,7 +12,7 @@ const initialState = {
 export const fetchMyCourses = createAsyncThunk(
   'myCourses/fetchMyCourses',
   async id => {
-    const { data } = await API.get(`/payments/usernameid/${id}`);
+    const { data } = await API.get(`/mycourses/${id}`);
     return data;
   }
 );
