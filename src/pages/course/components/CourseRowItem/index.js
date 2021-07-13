@@ -33,7 +33,7 @@ function CourseRowItem(props) {
   const { rating, score } = rate;
   const point = rating > 0 ? score / (rating * 2) : 0;
 
-  const handleAddToCart = (val) => {
+  const handleAddToCart = val => {
     dispatch(addToCart(val));
   };
 
@@ -85,7 +85,11 @@ function CourseRowItem(props) {
             </Box>
             {props.paid ? (
               <Box fontWeight="bold">
-                <Link to={`/categories/${category.name}/courses/${id}`}>
+                <Link
+                  as={ReactLink}
+                  to={`/categories/${category?.name}/courses/${id}`}
+                  _hover={{ textDecoration: 'none' }}
+                >
                   <CourseButton status="GO_TO_COURSE" />
                 </Link>
               </Box>
@@ -97,14 +101,21 @@ function CourseRowItem(props) {
                 >
                   ${price}
                 </Text>
-                {added ? <Link as={ReactLink} to="/cart" width='full' _hover={{ textDecoration: 'none' }}>
+                {added ? (
+                  <Link
+                    as={ReactLink}
+                    to="/cart"
+                    width="full"
+                    _hover={{ textDecoration: 'none' }}
+                  >
+                    <CourseButton status="ADDED" />
+                  </Link>
+                ) : (
                   <CourseButton
-                    status='ADDED'
+                    status="ADD_TO_CART"
+                    onClick={() => handleAddToCart(props.data)}
                   />
-                </Link> : <CourseButton
-                  status='ADD_TO_CART'
-                  onClick={() => handleAddToCart(props.data)}
-                />}
+                )}
               </Box>
             )}
           </Box>

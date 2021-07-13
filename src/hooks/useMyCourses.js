@@ -19,7 +19,7 @@ const useMyCourses = () => {
     if (status === STATUS.IDLE) {
       dispatch(fetchMyCourses(profile?.id));
     }
-  }, [dispatch, profile?.id, status]);
+  }, [dispatch, profile, status]);
   return [data, status, error];
 };
 

@@ -39,3 +39,6 @@ const myCourseSlice = createSlice({
 export default myCourseSlice.reducer;
 
 export const selectMyCourses = state => state.myCourses.data;
+
+export const isMyCourses = (state, courseId) => (
+  state.myCourses.data.find(item => item.id === courseId))

@@ -6,8 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { removeItemInCart, cleanCart } from '../../store/cart/cartSlice';
 import CartItem from './components/CartItem';
 import CheckoutForm from './components/CheckoutForm';
-import Paypal from './components/paypal';
-import { useAuth } from '../../services/auth.service';
+import Paypal from './components/Paypal';
+import { authHeader, useAuth } from '../../services/auth.service';
 import API from '../../utils/API';
 import useCustomToast from '../../hooks/useCustomToast';
 
@@ -21,15 +21,17 @@ function CartPage() {
 
   const bill = () => ({
     userId: profile.id,
-    courseIds: cart.map(cart => cart.id),
+    courseId: cart.map(cart => cart.id),
   });
 
   const onSubmit = async () => {
     try {
-      await API.post(`/payments`, bill());
+      const _authHeader = await authHeader();
+      await API.post(`/payment`, bill(), {
+        headers: _authHeader,
+      });
       dispatch(cleanCart());
       toast({ title: 'Payment success', status: 'success' });
-      history.push('/');
     } catch (error) {
       const message = error?.response?.data?.message;
       toast({ title: message, status: 'error' });
@@ -46,22 +48,17 @@ function CartPage() {
     ));
   };
 
+  const handleCheckoutForm = () => {
+    profile ? setCheckout(true) : history.push('/login');
+  };
+
   const totalMoney = bill =>
     bill.reduce((total, item) => total + item.price, 0);
 
   return (
     <Box mt="64px" minH="90vh">
       <Box w="full" bgColor="black">
-        <Container
-          maxW={[
-            'container.sm',
-            'container.sm',
-            'container.md',
-            'container.lg',
-          ]}
-          py="16"
-          color="white"
-        >
+        <Container maxW="container.xl" py="16" color="white">
           <Heading
             as="h4"
             color="white"
@@ -72,11 +69,7 @@ function CartPage() {
           </Heading>
         </Container>
       </Box>
-      <Container
-        maxW={['container.sm', 'container.sm', 'container.md', 'container.lg']}
-        py="16"
-        color="white"
-      >
+      <Container maxW="container.xl" py="16" color="white">
         <Flex w="full" direction={['column-reverse', 'column-reverse', 'row']}>
           <Box w={['full', 'full', 2 / 3]}>
             <Box>
@@ -102,7 +95,7 @@ function CartPage() {
             ) : (
               <CheckoutForm
                 totalMoney={totalMoney(cart)}
-                onClick={() => setCheckout(true)}
+                onClick={() => handleCheckoutForm()}
               />
             )}
           </Box>

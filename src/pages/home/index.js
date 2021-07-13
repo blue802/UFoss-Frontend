@@ -2,7 +2,6 @@ import React from 'react';
 import { Image, Box, Container, Heading, Text, Link } from '@chakra-ui/react';
 import { Link as ReactLink } from 'react-router-dom';
 import Slider from 'react-slick';
-import { useSelector } from 'react-redux';
 
 import CourseCard from '../course/components/CourseCard';
 import useCourses from '../../hooks/useCourses';

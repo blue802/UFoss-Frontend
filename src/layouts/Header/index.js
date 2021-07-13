@@ -26,7 +26,6 @@ import {
 import { Link as ReactLink } from 'react-router-dom';
 import { FaGlobe } from 'react-icons/fa';
 import { HiMenu } from 'react-icons/hi';
-import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 
 import SearchBar from '../../components/SearchBar';
@@ -63,15 +62,17 @@ const Header = () => {
   );
 
   const avatarComponent = (
-    <HStack>
-      <Avatar src={profile?.avatarUrl} />
-      <Box>
-        <Heading as="h4" size="md">
-          {profile?.username}
-        </Heading>
-        <Text fontSize="sm">{profile?.email}</Text>
-      </Box>
-    </HStack>
+    <Link as={ReactLink} to="/dashboard" onClick={() => onClose()}>
+      <HStack>
+        <Avatar src={profile?.avatarUrl} />
+        <Box>
+          <Heading as="h4" size="md">
+            {profile?.username}
+          </Heading>
+          <Text fontSize="sm">{profile?.email}</Text>
+        </Box>
+      </HStack>
+    </Link>
   );
 
   const listCategoryLinks = categories?.map(({ id, name }) => (
@@ -164,13 +165,7 @@ const Header = () => {
           </Menu>
         </HStack>
       ) : (
-        <Icon
-          as={AiOutlineShoppingCart}
-          fontSize="2xl"
-          cursor="pointer"
-          color="gray.500"
-          mr={3}
-        />
+        <Cart amount={cart.length} />
       )}
     </HStack>
   );

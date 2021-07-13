@@ -22,7 +22,7 @@ import useCourseById from '../../hooks/useCourseById';
 import { FaRegPlayCircle, FaStar } from 'react-icons/fa';
 import { Modal, ModalOverlay, ModalContent } from '@chakra-ui/react';
 import ReactStars from 'react-rating-stars-component';
-import { useAuth } from '../../services/auth.service';
+import { authHeader, useAuth } from '../../services/auth.service';
 import API from '../../utils/API';
 import useRate from '../../hooks/useRate';
 import useCustomToast from '../../hooks/useCustomToast';
@@ -30,10 +30,11 @@ import useCustomToast from '../../hooks/useCustomToast';
 import { STATUS } from '../../store/constant';
 import SpinnerLoading from '../../components/SpinnerLoading';
 import VideoPlayer from './components/VideoPlayer';
-import useMyCourses from '../../hooks/useMyCourses';
+import { isMyCourses } from '../../store/myCourses/myCoursesSlice';
+import { useSelector } from 'react-redux';
 
-function CourseDetail(props) {
-  const [rated, setRated] = useState(true);
+function CourseDetail() {
+  const [ratedBtn, setRatedBtn] = useState(true);
   const [videoPlaying, setVideoPlaying] = useState(null);
   const toast = useCustomToast();
   const [profile] = useAuth();
@@ -50,8 +51,7 @@ function CourseDetail(props) {
   const { category, courseId } = useParams();
   const [data, status, error] = useCourseById(category, courseId);
   const checkRated = useRate(courseId, profile?.id);
-  const [myCourse] = useMyCourses();
-  const checkMyCourse = myCourse.find(item => item.id === props?.data.id);
+  const isMyCourse = useSelector(state => isMyCourses(state, courseId));
 
   if (status === STATUS.FAILED) {
     return (
@@ -71,11 +71,11 @@ function CourseDetail(props) {
     );
   }
 
-  const { title, description, rate, instructor, lessons, price } = data;
+  const { title, description, rate, instructor, lessons } = data;
   const { rating, score } = rate;
   const point = rating > 0 ? score / (rating * 2) : 0;
   const listLesson = () =>
-    lessons.map((lesson, index) => (
+    lessons?.map((lesson, index) => (
       <HStack key={lesson.id} py="2">
         <Icon as={FaRegPlayCircle} mr="2" color="gray.400" />
         <Box
@@ -93,13 +93,25 @@ function CourseDetail(props) {
   };
 
   const ratingChanged = async newRating => {
-    const values = { userId: profile.id, score: newRating * 2 };
-    await API.post(`/categories/${category}/courses/${courseId}/rate`, values);
-    onCloseRate();
-    toast({ title: 'Thank You!', status: 'success' });
-    setRated(false);
+    try {
+      const values = { userId: profile.id, score: newRating * 2 };
+      const _authHeader = await authHeader();
+      await API.post(
+        `/categories/${category}/courses/${courseId}/rate`,
+        values,
+        {
+          headers: _authHeader,
+        }
+      );
+      onCloseRate();
+      toast({ title: 'Thank You!', status: 'success' });
+      setRatedBtn(false);
+    } catch (error) {
+      const message = error.response?.data?.message;
+      toast({ title: message, status: 'error' });
+    }
   };
-  
+
   return (
     <Box w="full" mt="64px" minH="90vh">
       <Box
@@ -139,7 +151,7 @@ function CourseDetail(props) {
                 <Heading as="h5" size="lg">
                   Course content
                 </Heading>
-                {profile && checkMyCourse && !checkRated && rated && (
+                {profile && isMyCourse && !checkRated && ratedBtn && (
                   <Button size="sm" fontWeight="normal" onClick={onOpenRate}>
                     <Icon as={FaStar} mr="2" color="yellow.400" />
                     Leave a rating
@@ -179,11 +191,13 @@ function CourseDetail(props) {
           </Grid>
         </Container>
       </Box>
-      <VideoPlayer
-        source={videoPlaying}
-        isOpen={isOpenVideo}
-        onClose={onCloseVideo}
-      />
+      {videoPlaying && (
+        <VideoPlayer
+          source={videoPlaying}
+          isOpen={isOpenVideo}
+          onClose={onCloseVideo}
+        />
+      )}
     </Box>
   );
 }

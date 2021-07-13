@@ -35,7 +35,7 @@ function CategoryPage() {
   const [query, setQuery] = useState(qs.parse(search));
   const [data, status, error] = useCoursesByCategory(
     category,
-    qs.stringify(query)
+    query
   );
   const [isSmallScreen] = useMediaQuery('(max-width: 1024px)');
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();

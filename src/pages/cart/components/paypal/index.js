@@ -24,7 +24,7 @@ export default function Paypal(props) {
           });
         },
         onApprove: async (data, actions) => {
-          const order = await actions.order.capture();
+          await actions.order.capture();
           onSubmit();
         },
         onError: error => {
