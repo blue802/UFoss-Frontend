@@ -50,7 +50,7 @@ function CourseDetail(props) {
   const point = rating > 0 ? score / (rating * 2) : 0;
 
   const listLesson = () =>
-    lessons.map((lesson, index) => (
+    lessons?.map((lesson, index) => (
       <HStack key={lesson.id} py="2">
         <Icon as={FaRegPlayCircle} mr="2" color="gray.400" />
         <Box

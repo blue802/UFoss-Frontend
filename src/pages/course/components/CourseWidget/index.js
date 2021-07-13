@@ -26,7 +26,7 @@ const CourseWidget = props => {
       rounded="md"
       overflow="hidden"
     >
-      {lessons[0] && (
+      {lessons && lessons[0] && (
         <Box width="full">
           <ReactPlayer
             light={imageURL}

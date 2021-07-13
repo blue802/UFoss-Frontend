@@ -47,8 +47,8 @@ const ForgotPasswordPage = () => {
       localStorage.setItem('email_reset', email);
       toast({ title: 'Please check your email!', status: 'info' });
     } catch (error) {
-      const message = error?.response?.data?.message;
-      message && toast({ title: message, status: 'error' });
+      const message = error?.response?.data;
+      toast({ title: message, status: 'error' });
     }
   };
 

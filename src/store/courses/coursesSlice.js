@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import qs from 'query-string';
 
 import API from '../../utils/API';
 import { STATUS } from '../constant';
@@ -11,12 +12,16 @@ const initialState = {
 
 export const fetchCourses = createAsyncThunk(
   'courses/fetchCourses',
-  async () => {
+  async userId => {
     const { data } = await API.get('/categories');
     if (data.length > 0) {
       for (let i = 0; i < data.length; i++) {
+        const query = qs.stringify({
+          size: 15,
+          userId,
+        });
         const res = await API.get(
-          `/categories/${data[i].name}/courses?size=15`
+          `/categories/${data[i].name}/courses?${query}`
         );
         const courses = res.data?.data;
         if (courses.length > 0) {

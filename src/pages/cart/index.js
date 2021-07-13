@@ -7,7 +7,7 @@ import { removeItemInCart, cleanCart } from '../../store/cart/cartSlice';
 import CartItem from './components/CartItem';
 import CheckoutForm from './components/CheckoutForm';
 import Paypal from './components/Paypal';
-import { useAuth } from '../../services/auth.service';
+import { authHeader, useAuth } from '../../services/auth.service';
 import API from '../../utils/API';
 import useCustomToast from '../../hooks/useCustomToast';
 
@@ -21,12 +21,15 @@ function CartPage() {
 
   const bill = () => ({
     userId: profile.id,
-    courseIds: cart.map(cart => cart.id),
+    courseId: cart.map(cart => cart.id),
   });
 
   const onSubmit = async () => {
     try {
-      await API.post(`/payments`, bill());
+      const _authHeader = await authHeader();
+      await API.post(`/payment`, bill(), {
+        headers: _authHeader,
+      });
       dispatch(cleanCart());
       toast({ title: 'Payment success', status: 'success' });
       history.push('/');
@@ -44,6 +47,10 @@ function CartPage() {
     return cart.map(item => (
       <CartItem handleRemoveCartItems={handleRemoveCartItems} item={item} />
     ));
+  };
+
+  const handleCheckoutForm = () => {
+    profile ? setCheckout(true) : history.push('/login');
   };
 
   const totalMoney = bill =>
@@ -102,7 +109,7 @@ function CartPage() {
             ) : (
               <CheckoutForm
                 totalMoney={totalMoney(cart)}
-                onClick={() => setCheckout(true)}
+                onClick={() => handleCheckoutForm()}
               />
             )}
           </Box>

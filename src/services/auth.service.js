@@ -35,7 +35,7 @@ const createTokenProvider = () => {
         {},
         {
           headers: {
-            Authorization: `Basic ${_token.refreshToken}`,
+            Authorization: _token.refreshToken,
           },
         }
       );
@@ -122,7 +122,7 @@ export const createAuthProvider = () => {
 
     return token
       ? {
-          Authorization: `Bearer ${token}`,
+          Authorization: token,
         }
       : {};
   };

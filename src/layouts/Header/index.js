@@ -26,7 +26,6 @@ import {
 import { Link as ReactLink } from 'react-router-dom';
 import { FaGlobe } from 'react-icons/fa';
 import { HiMenu } from 'react-icons/hi';
-import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 
 import SearchBar from '../../components/SearchBar';
@@ -164,13 +163,7 @@ const Header = () => {
           </Menu>
         </HStack>
       ) : (
-        <Icon
-          as={AiOutlineShoppingCart}
-          fontSize="2xl"
-          cursor="pointer"
-          color="gray.500"
-          mr={3}
-        />
+        <Cart amount={cart.length} />
       )}
     </HStack>
   );
