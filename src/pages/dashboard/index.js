@@ -20,10 +20,13 @@ import { STATUS } from '../../store/constant';
 import SpinnerLoading from '../../components/SpinnerLoading';
 import CourseRowItem from '../course/components/CourseRowItem';
 import useCoursesByCategory from '../../hooks/useCoursesByCategory';
+import useMyCourses from '../../hooks/useMyCourses'
 
 const Dashboard = () => {
   const [profile] = useAuth();
-  const [data, status, error] = useCoursesByCategory('Design');
+  // const [data, status, error] = useCoursesByCategory('Design');
+  const [data, status, error] = useMyCourses();
+  console.log("data neee", data);
 
   let content;
   if (status === STATUS.FAILED) {
@@ -31,10 +34,11 @@ const Dashboard = () => {
   } else if (status === STATUS.LOADING) {
     content = <SpinnerLoading />;
   } else if (status === STATUS.SUCCEEDED) {
-    content = data.data?.map(item => {
-      return <CourseRowItem key={item.id} data={item} />;
+    content = data?.map(item => {
+      return <CourseRowItem key={item.id} data={item} paid={true} />;
     });
   }
+
   return (
     <Container
       maxW={['container.sm', 'container.sm', 'container.lg']}

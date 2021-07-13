@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
   LinkBox,
@@ -11,16 +11,18 @@ import {
   PopoverTrigger,
   PopoverContent,
   PopoverBody,
-  PopoverFooter,
-  Button,
   Heading,
   useMediaQuery,
+  PopoverFooter,
+  Link
 } from '@chakra-ui/react';
+import { Link as ReactLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import LinesEllipsis from 'react-lines-ellipsis';
 
 import StarGroup from '../../../../components/StarGroup';
-import { addToCart } from '../../../../store/cart/cartSlice';
-import LinesEllipsis from 'react-lines-ellipsis';
+import { addToCart, checkInCart } from '../../../../store/cart/cartSlice';
+import CourseButton from '../../../../components/CourseButton';
 
 function CourseCard(props) {
   const dispatch = useDispatch();
@@ -35,18 +37,11 @@ function CourseCard(props) {
     rate,
     category,
   } = props.data;
-  const [isAdded, setIsAdded] = useState(false);
+  const added = useSelector(state => checkInCart(state, id));
+
   const { rating, score } = rate;
   const point = rating > 0 ? score / (rating * 2) : 0;
-  const carts = useSelector(state => state.carts);
 
-  const addCourseToCart = val => {
-    let checkIdCard = carts.find(cart => cart.id === val.id);
-    if (!checkIdCard) {
-      dispatch(addToCart(val));
-      setIsAdded(true);
-    }
-  };
   return (
     <LinkBox as="article" textAlign="left">
       <Popover trigger="hover" placement="auto">
@@ -100,14 +95,14 @@ function CourseCard(props) {
               justifyContent="space-between"
               pb={4}
             >
-              <Button
-                colorScheme="red"
-                width="full"
-                color="white"
-                onClick={() => addCourseToCart(props.data)}
-              >
-                {isAdded ? 'Added' : 'Add to cart'}
-              </Button>
+              {added ? <Link as={ReactLink} to="/cart" width='full' _hover={{ textDecoration: 'none' }}>
+                <CourseButton
+                  status='ADDED'
+                />
+              </Link> : <CourseButton
+                status='ADD_TO_CART'
+                onClick={() => dispatch(addToCart(props.data))}
+              />}
             </PopoverFooter>
           </PopoverContent>
         )}
@@ -124,11 +119,12 @@ CourseCard.prototype = {
     imageUrl: PropTypes.string,
     price: PropTypes.number,
     instructor: PropTypes.object,
-    vote: PropTypes.shape({
+    rate: PropTypes.shape({
       rating: PropTypes.number,
       score: PropTypes.number,
     }),
   }),
+  isInCart: PropTypes.bool,
 };
 
 export default CourseCard;

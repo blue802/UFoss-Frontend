@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Heading,
@@ -7,41 +7,65 @@ import {
   Grid,
   GridItem,
   HStack,
-  Link,
   Icon,
+  useDisclosure,
 } from '@chakra-ui/react';
+import { FaRegPlayCircle } from 'react-icons/fa';
 import LinesEllipsis from 'react-lines-ellipsis';
+import { useParams } from 'react-router-dom';
 
 import StarGroup from '../../components/StarGroup';
 import CourseWidget from './components/CourseWidget';
-import { useParams } from 'react-router-dom';
 import useCourseById from '../../hooks/useCourseById';
-import { FaRegPlayCircle } from 'react-icons/fa';
+import { STATUS } from '../../store/constant';
+import SpinnerLoading from '../../components/SpinnerLoading';
+import VideoPlayer from './components/VideoPlayer';
 
 function CourseDetail(props) {
   const { category, courseId } = useParams();
-  const data = useCourseById(category, courseId);
+  const [data, status, error] = useCourseById(category, courseId);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [videoPlaying, setVideoPlaying] = useState(null);
 
-  if (!data) {
+  if (status === STATUS.FAILED) {
     return (
       <Container maxW="container.2xl" mt="64px" minH="90vh">
-        <Text>Loading...</Text>
+        <Text color="red" fontSize="xl">
+          {error}
+        </Text>
       </Container>
     );
   }
 
-  const { title, description, rate, instructor, lessons, price } = data;
+  if (status === STATUS.LOADING || !data) {
+    return (
+      <Container maxW="container.2xl" mt="64px" minH="90vh" pt="5">
+        <SpinnerLoading />
+      </Container>
+    );
+  }
+
+  const { title, description, rate, instructor, lessons } = data;
   const { rating, score } = rate;
   const point = rating > 0 ? score / (rating * 2) : 0;
 
-  const listLesson = lessons.map((lesson, index) => (
-    <HStack key={lesson.id} py="2">
-      <Icon as={FaRegPlayCircle} mr="2" color="gray.400" />
-      <Link href={lesson.videoURL} isExternal isTruncated>
-        Lecture {index}: {lesson.title}
-      </Link>
-    </HStack>
-  ));
+  const listLesson = () =>
+    lessons.map((lesson, index) => (
+      <HStack key={lesson.id} py="2">
+        <Icon as={FaRegPlayCircle} mr="2" color="gray.400" />
+        <Box
+          onClick={() => onOpenVideoPlayer(lesson.videoURL)}
+          cursor="pointer"
+        >
+          <LinesEllipsis text={`Lecture ${index}: ${lesson.title}`} />
+        </Box>
+      </HStack>
+    ));
+
+  const onOpenVideoPlayer = url => {
+    setVideoPlaying(url);
+    onOpen();
+  };
 
   return (
     <Box w="full" mt="64px" minH="90vh">
@@ -78,11 +102,11 @@ function CourseDetail(props) {
               rowStart={[2, 2, 1]}
               rowEnd={[3, 3, 2]}
             >
-              <Heading as="h5" size="lg" mt={['2', '2', '8']} mb="5">
+              <Heading as="h5" size="md" mt={['2', '2', '8']} mb="5">
                 Course content
               </Heading>
               <Box borderWidth="1px" p="3" rounded="sm" mb="3">
-                {listLesson}
+                {listLesson()}
               </Box>
             </GridItem>
             <GridItem
@@ -93,17 +117,13 @@ function CourseDetail(props) {
               top={['0', '0', '-12rem']}
             >
               <Box pos="sticky" top="4rem">
-                <CourseWidget
-                  data={{
-                    price: price,
-                    intro: lessons[0],
-                  }}
-                />
+                <CourseWidget data={data} />
               </Box>
             </GridItem>
           </Grid>
         </Container>
       </Box>
+      <VideoPlayer source={videoPlaying} isOpen={isOpen} onClose={onClose} />
     </Box>
   );
 }

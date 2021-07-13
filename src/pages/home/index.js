@@ -2,55 +2,16 @@ import React from 'react';
 import { Image, Box, Container, Heading, Text, Link } from '@chakra-ui/react';
 import { Link as ReactLink } from 'react-router-dom';
 import Slider from 'react-slick';
+import { useSelector } from 'react-redux';
 
 import CourseCard from '../course/components/CourseCard';
-import NextArrowButton from './Components/NextArrowButton';
-import PrevArrowButton from './Components/PrevArrowButton';
 import useCourses from '../../hooks/useCourses';
 import { STATUS } from '../../store/constant';
+import settings from './configSlider';
 import SpinnerLoading from '../../components/SpinnerLoading';
 
 function HomePage() {
   const [data, status, error] = useCourses();
-
-  const settings = {
-    dots: false,
-    infinite: false,
-    lazyLoad: true,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 5,
-    swipeToSlide: true,
-    nextArrow: <NextArrowButton />,
-    prevArrow: <PrevArrowButton />,
-    responsive: [
-      {
-        breakpoint: 1280,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 4,
-        },
-      },
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2.5,
-          slidesToScroll: 2,
-          prevArrow: false,
-          nextArrow: false,
-        },
-      },
-      {
-        breakpoint: 448,
-        settings: {
-          slidesToShow: 1.5,
-          slidesToScroll: 1,
-          prevArrow: false,
-          nextArrow: false,
-        },
-      },
-    ],
-  };
 
   let content;
   if (status === STATUS.FAILED) {

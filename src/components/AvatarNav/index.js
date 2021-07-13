@@ -24,6 +24,7 @@ const AvatarNav = props => {
 
   const _logout = () => {
     logout();
+    localStorage.removeItem('cart');
     history.go(0);
   };
 

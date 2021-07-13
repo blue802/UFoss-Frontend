@@ -45,7 +45,7 @@ const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [searchTerm, setSearchTerm] = useState();
   const [data, status] = useSearchCourses(searchTerm);
-  const cart = useSelector(state => state.carts);
+  const cart = useSelector(state => state.cart);
 
   const loginSignupButtons = (
     <Box>
@@ -69,7 +69,7 @@ const Header = () => {
         <Heading as="h4" size="md">
           {profile?.username}
         </Heading>
-        <Text size="xs">{profile?.email}</Text>
+        <Text fontSize="sm">{profile?.email}</Text>
       </Box>
     </HStack>
   );
