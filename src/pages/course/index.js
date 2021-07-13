@@ -8,24 +8,50 @@ import {
   GridItem,
   HStack,
   Icon,
+  Button,
   useDisclosure,
+  ModalHeader,
+  Flex,
 } from '@chakra-ui/react';
-import { FaRegPlayCircle } from 'react-icons/fa';
 import LinesEllipsis from 'react-lines-ellipsis';
-import { useParams } from 'react-router-dom';
 
 import StarGroup from '../../components/StarGroup';
 import CourseWidget from './components/CourseWidget';
+import { useParams } from 'react-router-dom';
 import useCourseById from '../../hooks/useCourseById';
+import { FaRegPlayCircle, FaStar } from 'react-icons/fa';
+import { Modal, ModalOverlay, ModalContent } from '@chakra-ui/react';
+import ReactStars from 'react-rating-stars-component';
+import { useAuth } from '../../services/auth.service';
+import API from '../../utils/API';
+import useRate from '../../hooks/useRate';
+import useCustomToast from '../../hooks/useCustomToast';
+
 import { STATUS } from '../../store/constant';
 import SpinnerLoading from '../../components/SpinnerLoading';
 import VideoPlayer from './components/VideoPlayer';
+import useMyCourses from '../../hooks/useMyCourses';
 
 function CourseDetail(props) {
+  const [rated, setRated] = useState(true);
+  const [videoPlaying, setVideoPlaying] = useState(null);
+  const toast = useCustomToast();
+  const [profile] = useAuth();
+  const {
+    isOpen: isOpenVideo,
+    onOpen: onOpenVideo,
+    onClose: onCloseVideo,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenRate,
+    onOpen: onOpenRate,
+    onClose: onCloseRate,
+  } = useDisclosure();
   const { category, courseId } = useParams();
   const [data, status, error] = useCourseById(category, courseId);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [videoPlaying, setVideoPlaying] = useState(null);
+  const checkRated = useRate(courseId, profile?.id);
+  const [myCourse] = useMyCourses();
+  const checkMyCourse = myCourse.find(item => item.id === props?.data.id);
 
   if (status === STATUS.FAILED) {
     return (
@@ -45,10 +71,9 @@ function CourseDetail(props) {
     );
   }
 
-  const { title, description, rate, instructor, lessons } = data;
+  const { title, description, rate, instructor, lessons, price } = data;
   const { rating, score } = rate;
   const point = rating > 0 ? score / (rating * 2) : 0;
-
   const listLesson = () =>
     lessons.map((lesson, index) => (
       <HStack key={lesson.id} py="2">
@@ -64,9 +89,17 @@ function CourseDetail(props) {
 
   const onOpenVideoPlayer = url => {
     setVideoPlaying(url);
-    onOpen();
+    onOpenVideo();
   };
 
+  const ratingChanged = async newRating => {
+    const values = { userId: profile.id, score: newRating * 2 };
+    await API.post(`/categories/${category}/courses/${courseId}/rate`, values);
+    onCloseRate();
+    toast({ title: 'Thank You!', status: 'success' });
+    setRated(false);
+  };
+  
   return (
     <Box w="full" mt="64px" minH="90vh">
       <Box
@@ -102,9 +135,31 @@ function CourseDetail(props) {
               rowStart={[2, 2, 1]}
               rowEnd={[3, 3, 2]}
             >
-              <Heading as="h5" size="md" mt={['2', '2', '8']} mb="5">
-                Course content
-              </Heading>
+              <Flex justifyContent="space-between" mt={['2', '2', '8']} mb="5">
+                <Heading as="h5" size="lg">
+                  Course content
+                </Heading>
+                {profile && checkMyCourse && !checkRated && rated && (
+                  <Button size="sm" fontWeight="normal" onClick={onOpenRate}>
+                    <Icon as={FaStar} mr="2" color="yellow.400" />
+                    Leave a rating
+                  </Button>
+                )}
+                <Modal isOpen={isOpenRate} onClose={onCloseRate}>
+                  <ModalOverlay />
+                  <ModalContent>
+                    <ModalHeader textAlign="center">Rate Course</ModalHeader>
+                    <Box margin="0 auto">
+                      <ReactStars
+                        count={5}
+                        onChange={ratingChanged}
+                        size={50}
+                        isHalf={true}
+                      />
+                    </Box>
+                  </ModalContent>
+                </Modal>
+              </Flex>
               <Box borderWidth="1px" p="3" rounded="sm" mb="3">
                 {listLesson()}
               </Box>
@@ -115,6 +170,7 @@ function CourseDetail(props) {
               rowEnd={[2, 2, 2]}
               pos="relative"
               top={['0', '0', '-12rem']}
+              mt={['5', '5', '0']}
             >
               <Box pos="sticky" top="4rem">
                 <CourseWidget data={data} />
@@ -123,9 +179,12 @@ function CourseDetail(props) {
           </Grid>
         </Container>
       </Box>
-      <VideoPlayer source={videoPlaying} isOpen={isOpen} onClose={onClose} />
+      <VideoPlayer
+        source={videoPlaying}
+        isOpen={isOpenVideo}
+        onClose={onCloseVideo}
+      />
     </Box>
   );
 }
-
 export default CourseDetail;
