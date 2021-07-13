@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, Link as ReactLink } from 'react-router-dom';
+import { Link as ReactLink } from 'react-router-dom';
 import {
   LinkBox,
   Box,
@@ -9,6 +9,7 @@ import {
   LinkOverlay,
   HStack,
   Heading,
+  Link,
 } from '@chakra-ui/react';
 
 import StarGroup from '../../../../components/StarGroup';
@@ -16,7 +17,6 @@ import LinesEllipsis from 'react-lines-ellipsis';
 import CourseButton from '../../../../components/CourseButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, checkInCart } from '../../../../store/cart/cartSlice';
-
 function CourseRowItem(props) {
   const {
     id,
@@ -33,8 +33,8 @@ function CourseRowItem(props) {
   const { rating, score } = rate;
   const point = rating > 0 ? score / (rating * 2) : 0;
 
-  const handleAddToCart = () => {
-    console.log('added');
+  const handleAddToCart = val => {
+    dispatch(addToCart(val));
   };
 
   return (
@@ -85,7 +85,11 @@ function CourseRowItem(props) {
             </Box>
             {props.paid ? (
               <Box fontWeight="bold">
-                <Link to={`/categories/${category.name}/courses/${id}`}>
+                <Link
+                  as={ReactLink}
+                  to={`/categories/${category?.name}/courses/${id}`}
+                  _hover={{ textDecoration: 'none' }}
+                >
                   <CourseButton status="GO_TO_COURSE" />
                 </Link>
               </Box>
@@ -97,10 +101,21 @@ function CourseRowItem(props) {
                 >
                   ${price}
                 </Text>
-                <CourseButton
-                  status={added ? 'ADDED' : 'ADD_TO_CART'}
-                  onClick={() => dispatch(addToCart(props.data))}
-                />
+                {added ? (
+                  <Link
+                    as={ReactLink}
+                    to="/cart"
+                    width="full"
+                    _hover={{ textDecoration: 'none' }}
+                  >
+                    <CourseButton status="ADDED" />
+                  </Link>
+                ) : (
+                  <CourseButton
+                    status="ADD_TO_CART"
+                    onClick={() => handleAddToCart(props.data)}
+                  />
+                )}
               </Box>
             )}
           </Box>

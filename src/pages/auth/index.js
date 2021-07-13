@@ -34,6 +34,7 @@ function Authentication() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
   const [showPassword, setShowPassword] = useState(false);
@@ -88,6 +89,7 @@ function Authentication() {
       await loginAsync(username, password);
       setIsSubmitting(false);
     }
+    reset();
   };
 
   const _onSuccessLoginGoogle = res => {

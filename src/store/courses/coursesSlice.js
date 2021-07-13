@@ -12,13 +12,13 @@ const initialState = {
 
 export const fetchCourses = createAsyncThunk(
   'courses/fetchCourses',
-  async userId => {
+  async userID => {
     const { data } = await API.get('/categories');
     if (data.length > 0) {
       for (let i = 0; i < data.length; i++) {
         const query = qs.stringify({
           size: 15,
-          userId,
+          userID,
         });
         const res = await API.get(
           `/categories/${data[i].name}/courses?${query}`

@@ -62,15 +62,17 @@ const Header = () => {
   );
 
   const avatarComponent = (
-    <HStack>
-      <Avatar src={profile?.avatarUrl} />
-      <Box>
-        <Heading as="h4" size="md">
-          {profile?.username}
-        </Heading>
-        <Text fontSize="sm">{profile?.email}</Text>
-      </Box>
-    </HStack>
+    <Link as={ReactLink} to="/dashboard" onClick={() => onClose()}>
+      <HStack>
+        <Avatar src={profile?.avatarUrl} />
+        <Box>
+          <Heading as="h4" size="md">
+            {profile?.username}
+          </Heading>
+          <Text fontSize="sm">{profile?.email}</Text>
+        </Box>
+      </HStack>
+    </Link>
   );
 
   const listCategoryLinks = categories?.map(({ id, name }) => (

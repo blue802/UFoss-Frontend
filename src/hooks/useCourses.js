@@ -15,7 +15,7 @@ const useCourses = () => {
     if (status === STATUS.IDLE) {
       dispatch(fetchCourses(user?.id));
     }
-  }, [dispatch, status, user?.id]);
+  }, [dispatch, status, user]);
 
   return [data, status, error];
 };

@@ -17,10 +17,9 @@ const useMyCourses = () => {
 
   useEffect(() => {
     if (status === STATUS.IDLE) {
-      dispatch(fetchMyCourses(profile.id));
+      dispatch(fetchMyCourses(profile?.id));
     }
-  }, [dispatch, profile.id, status]);
-
+  }, [dispatch, profile, status]);
   return [data, status, error];
 };
 

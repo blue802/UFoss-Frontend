@@ -14,7 +14,9 @@ import {
   Heading,
   useMediaQuery,
   PopoverFooter,
+  Link,
 } from '@chakra-ui/react';
+import { Link as ReactLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import LinesEllipsis from 'react-lines-ellipsis';
 
@@ -93,10 +95,21 @@ function CourseCard(props) {
               justifyContent="space-between"
               pb={4}
             >
-              <CourseButton
-                status={added ? 'ADDED' : 'ADD_TO_CART'}
-                onClick={() => dispatch(addToCart(props.data))}
-              />
+              {added ? (
+                <Link
+                  as={ReactLink}
+                  to="/cart"
+                  width="full"
+                  _hover={{ textDecoration: 'none' }}
+                >
+                  <CourseButton status="ADDED" />
+                </Link>
+              ) : (
+                <CourseButton
+                  status="ADD_TO_CART"
+                  onClick={() => dispatch(addToCart(props.data))}
+                />
+              )}
             </PopoverFooter>
           </PopoverContent>
         )}

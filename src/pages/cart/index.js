@@ -32,7 +32,6 @@ function CartPage() {
       });
       dispatch(cleanCart());
       toast({ title: 'Payment success', status: 'success' });
-      history.push('/');
     } catch (error) {
       const message = error?.response?.data?.message;
       toast({ title: message, status: 'error' });
@@ -59,16 +58,7 @@ function CartPage() {
   return (
     <Box mt="64px" minH="90vh">
       <Box w="full" bgColor="black">
-        <Container
-          maxW={[
-            'container.sm',
-            'container.sm',
-            'container.md',
-            'container.lg',
-          ]}
-          py="16"
-          color="white"
-        >
+        <Container maxW="container.xl" py="16" color="white">
           <Heading
             as="h4"
             color="white"
@@ -79,11 +69,7 @@ function CartPage() {
           </Heading>
         </Container>
       </Box>
-      <Container
-        maxW={['container.sm', 'container.sm', 'container.md', 'container.lg']}
-        py="16"
-        color="white"
-      >
+      <Container maxW="container.xl" py="16" color="white">
         <Flex w="full" direction={['column-reverse', 'column-reverse', 'row']}>
           <Box w={['full', 'full', 2 / 3]}>
             <Box>

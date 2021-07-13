@@ -12,13 +12,13 @@ const useCourseById = (category, courseId) => {
   const [user] = useAuth();
 
   useEffect(() => {
-    async function fetchData(userId) {
+    async function fetchData(userID) {
       try {
         setStatus(STATUS.LOADING);
         const _authHeader = await authHeader();
         const res = await API.get(
           `/categories/${category}/courses/${courseId}?${qs.stringify({
-            userId,
+            userID,
           })}`,
           { headers: _authHeader }
         );
@@ -34,7 +34,7 @@ const useCourseById = (category, courseId) => {
     if (status === STATUS.IDLE) {
       fetchData(user?.id);
     }
-  }, [category, courseId, status]);
+  }, [category, courseId, status, user?.id]);
 
   return [data, status, error];
 };

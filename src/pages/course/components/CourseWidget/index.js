@@ -1,18 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Text, Icon, Heading, Button } from '@chakra-ui/react';
+import { Box, Text, Icon, Heading, Button, Link } from '@chakra-ui/react';
 import { FcApproval } from 'react-icons/fc';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactPlayer from 'react-player';
+import { Link as ReactLink, useHistory } from 'react-router-dom';
 
 import { addToCart, checkInCart } from '../../../../store/cart/cartSlice';
-import { useHistory } from 'react-router-dom';
+import useMyCourses from '../../../../hooks/useMyCourses';
+import CourseButton from '../../../../components/CourseButton';
 const CourseWidget = props => {
   const dispatch = useDispatch();
   const history = useHistory();
   const added = useSelector(state => checkInCart(state, props?.data.id));
   const { price, lessons, imageURL } = props.data;
-
+  const [data] = useMyCourses();
+  const myCourse = data.find(item => item.id === props?.data.id);
   const handleBuyNow = val => {
     dispatch(addToCart(val));
     history.push('/cart');
@@ -20,6 +23,7 @@ const CourseWidget = props => {
 
   return (
     <Box
+      display={myCourse ? 'none' : 'block'}
       bgColor="white"
       boxShadow="xl"
       borderWidth="1px"
@@ -42,21 +46,28 @@ const CourseWidget = props => {
         <Heading as="h5" color="black" fontSize="4xl" mb="3">
           ${price}
         </Heading>
-        <Button
-          w="full"
-          colorScheme="red"
-          size="lg"
-          mb="3"
-          onClick={() => dispatch(addToCart(props.data))}
-        >
-          {added ? 'Added' : 'Add To Cart'}
-        </Button>
+
+        {added ? (
+          <Link
+            as={ReactLink}
+            to="/cart"
+            width="full"
+            _hover={{ textDecoration: 'none' }}
+          >
+            <CourseButton status="ADDED" />
+          </Link>
+        ) : (
+          <CourseButton
+            status="ADD_TO_CART"
+            onClick={() => dispatch(addToCart(props.data))}
+          />
+        )}
+
         <Button
           w="full"
           colorScheme="teal"
           variant="outline"
-          size="lg"
-          mb="3"
+          my="3"
           onClick={() => handleBuyNow(props.data)}
         >
           Buy now

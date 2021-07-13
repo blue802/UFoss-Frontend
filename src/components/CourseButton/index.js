@@ -7,7 +7,7 @@ const CourseButton = props => {
 
   const textContentBtn = status => {
     if (status === 'ADD_TO_CART') return 'Add To Card';
-    if (status === 'ADDED') return 'Added';
+    if (status === 'ADDED') return 'Go to cart';
     if (status === 'GO_TO_COURSE') return 'Go To Course';
   };
 

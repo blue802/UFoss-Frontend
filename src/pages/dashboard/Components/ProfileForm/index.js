@@ -24,8 +24,9 @@ const ProfileForm = ({ profile }) => {
     e.preventDefault();
     const payload = { firstName, lastName, phone };
     try {
+      const _authHeader = await authHeader();
       const res = await API.put(`/user/update/${profile.id}`, payload, {
-        headers: authHeader(),
+        headers: _authHeader,
       });
       updateProfile(res.data);
       toast({ title: 'Update Successful!', status: 'success' });
