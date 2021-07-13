@@ -20,7 +20,7 @@ import StarGroup from '../../components/StarGroup';
 import CourseWidget from './components/CourseWidget';
 import { useParams } from 'react-router-dom';
 import useCourseById from '../../hooks/useCourseById';
-import { FaRegPlayCircle } from 'react-icons/fa';
+import { FaRegPlayCircle ,FaStar} from 'react-icons/fa';
 import { Modal, ModalOverlay, ModalContent } from '@chakra-ui/react';
 import ReactStars from 'react-rating-stars-component';
 import { useAuth } from '../../services/auth.service';
@@ -31,16 +31,20 @@ import useCustomToast from '../../hooks/useCustomToast';
 import { STATUS } from '../../store/constant';
 import SpinnerLoading from '../../components/SpinnerLoading';
 import VideoPlayer from './components/VideoPlayer';
+import useMyCourses from '../../hooks/useMyCourses';
 
 function CourseDetail(props) {
   const [rated, setRated] = useState(true);
   const [videoPlaying, setVideoPlaying] = useState(null);
   const toast = useCustomToast();
   const [profile] = useAuth();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isOpenVideo, onOpen: onOpenVideo, onClose: onCloseVideo } = useDisclosure();
+  const { isOpen: isOpenRate, onOpen: onOpenRate, onClose: onCloseRate } = useDisclosure();
   const { category, courseId } = useParams();
   const [data, status, error] = useCourseById(category, courseId);
   const checkRated = useRate(courseId , profile?.id);
+  const [myCourse] = useMyCourses();
+  const checkMyCourse = myCourse.find(item => item.id === props?.data.id);
 
   if (status === STATUS.FAILED) {
     return (
@@ -78,17 +82,16 @@ function CourseDetail(props) {
 
   const onOpenVideoPlayer = url => {
     setVideoPlaying(url);
-    onOpen();
+    onOpenVideo();
   };
 
   const ratingChanged = async(newRating) => {
     const values ={userId: profile.id ,score: newRating*2};
     await API.post(`/categories/${category}/courses/${courseId}/rate`,values);
-    onClose()
+    onCloseRate()
     toast({ title: 'Thank You!', status: 'success' });
     setRated(false)
   };
-  console.log(checkRated)
   return (  
     <Box w="full" mt="64px" minH="90vh">
       <Box
@@ -128,15 +131,17 @@ function CourseDetail(props) {
                 <Heading as="h5" size="lg" >
                   Course content
                 </Heading>
-                {profile && !checkRated && rated && 
+                {profile && true &&!checkRated && rated && 
                   <Button 
-                    variant="unstyled" 
+                    // variant="unstyled" 
+                    size="sm"
                     fontWeight="normal" 
-                    onClick={onOpen}>
+                    onClick={onOpenRate}>
+                      <Icon as={FaStar} mr="2" color="yellow.400" />
                       Leave a rating
                 </Button>
                 }
-                  <Modal isOpen={isOpen} onClose={onClose}>
+                  <Modal isOpen={isOpenRate} onClose={onCloseRate}>
                     <ModalOverlay />
                     <ModalContent>
                     <ModalHeader textAlign='center'>Rate Course</ModalHeader>
@@ -161,15 +166,16 @@ function CourseDetail(props) {
               rowEnd={[2, 2, 2]}
               pos="relative"
               top={['0', '0', '-12rem']}
+              mt={['5','5','0']}
             >
               <Box pos="sticky" top="4rem">
-              <CourseWidget data={data} />
+                <CourseWidget data={data} />
               </Box>
             </GridItem>
           </Grid>
         </Container>
       </Box>
-      {/* <VideoPlayer source={videoPlaying} isOpen={isOpen} onClose={onClose} /> */}
+      <VideoPlayer source={videoPlaying} isOpen={isOpenVideo} onClose={onCloseVideo} />
     </Box>
   );
 }
