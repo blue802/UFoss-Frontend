@@ -15,7 +15,7 @@ import {
   Portal,
   Text,
 } from '@chakra-ui/react';
-import { Link as ReactLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { logout } from '../../services/auth.service';
 
 const AvatarNav = props => {
@@ -31,7 +31,7 @@ const AvatarNav = props => {
   return (
     <Popover trigger="hover">
       <PopoverTrigger>
-        <Link as={ReactLink} to="/dashboard">
+        <Link href="/dashboard">
           <Avatar src={avatarUrl} size="sm" />
         </Link>
       </PopoverTrigger>
