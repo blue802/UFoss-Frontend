@@ -68,10 +68,10 @@ const ForgotPasswordPage = () => {
     const { email, password } = data;
     setIsSubmitting(true);
     if (isResetPassword) {
-      resetPasswordAsync(email, password, token);
+      await resetPasswordAsync(email, password, token);
       setIsSubmitting(false);
     } else {
-      reqResetPasswordAsync(email);
+      await reqResetPasswordAsync(email);
       setIsSubmitting(false);
     }
   };
