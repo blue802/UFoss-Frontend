@@ -15,7 +15,7 @@ const useCoursesByCategory = (category, query) => {
     async function fetchData() {
       try {
         setStatus(STATUS.LOADING);
-        let newQuery = qs.stringify({ ...query, userId: user?.id });
+        let newQuery = qs.stringify({ ...query, userID: user?.id });
         const res = await API.get(
           `/categories/${category}/courses?${newQuery}`
         );
