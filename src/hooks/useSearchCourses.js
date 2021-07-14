@@ -11,9 +11,7 @@ const useSearchCourses = searchTerm => {
     async function fetchData() {
       try {
         setStatus(STATUS.LOADING);
-        const res = await API.get(
-          `/courses?title=${searchTerm}&desc=${searchTerm}`
-        );
+        const res = await API.get(`/courses?search=${searchTerm}`);
         setData(res.data);
         setStatus(STATUS.SUCCEEDED);
       } catch (error) {
