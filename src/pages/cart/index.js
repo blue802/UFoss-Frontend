@@ -53,7 +53,7 @@ function CartPage() {
   };
 
   const totalMoney = bill =>
-    bill.reduce((total, item) => total + item.price, 0);
+    bill.reduce((total, item) => total + item.price, 0).toFixed(2);
 
   return (
     <Box mt="64px" minH="90vh">
