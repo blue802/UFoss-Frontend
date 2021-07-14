@@ -12,13 +12,13 @@ const useCourseById = (category, courseId) => {
   const [user] = useAuth();
 
   useEffect(() => {
-    async function fetchData(userID) {
+    async function fetchData(userId) {
       try {
         setStatus(STATUS.LOADING);
         const _authHeader = await authHeader();
         const res = await API.get(
           `/categories/${category}/courses/${courseId}?${qs.stringify({
-            userID,
+            userId,
           })}`,
           { headers: _authHeader }
         );
