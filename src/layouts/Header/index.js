@@ -62,7 +62,7 @@ const Header = () => {
   );
 
   const avatarComponent = (
-    <Link as={ReactLink} to="/dashboard" onClick={() => onClose()}>
+    <Link href="/dashboard" onClick={() => onClose()}>
       <HStack>
         <Avatar src={profile?.avatarUrl} />
         <Box>
