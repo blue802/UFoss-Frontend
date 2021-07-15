@@ -25,6 +25,7 @@ import {
   login,
   register as signUp,
   tokenProvider,
+  resendVerification,
 } from '../../services/auth.service';
 import ButtonSocialLogin from './components/ButtonSocialLogin';
 import formValidationConfigs from './configs/formValidationConfigs';
@@ -39,6 +40,7 @@ function Authentication() {
   } = useForm();
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [reEmail, setReEmail] = useState(localStorage.getItem('reEmail'));
   const location = useLocation();
   const history = useHistory();
   const toast = useCustomToast();
@@ -85,9 +87,12 @@ function Authentication() {
     if (isSignUp) {
       await signUpAsync(username, email, password);
       setIsSubmitting(false);
+      setReEmail(email);
+      localStorage.setItem('reEmail');
     } else {
       await loginAsync(username, password);
       setIsSubmitting(false);
+      localStorage.removeItem('reEmail');
     }
     reset();
   };
@@ -99,6 +104,14 @@ function Authentication() {
   };
 
   const _onFailureLoginGoogle = res => {};
+
+  const resendEmail = async () => {
+    await resendVerification(reEmail);
+    toast({
+      title: 'We have resend verification in your email!',
+      status: 'success',
+    });
+  };
 
   return (
     <Container maxW="container.xl" mt="64px" minH="74vh">
@@ -234,6 +247,20 @@ function Authentication() {
               Sign up
             </Link>
           </Text>
+        )}
+
+        {reEmail && (
+          <Button
+            variant="link"
+            display="block"
+            mx="auto"
+            mt="5"
+            size="sm"
+            fontWeight="light"
+            onClick={() => resendEmail()}
+          >
+            Resend Email Verification
+          </Button>
         )}
       </Box>
     </Container>

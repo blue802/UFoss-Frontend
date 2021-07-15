@@ -163,6 +163,10 @@ export const createAuthProvider = () => {
     localStorage.setItem('TOKEN_AUTH', JSON.stringify(_token));
   };
 
+  const resendVerification = async email => {
+    await API.get('/auth/register/resend-mail?email=' + email);
+  };
+
   return {
     useAuth,
     authHeader,
@@ -173,6 +177,7 @@ export const createAuthProvider = () => {
     resetPassword,
     tokenProvider,
     updateProfile,
+    resendVerification,
   };
 };
 
@@ -186,4 +191,5 @@ export const {
   resetPassword,
   tokenProvider,
   updateProfile,
+  resendVerification,
 } = createAuthProvider();
