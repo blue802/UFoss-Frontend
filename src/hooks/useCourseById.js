@@ -31,10 +31,8 @@ const useCourseById = (category, courseId) => {
       }
     }
 
-    if (status === STATUS.IDLE) {
-      fetchData(user?.id);
-    }
-  }, [category, courseId, status, user?.id]);
+    fetchData(user?.id);
+  }, [category, courseId, user?.id]);
 
   return [data, status, error];
 };
