@@ -6,6 +6,7 @@ import {
   Drawer,
   DrawerBody,
   DrawerContent,
+  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   Heading,
@@ -23,14 +24,14 @@ import {
   useDisclosure,
   useMediaQuery,
 } from '@chakra-ui/react';
-import { Link as ReactLink } from 'react-router-dom';
+import { Link as ReactLink, useHistory } from 'react-router-dom';
 import { FaGlobe } from 'react-icons/fa';
 import { HiMenu } from 'react-icons/hi';
 import { useSelector } from 'react-redux';
 
 import SearchBar from '../../components/SearchBar';
 import logo from '../../assets/images/logo.png';
-import { useAuth } from '../../services/auth.service';
+import { logout, useAuth } from '../../services/auth.service';
 import AvatarNav from '../../components/AvatarNav';
 import useCategories from '../../hooks/useCategories';
 import useSearchCourses from '../../hooks/useSearchCourses';
@@ -45,6 +46,13 @@ const Header = () => {
   const [searchTerm, setSearchTerm] = useState();
   const [data, status] = useSearchCourses(searchTerm);
   const cart = useSelector(state => state.cart);
+  const history = useHistory();
+
+  const _logout = () => {
+    logout();
+    localStorage.removeItem('cart');
+    history.go(0);
+  };
 
   const loginSignupButtons = (
     <Box>
@@ -110,7 +118,12 @@ const Header = () => {
     >
       <HStack>
         {!isLargeScreen && <Icon as={HiMenu} fontSize="3xl" onClick={onOpen} />}
-        <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
+        <Drawer
+          autoFocus={false}
+          placement="left"
+          onClose={onClose}
+          isOpen={isOpen}
+        >
           <DrawerOverlay />
           <DrawerContent>
             <DrawerHeader flex="" borderBottomWidth="1px">
@@ -121,6 +134,11 @@ const Header = () => {
                 {listCategoryLinks}
               </List>
             </DrawerBody>
+            <DrawerFooter justifyContent="start">
+              <Button variant="outline" colorScheme="blue" onClick={_logout}>
+                Logout
+              </Button>
+            </DrawerFooter>
           </DrawerContent>
         </Drawer>
         {isLargeScreen && logoItem}
